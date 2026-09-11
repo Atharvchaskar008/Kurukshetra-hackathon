@@ -17,6 +17,7 @@ from fastapi.responses import JSONResponse
 
 from backend.config import get_settings
 from backend.database.firebase import initialize_firebase
+from backend.error_handlers import register_error_handlers
 from backend.routers import api_router
 from backend.routers.health import router as health_router
 
@@ -54,9 +55,9 @@ def create_app() -> FastAPI:
         version=settings.app_version,
         description="SupplyGuard - Automated Software Supply Chain Security & Dependency Risk Engine",
         lifespan=lifespan,
-        docs_url="/docs",
-        redoc_url="/redoc",
-        openapi_url="/openapi.json",
+        docs_url=settings.docs_url,
+        redoc_url=settings.redoc_url,
+        openapi_url=settings.openapi_url,
     )
 
     # Configure CORS middleware defensively
@@ -86,6 +87,9 @@ def create_app() -> FastAPI:
 
     # Mount API routers at /api/v1
     app.include_router(api_router, prefix=settings.api_prefix)
+
+    # Register centralized exception handlers
+    register_error_handlers(app)
 
     return app
 

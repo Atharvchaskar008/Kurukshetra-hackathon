@@ -46,12 +46,55 @@ class Settings(BaseModel):
     secret_key: str = Field(
         default_factory=lambda: os.getenv("SECRET_KEY", "supplyguard-insecure-dev-secret-key")
     )
-    cors_origins: List[str] = ["*"]
+    cors_origins: List[str] = Field(
+        default_factory=lambda: [
+            origin.strip()
+            for origin in os.getenv("CORS_ORIGINS", "*").split(",")
+            if origin.strip()
+        ]
+    )
+
+    @property
+    def is_production(self) -> bool:
+        """True if running in production mode."""
+        return self.app_env.lower() in ("production", "prod")
+
+    @property
+    def is_development(self) -> bool:
+        """True if running in development mode."""
+        return self.app_env.lower() in ("development", "dev", "local")
+
+    @property
+    def docs_url(self) -> Optional[str]:
+        """Documentation URL, disabled in strict production unless debug is explicitly enabled."""
+        if self.is_production and not self.debug:
+            return None
+        return "/docs"
+
+    @property
+    def redoc_url(self) -> Optional[str]:
+        """ReDoc URL, disabled in strict production unless debug is explicitly enabled."""
+        if self.is_production and not self.debug:
+            return None
+        return "/redoc"
+
+    @property
+    def openapi_url(self) -> Optional[str]:
+        """OpenAPI spec URL."""
+        if self.is_production and not self.debug:
+            return None
+        return "/openapi.json"
 
     # Security guardrails & scan limits (Hostile input protection)
-    max_upload_size_bytes: int = 50 * 1024 * 1024  # 50 MB
-    scan_timeout_seconds: int = 180  # 3 minutes
-    max_scan_files: int = 5000
+    max_upload_size_bytes: int = Field(
+        default_factory=lambda: int(os.getenv("MAX_UPLOAD_SIZE_BYTES", str(50 * 1024 * 1024)))
+    )  # 50 MB
+    scan_timeout_seconds: int = Field(
+        default_factory=lambda: int(os.getenv("SCAN_TIMEOUT_SECONDS", "180"))
+    )  # 3 minutes
+    max_scan_files: int = Field(
+        default_factory=lambda: int(os.getenv("MAX_SCAN_FILES", "5000"))
+    )
 
     # Vulnerability & Threat Intelligence APIs
     github_token: str = Field(default_factory=lambda: os.getenv("GITHUB_TOKEN", ""))
