@@ -13,6 +13,7 @@ from typing import Any, Dict
 from fastapi import APIRouter
 
 from backend.config import get_settings
+from backend.database.firebase import get_firebase_status
 
 router = APIRouter(tags=["Health"])
 
@@ -55,4 +56,5 @@ async def health_check() -> Dict[str, Any]:
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "python_version": sys.version.split()[0],
         "capabilities": get_external_tools_status(),
+        "database": get_firebase_status(),
     }

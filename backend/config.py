@@ -62,9 +62,18 @@ class Settings(BaseModel):
     # Grok / AI Service (Explanation and reporting only)
     grok_api_key: str = Field(default_factory=lambda: os.getenv("GROK_API_KEY", ""))
 
-    # Database
+    # Database & Firebase Firestore
     database_url: str = Field(
         default_factory=lambda: os.getenv("DATABASE_URL", "sqlite:///./supplyguard.db")
+    )
+    firebase_credentials_path: str = Field(
+        default_factory=lambda: os.getenv("FIREBASE_CREDENTIALS_PATH", "")
+    )
+    firebase_credentials_json: str = Field(
+        default_factory=lambda: os.getenv("FIREBASE_CREDENTIALS_JSON", "")
+    )
+    firebase_project_id: str = Field(
+        default_factory=lambda: os.getenv("FIREBASE_PROJECT_ID", "")
     )
 
 

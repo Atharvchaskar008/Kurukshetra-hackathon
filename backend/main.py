@@ -16,6 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from backend.config import get_settings
+from backend.database.firebase import initialize_firebase
 from backend.routers import api_router
 from backend.routers.health import router as health_router
 
@@ -35,7 +36,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     logger.info("Initializing %s (v%s) in [%s] mode...", settings.app_name, settings.app_version, settings.app_env)
     logger.info("Host: %s:%s | API Prefix: %s", settings.backend_host, settings.backend_port, settings.api_prefix)
-    
+
+    # Initialize persistence / Firebase Firestore from environment
+    initialize_firebase(settings)
+
     yield  # Application is serving requests
 
     logger.info("Gracefully shutting down %s...", settings.app_name)
