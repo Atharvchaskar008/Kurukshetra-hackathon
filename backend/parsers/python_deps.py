@@ -77,17 +77,48 @@ def parse_pyproject_toml(
         return []
     if not isinstance(data, dict):
         return []
-    project = data.get("project")
-    if not isinstance(project, dict):
-        return []
-    raw_deps = project.get("dependencies")
-    if not isinstance(raw_deps, list):
-        return []
     combined: List[DeclaredDependency] = []
-    for item in raw_deps:
-        if not isinstance(item, str):
-            continue
-        combined.extend(parse_requirements_txt(item, source_path=source_path))
+
+    # 1. Standard PEP 621 [project.dependencies]
+    project = data.get("project")
+    if isinstance(project, dict):
+        raw_deps = project.get("dependencies")
+        if isinstance(raw_deps, list):
+            for item in raw_deps:
+                if isinstance(item, str):
+                    combined.extend(parse_requirements_txt(item, source_path=source_path))
+
+    # 2. Tool Poetry [tool.poetry.dependencies]
+    tool = data.get("tool")
+    if isinstance(tool, dict):
+        poetry = tool.get("poetry")
+        if isinstance(poetry, dict):
+            poetry_deps = poetry.get("dependencies")
+            if isinstance(poetry_deps, dict):
+                for pkg_name, spec_val in poetry_deps.items():
+                    if pkg_name.lower() == "python":
+                        continue
+                    spec_str = "*"
+                    is_optional = False
+                    if isinstance(spec_val, str):
+                        spec_str = spec_val
+                    elif isinstance(spec_val, dict):
+                        spec_str = str(spec_val.get("version", "*"))
+                        is_optional = bool(spec_val.get("optional", False))
+                    pinned = spec_str.startswith("==") and is_pinned_version_spec(spec_str[2:].strip())
+                    combined.append(
+                        DeclaredDependency(
+                            package_name=pkg_name,
+                            version=spec_str,
+                            ecosystem=Ecosystem.PYPI,
+                            source_manifest=source_path,
+                            manifest_section=NpmDependencySection.DEPENDENCIES,
+                            is_optional=is_optional,
+                            is_pinned=pinned,
+                            metadata={"declared_range": spec_str},
+                        )
+                    )
+
     return combined
 
 
