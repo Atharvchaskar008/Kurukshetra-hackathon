@@ -13,7 +13,8 @@ from typing import AsyncIterator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from backend.config import get_settings
 from backend.database.firebase import initialize_firebase
@@ -90,6 +91,16 @@ def create_app() -> FastAPI:
 
     # Register centralized exception handlers
     register_error_handlers(app)
+
+    # Serve frontend static assets (CSS, JS)
+    import pathlib
+    frontend_dir = pathlib.Path(__file__).resolve().parent.parent / "frontend"
+    if frontend_dir.is_dir():
+        app.mount("/static", StaticFiles(directory=str(frontend_dir)), name="static")
+
+        @app.get("/dashboard", tags=["Dashboard"])
+        async def dashboard():
+            return FileResponse(str(frontend_dir / "index.html"))
 
     return app
 
