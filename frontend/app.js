@@ -28,10 +28,16 @@ const valHigh = document.getElementById("val-high");
 const valMedium = document.getElementById("val-medium");
 const valLow = document.getElementById("val-low");
 
-// Allow Enter key
-repoInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") startScan();
-});
+// Bind button and Enter key listeners
+if (analyzeBtn) {
+    analyzeBtn.addEventListener("click", startScan);
+}
+if (repoInput) {
+    repoInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") startScan();
+    });
+}
+window.startScan = startScan;
 
 async function startScan() {
     const url = repoInput.value.trim();
@@ -162,7 +168,6 @@ function renderResults(data) {
 
     // Dependencies list
     depsList.innerHTML = "";
-    const deps = data.dependencies || [];
     deps.forEach((d) => {
         const chip = document.createElement("span");
         chip.className = "dep-chip";
