@@ -17,14 +17,23 @@ from fastapi import APIRouter, File, UploadFile
 from backend.config import get_settings
 from backend.database.repository import get_scan_repository
 from backend.exceptions import (
+    DocumentNotFoundError,
     RepoSizeLimitExceededError,
     RepositoryIngestionError,
     ValidationError,
 )
+from backend.ingestion.git_cloner import GitCloner
 from backend.ingestion.zip_extractor import ZipExtractor
 from backend.models.domain import Repository, Scan
 from backend.models.enums import ScanStatus
-from backend.schemas.scan import ScanCreateResponse
+from backend.pipeline import run_scan
+from backend.schemas.scan import (
+    DependencyResponse,
+    GitHubScanRequest,
+    ScanCreateResponse,
+    ScanDetailResponse,
+    ScanStatusResponse,
+)
 
 logger = logging.getLogger("supplyguard.routers.scans")
 router = APIRouter(prefix="/scans", tags=["Scans"])
@@ -52,6 +61,7 @@ async def upload_zip_archive(file: UploadFile = File(...)) -> ScanCreateResponse
     # Stream upload to temporary file while enforcing max_upload_size_bytes
     temp_zip = Path(tempfile.gettempdir()) / f"upload_{scan_id}.zip"
     uploaded_bytes = 0
+    workspace = None
 
     try:
         with open(temp_zip, "wb") as buffer:
@@ -107,17 +117,102 @@ async def upload_zip_archive(file: UploadFile = File(...)) -> ScanCreateResponse
             scan_id,
         )
 
+        result = run_scan(scan_id, workspace, repo_metadata)
+        status = ScanStatus(result.get("status", ScanStatus.COMPLETED.value))
         return ScanCreateResponse(
             scan_id=scan_id,
-            status=ScanStatus.PENDING,
+            status=status,
             target=f"upload:{file.filename}",
-            message="Repository ZIP archive uploaded and verified successfully.",
+            message="Repository ZIP archive uploaded and analyzed.",
         )
 
     finally:
-        # Clean up temporary uploaded zip file
+        try:
+            if workspace is not None:
+                workspace.cleanup()
+        except Exception:
+            pass
         if temp_zip.exists():
             try:
                 temp_zip.unlink()
             except Exception:
                 pass
+
+
+@router.post("/github", response_model=ScanCreateResponse, summary="Scan GitHub repository")
+async def create_github_scan(payload: GitHubScanRequest) -> ScanCreateResponse:
+    scan_id = str(uuid.uuid4())
+    cloner = GitCloner()
+    workspace = None
+    try:
+        workspace = cloner.clone(
+            payload.repository_url,
+            branch=payload.branch,
+            commit_hash=payload.commit_hash,
+        )
+        files = workspace.list_files()
+        repo_metadata = Repository(
+            url=payload.repository_url,
+            name=payload.repository_url.rstrip("/").split("/")[-1],
+            default_branch=payload.branch or "main",
+            commit_hash=payload.commit_hash,
+            file_count=len(files),
+            metadata={"source": "github"},
+        )
+        store = get_scan_repository()
+        store.create_scan(scan_id, Scan(scan_id=scan_id, repository=repo_metadata, status=ScanStatus.PENDING))
+        result = run_scan(scan_id, workspace, repo_metadata)
+        status = ScanStatus(result.get("status", ScanStatus.COMPLETED.value))
+        return ScanCreateResponse(
+            scan_id=scan_id,
+            status=status,
+            target=payload.repository_url,
+            message="GitHub repository cloned and analyzed.",
+        )
+    finally:
+        if workspace is not None:
+            try:
+                workspace.cleanup()
+            except Exception:
+                pass
+
+
+def _load_scan(scan_id: str) -> dict:
+    doc = get_scan_repository().get_scan(scan_id)
+    if not doc:
+        raise DocumentNotFoundError(f"Scan {scan_id} was not found.")
+    return doc
+
+
+@router.get("/{scan_id}", response_model=ScanStatusResponse, summary="Get scan status")
+async def get_scan_status(scan_id: str) -> ScanStatusResponse:
+    doc = _load_scan(scan_id)
+    return ScanStatusResponse(
+        scan_id=scan_id,
+        status=doc.get("status", ScanStatus.PENDING),
+        created_at=doc.get("created_at", ""),
+        updated_at=doc.get("updated_at", ""),
+        completed_at=doc.get("completed_at"),
+        progress_percent=float(doc.get("progress_percent") or 0.0),
+        current_stage=doc.get("current_stage", "queued"),
+        error_message=doc.get("error_message"),
+    )
+
+
+@router.get("/{scan_id}/details", response_model=ScanDetailResponse, summary="Get scan details")
+async def get_scan_details(scan_id: str) -> ScanDetailResponse:
+    doc = _load_scan(scan_id)
+    raw_deps = doc.get("dependencies") or []
+    dependencies = [DependencyResponse.model_validate(item) for item in raw_deps]
+    return ScanDetailResponse(
+        scan_id=scan_id,
+        status=doc.get("status", ScanStatus.PENDING),
+        repository=doc.get("repository") or {},
+        risk=doc.get("risk"),
+        findings=[],
+        dependencies=dependencies,
+        graph=doc.get("graph"),
+        created_at=doc.get("created_at", ""),
+        updated_at=doc.get("updated_at", ""),
+        completed_at=doc.get("completed_at"),
+    )

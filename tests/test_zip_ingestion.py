@@ -166,7 +166,7 @@ def test_zip_upload_api_success():
     assert response.status_code == 200
     data = response.json()
     assert "scan_id" in data
-    assert data["status"] == "pending"
+    assert data["status"] == "completed"
     assert data["target"] == "upload:project.zip"
 
 

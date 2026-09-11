@@ -19,6 +19,12 @@ from backend.parsers.package_json import (
     parse_package_json_file,
     parse_workspace_package_jsons,
 )
+from backend.parsers.python_deps import (
+    parse_pyproject_toml,
+    parse_pyproject_toml_file,
+    parse_requirements_txt,
+    parse_requirements_txt_file,
+)
 
 __all__ = [
     "DeclaredDependency",
@@ -31,4 +37,8 @@ __all__ = [
     "parse_package_json",
     "parse_package_json_file",
     "parse_workspace_package_jsons",
+    "parse_pyproject_toml",
+    "parse_pyproject_toml_file",
+    "parse_requirements_txt",
+    "parse_requirements_txt_file",
 ]
