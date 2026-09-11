@@ -1,3 +1,3 @@
-from backend.pipeline.orchestrator import run_scan
+from backend.pipeline.orchestrator import ScanOrchestrator, run_scan
 
-__all__ = ["run_scan"]
+__all__ = ["ScanOrchestrator", "run_scan"]

@@ -1,11 +1,27 @@
-"""Scan pipeline: ecosystems + declared dependencies. No package installs."""
+"""
+Central Scan Orchestrator for Depscan / SupplyGuard.
+
+Coordinates the static security analysis pipeline across workspaces:
+workspace
+→ manifest detection
+→ dependency parsing
+→ dependency normalization
+→ analysis result
+→ persistence
+
+Guarantees:
+- Works transparently with GitHub and ZIP workspaces.
+- Isolates stage and parser failures (failure in one parser does not crash the pipeline).
+- Strictly static execution (zero package manager or code execution).
+"""
 
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional
 
-from backend.database.repository import get_scan_repository
+from backend.database.repository import ScanRepository, get_scan_repository
 from backend.ecosystems import detect_ecosystems
 from backend.ecosystems.models import ManifestType
 from backend.ingestion.workspace import RepositoryWorkspace
@@ -14,72 +30,145 @@ from backend.models.enums import ScanStatus
 from backend.parsers.package_json import parse_package_json_file
 from backend.parsers.python_deps import parse_pyproject_toml_file, parse_requirements_txt_file
 
-logger = logging.getLogger("supplyguard.pipeline")
+logger = logging.getLogger("supplyguard.pipeline.orchestrator")
+
+
+class ScanOrchestrator:
+    """
+    Coordinates end-to-end repository scan execution and lifecycle management.
+    """
+
+    def __init__(self, store: Optional[ScanRepository] = None) -> None:
+        self.store = store or get_scan_repository()
+
+    def execute_scan(
+        self,
+        scan_id: str,
+        workspace: RepositoryWorkspace,
+        repository: Optional[Repository] = None,
+    ) -> Dict[str, Any]:
+        """
+        Execute scan pipeline synchronously on a given workspace.
+        """
+        # 1. Transition state to RUNNING / SCANNING
+        self.store.update_scan(
+            scan_id,
+            {
+                "status": ScanStatus.RUNNING.value,
+                "current_stage": "ecosystem_detection",
+                "progress_percent": 15.0,
+            },
+        )
+
+        has_partial_failures = False
+        errors: List[str] = []
+
+        try:
+            # 2. Stage: Manifest & Ecosystem Detection
+            detection = detect_ecosystems(workspace)
+            self.store.update_scan(
+                scan_id,
+                {
+                    "current_stage": "dependency_extraction",
+                    "progress_percent": 40.0,
+                    "ecosystems_detected": [e.value for e in detection.ecosystems],
+                },
+            )
+
+            # 3. Stage: Dependency Parsing with Isolation
+            declared_dependencies: List[Dict[str, Any]] = []
+            root = workspace.root_path
+
+            for manifest in detection.manifest_inventory:
+                full_path = root / manifest.path
+                try:
+                    if manifest.manifest_type == ManifestType.PACKAGE_JSON:
+                        parsed = parse_package_json_file(full_path, source_path=manifest.path)
+                        declared_dependencies.extend(
+                            d.to_dependency().model_dump(mode="json") for d in parsed.dependencies
+                        )
+                    elif manifest.manifest_type == ManifestType.REQUIREMENTS_TXT:
+                        req_deps = parse_requirements_txt_file(full_path, source_path=manifest.path)
+                        declared_dependencies.extend(
+                            d.to_dependency().model_dump(mode="json") for d in req_deps
+                        )
+                    elif manifest.manifest_type == ManifestType.PYPROJECT_TOML:
+                        pyproject_deps = parse_pyproject_toml_file(full_path, source_path=manifest.path)
+                        declared_dependencies.extend(
+                            d.to_dependency().model_dump(mode="json") for d in pyproject_deps
+                        )
+                except Exception as parse_err:
+                    logger.warning("Failed parsing manifest %s: %s", manifest.path, parse_err)
+                    has_partial_failures = True
+                    errors.append(f"{manifest.path}: {parse_err}")
+
+            # 4. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
+            final_status = (
+                ScanStatus.PARTIAL.value if has_partial_failures and declared_dependencies
+                else ScanStatus.COMPLETED.value
+            )
+
+            completed_time = datetime.now(timezone.utc).isoformat()
+
+            # 5. Construct canonical scan context/result
+            result: Dict[str, Any] = {
+                "scan_id": scan_id,
+                "status": final_status,
+                "current_stage": "completed",
+                "completed_at": completed_time,
+                "progress_percent": 100.0,
+                "ecosystems": [e.value for e in detection.ecosystems],
+                "ecosystems_detected": [e.value for e in detection.ecosystems],
+                "dependencies": declared_dependencies,
+                "dependency_count": len(declared_dependencies),
+                "dependencies_count": len(declared_dependencies),
+                "direct_dependencies_count": len(declared_dependencies),
+                "transitive_dependencies_count": 0,
+                "findings": [],
+                "findings_count": 0,
+                "graph": None,
+                "score": None,
+                "risk_level": None,
+                "is_monorepo": detection.is_monorepo,
+                "is_multilanguage": detection.is_multilanguage,
+                "errors": errors if errors else None,
+            }
+
+            if repository is not None:
+                repo_data = repository.model_dump(mode="json")
+                repo_data["ecosystems_detected"] = result["ecosystems"]
+                result["repository"] = repo_data
+
+            # 6. Persist results
+            updated = self.store.update_scan(scan_id, result)
+            return updated or result
+
+        except Exception as exc:
+            logger.exception("Scan orchestrator execution failed for %s", scan_id)
+            failed_payload = {
+                "scan_id": scan_id,
+                "status": ScanStatus.FAILED.value,
+                "current_stage": "failed",
+                "error_message": str(exc)[:500],
+                "progress_percent": 100.0,
+                "ecosystems": [],
+                "dependencies": [],
+                "findings": [],
+                "graph": None,
+                "score": None,
+            }
+            updated_failed = self.store.update_scan(scan_id, failed_payload)
+            return updated_failed or failed_payload
 
 
 def run_scan(
     scan_id: str,
     workspace: RepositoryWorkspace,
-    repository: Repository | None = None,
+    repository: Optional[Repository] = None,
 ) -> Dict[str, Any]:
-    store = get_scan_repository()
-    store.update_scan(
-        scan_id,
-        {"status": ScanStatus.SCANNING.value, "current_stage": "ecosystems", "progress_percent": 20},
-    )
-    try:
-        detection = detect_ecosystems(workspace)
-        store.update_scan(scan_id, {"current_stage": "dependencies", "progress_percent": 50})
-
-        declared: List[Dict[str, Any]] = []
-        root = workspace.root_path
-        for manifest in detection.manifest_inventory:
-            full = root / manifest.path
-            if manifest.manifest_type == ManifestType.PACKAGE_JSON:
-                parsed = parse_package_json_file(full, source_path=manifest.path)
-                declared.extend(d.to_dependency().model_dump(mode="json") for d in parsed.dependencies)
-            elif manifest.manifest_type == ManifestType.REQUIREMENTS_TXT:
-                declared.extend(
-                    d.to_dependency().model_dump(mode="json")
-                    for d in parse_requirements_txt_file(full, source_path=manifest.path)
-                )
-            elif manifest.manifest_type == ManifestType.PYPROJECT_TOML:
-                declared.extend(
-                    d.to_dependency().model_dump(mode="json")
-                    for d in parse_pyproject_toml_file(full, source_path=manifest.path)
-                )
-
-        from datetime import datetime, timezone
-
-        payload: Dict[str, Any] = {
-            "status": ScanStatus.COMPLETED.value,
-            "current_stage": "completed",
-            "completed_at": datetime.now(timezone.utc).isoformat(),
-            "progress_percent": 100.0,
-            "dependencies": declared,
-            "dependencies_count": len(declared),
-            "direct_dependencies_count": len(declared),
-            "transitive_dependencies_count": 0,
-            "findings_count": 0,
-            "ecosystems_detected": [e.value for e in detection.ecosystems],
-            "is_monorepo": detection.is_monorepo,
-            "is_multilanguage": detection.is_multilanguage,
-            "scanner_status": {"osv": "NOT_RUN", "syft": "NOT_CONFIGURED", "grype": "NOT_CONFIGURED"},
-        }
-        if repository is not None:
-            payload["repository"] = repository.model_dump(mode="json")
-            payload["repository"]["ecosystems_detected"] = payload["ecosystems_detected"]
-        updated = store.update_scan(scan_id, payload)
-        return updated or payload
-    except Exception as exc:
-        logger.exception("Scan %s failed", scan_id)
-        failed = store.update_scan(
-            scan_id,
-            {
-                "status": ScanStatus.FAILED.value,
-                "current_stage": "failed",
-                "error_message": str(exc)[:500],
-                "progress_percent": 100.0,
-            },
-        )
-        return failed or {}
+    """
+    Convenience function invoking the default ScanOrchestrator.
+    Maintains compatibility across routers and test suites.
+    """
+    orchestrator = ScanOrchestrator()
+    return orchestrator.execute_scan(scan_id, workspace, repository)
