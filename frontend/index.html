@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css?v=2.0">
 </head>
 <body>
     <!-- Header -->
@@ -92,6 +92,102 @@
             <!-- Ecosystems -->
             <div class="ecosystems-bar" id="ecosystems-bar"></div>
 
+            <!-- AI Threat Intelligence & Remediation Section -->
+            <section class="ai-section" id="ai-section">
+                <div class="ai-header">
+                    <div class="ai-header-text">
+                        <div class="ai-title-row">
+                            <span class="ai-sparkle">✨</span>
+                            <h2 class="ai-title">AI Threat Intelligence &amp; Auto-Remediation</h2>
+                            <span class="ai-pill">Google Gemini Powered</span>
+                        </div>
+                        <p class="ai-desc">
+                            Synthesize real-world exploit chains, attacker blast radius, and generate 1-click Git patches and terminal verification commands.
+                        </p>
+                    </div>
+                    <button id="btn-ai-explain" class="btn-ai" onclick="runAIAnalysis()">
+                        <span class="btn-ai-icon">⚡</span>
+                        <span class="btn-ai-text">Generate AI Threat Analysis &amp; Fix Patch</span>
+                    </button>
+                </div>
+
+                <!-- AI Loading State -->
+                <div id="ai-loading" class="ai-loading hidden">
+                    <div class="ai-spinner"></div>
+                    <div class="ai-loading-text">
+                        <strong>Reasoning with Google Gemini...</strong>
+                        <span>Synthesizing attack vectors, dependency graph blast radius, and generating unified diff patch...</span>
+                    </div>
+                </div>
+
+                <!-- AI Error State -->
+                <div id="ai-error" class="ai-error hidden"></div>
+
+                <!-- AI Results Container -->
+                <div id="ai-results" class="ai-results hidden">
+                    <!-- Meta Bar -->
+                    <div class="ai-meta-bar">
+                        <div class="ai-meta-item">
+                            <span class="ai-meta-label">Engine:</span>
+                            <span class="ai-meta-val" id="ai-model-badge">—</span>
+                        </div>
+                        <div class="ai-meta-item">
+                            <span class="ai-meta-label">Findings Analyzed:</span>
+                            <span class="ai-meta-val" id="ai-findings-count">0</span>
+                        </div>
+                        <div class="ai-meta-item">
+                            <span class="ai-meta-label">Patch Readiness:</span>
+                            <span class="ai-meta-val ai-ready-badge">✅ Production Ready</span>
+                        </div>
+                    </div>
+
+                    <!-- Executive Assessment -->
+                    <div class="ai-card ai-summary-card">
+                        <h3 class="ai-card-title"><span class="card-icon">🛡️</span> Executive Security Assessment</h3>
+                        <p class="ai-summary-text" id="ai-summary-text"></p>
+                    </div>
+
+                    <!-- Attack Scenarios -->
+                    <div class="ai-card">
+                        <h3 class="ai-card-title"><span class="card-icon">⚠️</span> Synthesized Exploit Chains &amp; Attack Vectors</h3>
+                        <div class="ai-scenarios-list" id="ai-scenarios-list"></div>
+                    </div>
+
+                    <!-- Prioritized Action Checklist -->
+                    <div class="ai-card">
+                        <h3 class="ai-card-title"><span class="card-icon">📋</span> Prioritized Developer Remediation Checklist</h3>
+                        <div class="ai-actions-list" id="ai-actions-list"></div>
+                    </div>
+
+                    <!-- Unified Git Diff Patch -->
+                    <div class="ai-card ai-patch-card">
+                        <div class="ai-patch-header">
+                            <div>
+                                <h3 class="ai-card-title"><span class="card-icon">⚡</span> 1-Click Automated Fix Patch (Unified Git Diff)</h3>
+                                <p class="ai-patch-sub">Apply directly with <code>git apply patch.diff</code></p>
+                            </div>
+                            <button class="btn-copy" id="btn-copy-patch" onclick="copyPatchDiff()">
+                                <span class="copy-icon">📋</span>
+                                <span class="copy-text">Copy Patch</span>
+                            </button>
+                        </div>
+                        <pre class="ai-diff-pre" id="ai-diff-pre"><code></code></pre>
+                    </div>
+
+                    <!-- Verification Commands -->
+                    <div class="ai-card ai-verify-card">
+                        <div class="ai-verify-header">
+                            <h3 class="ai-card-title"><span class="card-icon">💻</span> Verification &amp; Security Validation Commands</h3>
+                            <button class="btn-copy" id="btn-copy-verify" onclick="copyVerifyCommands()">
+                                <span class="copy-icon">📋</span>
+                                <span class="copy-text">Copy Commands</span>
+                            </button>
+                        </div>
+                        <div class="ai-verify-list" id="ai-verify-list"></div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Findings Table -->
             <div class="findings-section">
                 <h2 class="section-title">Security Findings</h2>
@@ -106,6 +202,7 @@
                                 <th>Confidence</th>
                                 <th>Blast Radius</th>
                                 <th>Details</th>
+                                <th>AI Action</th>
                             </tr>
                         </thead>
                         <tbody id="findings-tbody"></tbody>
@@ -127,6 +224,6 @@
         <p>SupplyGuard &copy; 2026 — Kurukshetra Hackathon &middot; Static Analysis Only &middot; Zero Code Execution</p>
     </footer>
 
-    <script src="/static/app.js"></script>
+    <script src="/static/app.js?v=2.0"></script>
 </body>
 </html>
