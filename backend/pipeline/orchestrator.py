@@ -33,6 +33,7 @@ from backend.parsers.python_deps import parse_pyproject_toml_file, parse_require
 from backend.scanner.heuristics import SupplyChainHeuristicsScanner
 from backend.scanner.lifecycle import LifecycleScriptScanner
 from backend.scanner.osv import OSVScanner
+from backend.scanner.risk_engine import compute_risk_score
 
 logger = logging.getLogger("supplyguard.pipeline.orchestrator")
 
@@ -152,7 +153,10 @@ class ScanOrchestrator:
             except Exception as lc_err:
                 logger.warning("Lifecycle script scanner failed gracefully: %s", lc_err)
 
-            # 7. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
+            # 8. Stage: Risk Scoring
+            risk_result = compute_risk_score(findings)
+
+            # 9. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
             final_status = (
                 ScanStatus.PARTIAL.value if has_partial_failures and declared_dependencies
                 else ScanStatus.COMPLETED.value
@@ -160,7 +164,7 @@ class ScanOrchestrator:
 
             completed_time = datetime.now(timezone.utc).isoformat()
 
-            # 8. Construct canonical scan context/result
+            # 10. Construct canonical scan context/result
             result: Dict[str, Any] = {
                 "scan_id": scan_id,
                 "status": final_status,
@@ -174,11 +178,14 @@ class ScanOrchestrator:
                 "dependencies_count": len(declared_dependencies),
                 "direct_dependencies_count": len(declared_dependencies),
                 "transitive_dependencies_count": 0,
-                "findings": findings,
+                "findings": risk_result["prioritized_findings"],
                 "findings_count": len(findings),
+                "findings_by_severity": risk_result["findings_by_severity"],
+                "findings_by_priority": risk_result["findings_by_priority"],
                 "graph": dep_graph,
-                "score": None,
-                "risk_level": None,
+                "score": risk_result["score"],
+                "risk_level": risk_result["risk_level"],
+                "total_risk": risk_result["total_risk"],
                 "is_monorepo": detection.is_monorepo,
                 "is_multilanguage": detection.is_multilanguage,
                 "errors": errors if errors else None,

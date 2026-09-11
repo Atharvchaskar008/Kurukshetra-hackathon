@@ -48,7 +48,8 @@ def test_orchestrator_complete_scan(tmp_path):
     assert isinstance(res["findings"], list)
     assert isinstance(res["graph"], dict)
     assert len(res["graph"]["nodes"]) >= 3
-    assert res["score"] is None
+    assert isinstance(res["score"], float)
+    assert res["risk_level"] is not None
 
     # Check persistence
     persisted = store.get_scan("scan_001")
