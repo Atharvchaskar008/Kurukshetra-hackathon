@@ -3,10 +3,10 @@
 ## Project Status
 
 Previous milestones: 01–25 (original roadmap; **not all implemented in git**)
-Current milestone: 27
-Completed new milestones: 1/25 (26 done)
-In progress: 27 — land package.json parser
-Remaining: 27–50
+Current milestone: 28
+Completed new milestones: 2/25 (26–27 done)
+In progress: none
+Remaining: 28–50
 Blocked: 0
 
 ## Deadline Mode
@@ -108,29 +108,15 @@ Skip for deadline unless leftover time: Syft/Grype CLI, Grok explanations, full 
 
 ## Current milestone
 
-27 — Land static package.json parser in git
+28 — Static Python declared-dependency parser
 
 ## Next milestone
 
-28 — Static Python declared-dependency parser
-
-## Files changed this session
-
-- `IMPLEMENTATION_PLAN.md`
-- `NEXT_25_PROMPTS.md`
-- `requirements.txt`
-- `pytest.ini`
-- `.env.example`
-- `readme.md`
-- `backend/config.py` (`Optional` import)
-
-## Tests performed
-
-- `python -m pytest tests/test_health.py tests/test_api_schemas.py tests/test_package_json_parser.py` — 25 passed (local `.venv`)
+29 — Scan orchestrator skeleton
 
 ## Exact next action
 
-Commit 26, then commit untracked `backend/parsers` as 27. Next implementation: Prompt 28 (Python parsers) then 29 (orchestrator).
+Implement Prompt 28: static `requirements.txt` / `pyproject.toml` parsers, then Prompt 29 orchestrator.
 
 ## Milestone log
 
@@ -170,3 +156,25 @@ Status: ✅ COMPLETED
 ### Next
 
 27 — Land static package.json parser
+
+### 27 — Land static package.json parser
+
+Status: ✅ COMPLETED
+
+### Changes
+
+- Added JSON-only `backend/parsers` for package.json
+- Nested/workspace discovery without npm
+- Unit tests for sections, malformed JSON, empty deps, nested trees
+
+### Tests
+
+- `tests/test_package_json_parser.py`: PASS
+
+### Commit
+
+`feat(27): add static package.json dependency parser`
+
+### Next
+
+28 — Static Python declared-dependency parser
