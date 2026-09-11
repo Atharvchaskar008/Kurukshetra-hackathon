@@ -80,6 +80,13 @@ def validate_github_url(url: str) -> ValidatedRepoURL:
     if raw.startswith("/") or raw.startswith("..") or "\x00" in raw:
         raise ValidationError("Arbitrary filesystem paths and null bytes are strictly prohibited.")
 
+    # Auto-prefix https:// or https://github.com/ if scheme is missing
+    if not raw.startswith(("https://", "http://", "git@")):
+        if raw.startswith("github.com/"):
+            raw = f"https://{raw}"
+        elif "/" in raw and not raw.startswith("."):
+            raw = f"https://github.com/{raw}"
+
     # Check for SSH format git@github.com:owner/repo(.git)
     ssh_match = _SSH_GITHUB_REGEX.match(raw)
     if ssh_match:
