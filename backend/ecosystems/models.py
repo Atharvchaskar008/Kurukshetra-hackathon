@@ -52,11 +52,27 @@ class ManifestFile(BaseModel):
     ecosystem: Ecosystem = Field(description="Associated package ecosystem.")
     manifest_type: ManifestType = Field(description="Specific manifest or lockfile type.")
     is_lockfile: bool = Field(default=False, description="True if this is a resolved lockfile.")
+    role: str = Field(default="manifest", description="Normalized category: 'manifest' or 'lockfile'.")
     size_bytes: int = Field(default=0, ge=0, description="File size in bytes.")
     metadata: Dict[str, Any] = Field(
         default_factory=dict,
         description="Optional static metadata extracted safely without code execution.",
     )
+
+    @property
+    def type(self) -> str:
+        """Alias returning manifest string type name."""
+        return self.manifest_type.value
+
+    def to_normalized_dict(self) -> Dict[str, Any]:
+        """Return canonical dictionary representation per Prompt 022."""
+        return {
+            "path": self.path,
+            "type": self.manifest_type.value,
+            "ecosystem": self.ecosystem.value,
+            "manifest/lockfile": "lockfile" if self.is_lockfile else "manifest",
+            "is_lockfile": self.is_lockfile,
+        }
 
 
 class EcosystemDetectionResult(BaseModel):

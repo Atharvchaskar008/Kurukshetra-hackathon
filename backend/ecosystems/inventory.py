@@ -126,6 +126,7 @@ class ManifestInventoryScanner:
                         ecosystem=ecosystem,
                         manifest_type=manifest_type,
                         is_lockfile=is_lockfile,
+                        role="lockfile" if is_lockfile else "manifest",
                         size_bytes=size_bytes,
                         metadata=static_metadata,
                     )
