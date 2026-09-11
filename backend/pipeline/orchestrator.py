@@ -28,6 +28,9 @@ from backend.graph import build_dependency_graph
 from backend.ingestion.workspace import RepositoryWorkspace
 from backend.models.domain import Repository
 from backend.models.enums import ScanStatus
+from backend.parsers.cargo_toml import parse_cargo_toml_file
+from backend.parsers.go_mod import parse_go_mod_file
+from backend.parsers.maven import parse_pom_xml_file
 from backend.parsers.package_json import parse_package_json_file
 from backend.parsers.python_deps import parse_pyproject_toml_file, parse_requirements_txt_file
 from backend.scanner.heuristics import SupplyChainHeuristicsScanner
@@ -110,6 +113,21 @@ class ScanOrchestrator:
                         pyproject_deps = parse_pyproject_toml_file(full_path, source_path=manifest.path)
                         declared_dependencies.extend(
                             d.to_dependency().model_dump(mode="json") for d in pyproject_deps
+                        )
+                    elif manifest.manifest_type == ManifestType.POM_XML:
+                        maven_deps = parse_pom_xml_file(full_path, source_path=manifest.path)
+                        declared_dependencies.extend(
+                            d.to_dependency().model_dump(mode="json") for d in maven_deps
+                        )
+                    elif manifest.manifest_type in (ManifestType.GO_MOD, ManifestType.GO_SUM):
+                        go_deps = parse_go_mod_file(full_path, source_path=manifest.path)
+                        declared_dependencies.extend(
+                            d.to_dependency().model_dump(mode="json") for d in go_deps
+                        )
+                    elif manifest.manifest_type in (ManifestType.CARGO_TOML, ManifestType.CARGO_LOCK):
+                        cargo_deps = parse_cargo_toml_file(full_path, source_path=manifest.path)
+                        declared_dependencies.extend(
+                            d.to_dependency().model_dump(mode="json") for d in cargo_deps
                         )
                 except Exception as parse_err:
                     logger.warning("Failed parsing manifest %s: %s", manifest.path, parse_err)

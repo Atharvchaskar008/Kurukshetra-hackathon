@@ -26,6 +26,10 @@ from backend.parsers.python_deps import (
     parse_requirements_txt_file,
 )
 
+from backend.parsers.cargo_toml import parse_cargo_toml_content, parse_cargo_toml_file
+from backend.parsers.go_mod import parse_go_mod_content, parse_go_mod_file
+from backend.parsers.maven import parse_pom_xml_content, parse_pom_xml_file
+
 __all__ = [
     "DeclaredDependency",
     "NestedPackageJsonParseResult",
@@ -41,4 +45,10 @@ __all__ = [
     "parse_pyproject_toml_file",
     "parse_requirements_txt",
     "parse_requirements_txt_file",
+    "parse_pom_xml_content",
+    "parse_pom_xml_file",
+    "parse_go_mod_content",
+    "parse_go_mod_file",
+    "parse_cargo_toml_content",
+    "parse_cargo_toml_file",
 ]
