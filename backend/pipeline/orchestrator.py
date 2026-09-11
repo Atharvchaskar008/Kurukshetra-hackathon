@@ -31,6 +31,7 @@ from backend.models.enums import ScanStatus
 from backend.parsers.package_json import parse_package_json_file
 from backend.parsers.python_deps import parse_pyproject_toml_file, parse_requirements_txt_file
 from backend.scanner.heuristics import SupplyChainHeuristicsScanner
+from backend.scanner.lifecycle import LifecycleScriptScanner
 from backend.scanner.osv import OSVScanner
 
 logger = logging.getLogger("supplyguard.pipeline.orchestrator")
@@ -80,6 +81,7 @@ class ScanOrchestrator:
 
             # 3. Stage: Dependency Parsing with Isolation
             declared_dependencies: List[Dict[str, Any]] = []
+            package_json_data_list: List[Dict[str, Any]] = []  # For lifecycle analysis
             root = workspace.root_path
 
             for manifest in detection.manifest_inventory:
@@ -90,6 +92,14 @@ class ScanOrchestrator:
                         declared_dependencies.extend(
                             d.to_dependency().model_dump(mode="json") for d in parsed.dependencies
                         )
+                        # Preserve raw data for lifecycle analysis
+                        import json
+                        try:
+                            raw_data = json.loads(full_path.read_text(encoding="utf-8"))
+                            raw_data["_manifest_path"] = manifest.path
+                            package_json_data_list.append(raw_data)
+                        except Exception:
+                            pass
                     elif manifest.manifest_type == ManifestType.REQUIREMENTS_TXT:
                         req_deps = parse_requirements_txt_file(full_path, source_path=manifest.path)
                         declared_dependencies.extend(
@@ -129,6 +139,18 @@ class ScanOrchestrator:
                 findings.extend(heuristic_findings)
             except Exception as h_err:
                 logger.warning("Supply chain heuristics scanner failed gracefully: %s", h_err)
+
+            # 7. Stage: Lifecycle Script Analysis (npm package.json scripts)
+            try:
+                lifecycle_scanner = LifecycleScriptScanner()
+                for pkg_data in package_json_data_list:
+                    m_path = pkg_data.pop("_manifest_path", "package.json")
+                    lc_findings = lifecycle_scanner.scan_manifest_data(
+                        pkg_data, manifest_path=m_path, blast_radii=blast_map
+                    )
+                    findings.extend(lc_findings)
+            except Exception as lc_err:
+                logger.warning("Lifecycle script scanner failed gracefully: %s", lc_err)
 
             # 7. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
             final_status = (
