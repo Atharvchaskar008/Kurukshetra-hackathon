@@ -139,21 +139,23 @@ async def upload_zip_archive(file: UploadFile = File(...)) -> ScanCreateResponse
                 pass
 
 
+@router.post("", response_model=ScanCreateResponse, summary="Initiate repository security scan")
 @router.post("/github", response_model=ScanCreateResponse, summary="Scan GitHub repository")
 async def create_github_scan(payload: GitHubScanRequest) -> ScanCreateResponse:
+    target_url = payload.get_url()
     scan_id = str(uuid.uuid4())
     cloner = GitCloner()
     workspace = None
     try:
         workspace = cloner.clone(
-            payload.repository_url,
+            target_url,
             branch=payload.branch,
             commit_hash=payload.commit_hash,
         )
         files = workspace.list_files()
         repo_metadata = Repository(
-            url=payload.repository_url,
-            name=payload.repository_url.rstrip("/").split("/")[-1],
+            url=target_url,
+            name=target_url.rstrip("/").split("/")[-1],
             default_branch=payload.branch or "main",
             commit_hash=payload.commit_hash,
             file_count=len(files),
@@ -166,7 +168,7 @@ async def create_github_scan(payload: GitHubScanRequest) -> ScanCreateResponse:
         return ScanCreateResponse(
             scan_id=scan_id,
             status=status,
-            target=payload.repository_url,
+            target=target_url,
             message="GitHub repository cloned and analyzed.",
         )
     finally:

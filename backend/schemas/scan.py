@@ -30,9 +30,14 @@ def _iso_now() -> str:
 class GitHubScanRequest(BaseModel):
     """Payload for submitting a public or authenticated GitHub repository for scanning."""
 
-    repository_url: str = Field(
+    repository_url: Optional[str] = Field(
+        default=None,
         description="Public GitHub repository URL (e.g., https://github.com/owner/repo).",
         examples=["https://github.com/lodash/lodash"],
+    )
+    repo_url: Optional[str] = Field(
+        default=None,
+        description="Convenience alias for repository_url.",
     )
     branch: Optional[str] = Field(
         default=None,
@@ -42,6 +47,12 @@ class GitHubScanRequest(BaseModel):
         default=None,
         description="Specific commit SHA to analyze for reproducible security scans.",
     )
+
+    def get_url(self) -> str:
+        target = self.repo_url or self.repository_url
+        if not target:
+            raise ValueError("Either 'repo_url' or 'repository_url' must be provided.")
+        return target
 
 
 class ZipScanRequest(BaseModel):
