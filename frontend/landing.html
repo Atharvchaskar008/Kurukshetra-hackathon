@@ -1,162 +1,1435 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Primary Meta Tags -->
-    <title>DepScan AI — Software Supply Chain Security & AI Auto-Remediation</title>
-    <meta name="title" content="DepScan AI — Software Supply Chain Security & AI Auto-Remediation">
+    <title>DepScan AI — Software Supply Chain Security &amp; AI Auto-Remediation</title>
+    <meta name="title" content="DepScan AI — Software Supply Chain Security &amp; AI Auto-Remediation">
     <meta name="description" content="DepScan AI: Automated Software Supply Chain Security Analyzer. Identify risky dependencies, typosquatting indicators, build provenance flaws, and synthesize 1-click AI remediation patches.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://127.0.0.1:8000">
-    <meta property="og:title" content="DepScan AI — Software Supply Chain Security & AI Auto-Remediation">
-    <meta property="og:description" content="Automated Software Supply Chain Security Analyzer & AI Auto-Remediation Engine.">
+    <meta property="og:title" content="DepScan AI — Software Supply Chain Security &amp; AI Auto-Remediation">
+    <meta property="og:description" content="Automated Software Supply Chain Security Analyzer &amp; AI Auto-Remediation Engine.">
     <meta property="og:image" content="/images/logo.svg">
     <script type="module" crossorigin="" src="/static/landing.js"></script>
     <link rel="stylesheet" crossorigin="" href="/static/writemate.css">
-  <meta name="description" content="DepScan AI: Automated Software Supply Chain Security Analyzer." data-rh="true"></head>
-  <body>
-    <div id="root"><div class="antialiased bg-theme-dark"><header class="sticky top-0 z-50 transition-all duration-300 bg-theme-dark/80 backdrop-blur-lg border-b border-white/10"><nav><div class="max-w-7xl mx-auto px-6"><div class="flex items-center justify-between py-4"><div><a href="/" class="flex items-center gap-2.5 group">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-transform group-hover:scale-105 duration-200">
-            <rect x="0.75" y="0.75" width="24.5" height="24.5" rx="5.5" stroke="white" stroke-width="1.5"/>
-        </svg>
-        <span class="text-white font-bold text-xl tracking-tight" style="font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">DepScan</span>
-        <span class="text-white/60 font-normal text-xl" style="font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">AI</span>
-    </a></div><div class="hidden lg:block"><ul class="flex space-x-8 [&amp;&gt;li&gt;a]:font-normal [&amp;&gt;li&gt;a]:py-4 [&amp;&gt;li&gt;a]:inline-block [&amp;&gt;li&gt;a]:hover:text-white"><li><a class="transition-colors duration-300 text-white" href="#capabilities">Capabilities</a></li><li><a class="transition-colors duration-300 text-white/60 hover:text-white" href="#ecosystems">Ecosystems</a></li><li><a class="transition-colors duration-300 text-white/60 hover:text-white" href="#use-cases">Use Cases</a></li><li><a class="transition-colors duration-300 text-white/60 hover:text-white" href="#faq">FAQ</a></li><li><a class="transition-colors duration-300 text-white/60 hover:text-white" href="/docs" target="_blank">API Docs</a></li></ul></div><div class=" sm:flex items-center"><div class="lg:flex hidden"><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center font-mono hidden sm:inline-flex text-base px-6 py-3.5 ring ring-transparent font-medium -tracking-[0.2px] leading-5 text-white    transition-all duration-300" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Dashboard</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Login</span></span></a><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center font-mono hidden px-6 ring ring-white/40 sm:inline-flex text-base font-medium -tracking-[0.2px] leading-5 text-white py-3.5 hover:bg-white/10 transition-all duration-300" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Start for free</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Start for free</span></span></a></div><div class="block lg:hidden ml-5"><button class="text-white font-medium text-sm cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div></div></div></div></nav></header><section class="border-y border-white/20 overflow-hidden relative"><div class="absolute left-1/2 -translate-x-1/2 pointer-events-none w-full h-full"><img class="w-full h-full" alt="" src="/images/Gradient.png"></div><div class="max-w-7xl mx-auto px-6 relative z-20"><div class="border-x border-white/20 pt-6 xl:py-30"><div class="max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto px-4 py-14"><h1 class="text-4xl lg:text-5xl -tracking-[1.5px] xl:text-6xl font-normal text-white text-center xl:leading-16 mb-6" style="opacity: 1; transform: none;">Scan Smarter. Patch Faster.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-400">Secure Every Dependency.</span></h1><p class="text-white/80 text-base max-w-xl text-center mx-auto mb-8 xl:mb-14" style="opacity: 1; transform: none;">Your all-in-one software supply chain security analyzer — identify risky dependencies, typosquatting indicators, build provenance flaws, and synthesize 1-click AI remediation patches.</p><div class="relative max-w-[580px] mx-auto" style="opacity: 1; transform: none;">
-    <form onsubmit="handleHeroSubmit(event)" class="relative">
-        <input id="hero-repo-url" class="text-sm text-white placeholder:text-white/50 p-8 pl-6 pr-44 bg-theme-dark-500 h-16 w-full focus:outline-none border border-white/20 focus:border-white/50 transition duration-300 font-mono" placeholder="Enter GitHub repo URL (e.g. user/repo)..." type="text" value="https://github.com/Amey2007-FullStack/Test_repo_kurukshetra.git" required>
-        <div class="absolute right-2 top-1/2 -translate-y-1/2 z-10">
-            <button type="submit" class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center bg-white text-black font-mono text-sm font-semibold px-5 py-3 hover:bg-gray-100 transition duration-300 gap-1.5 shadow-lg">
-                <span>Start for free</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M11.9961 3.99902L11.9961 20.0004M6 9.99502L11.9998 3.99902L18 9.99502" stroke="#060606" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </button>
+    <style>
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Auto-Moving Infinite Marquee Animation for Ecosystems */
+      @keyframes marquee-glide {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .marquee-wrapper {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding: 12px 0 20px 0;
+        mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      }
+
+      .marquee-track {
+        display: flex;
+        gap: 16px;
+        width: max-content;
+        animation: marquee-glide 34s linear infinite;
+        will-change: transform;
+      }
+
+      .marquee-track:hover {
+        animation-play-state: paused;
+      }
+
+      /* Auto-Moving Visual Scrollbar Track & Thumb */
+      .moving-scrollbar-track {
+        width: 100%;
+        max-width: 440px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 9999px;
+        margin: 22px auto 0 auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .moving-scrollbar-thumb {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 32%;
+        background: #ffffff;
+        border-radius: 9999px;
+        box-shadow: 0 0 14px rgba(255, 255, 255, 0.7);
+        animation: moving-thumb 34s ease-in-out infinite;
+      }
+
+      @keyframes moving-thumb {
+        0% { left: 0%; }
+        50% { left: 68%; }
+        100% { left: 0%; }
+      }
+
+      .ecosystem-card {
+        flex: 0 0 184px;
+        min-width: 184px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 22px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.035);
+        border-radius: 14px;
+        backdrop-filter: blur(8px);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+      }
+
+      .ecosystem-card:hover {
+        border-color: rgba(255, 255, 255, 0.45);
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Use Case Glass Cards */
+      .usecase-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        padding: 32px 28px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .usecase-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .usecase-card:hover {
+        border-color: rgba(255, 255, 255, 0.35);
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.05);
+      }
+
+      .usecase-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Compact Testimonials Horizontal Scrollbar */
+      .testimonials-scroll-container {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 20px;
+        padding-top: 4px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #ffffff #18181b;
+      }
+
+      .testimonials-scroll-container::-webkit-scrollbar {
+        height: 6px;
+        display: block !important;
+      }
+      .testimonials-scroll-container::-webkit-scrollbar-track {
+        background: #111114;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .testimonials-scroll-container::-webkit-scrollbar-thumb {
+        background: #ffffff;
+        border-radius: 9999px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+      }
+      .testimonials-scroll-container::-webkit-scrollbar-thumb:hover {
+        background: #e4e4e7;
+      }
+
+      .testimonial-card {
+        flex: 0 0 400px;
+        min-width: 350px;
+        max-width: 440px;
+        background: #0d0d11;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 14px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+      }
+
+      .testimonial-card:hover {
+        border-color: rgba(255, 255, 255, 0.45);
+        background: #121217;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      }
+
+      /* What You Get responsive carousel track */
+      .what-track {
+        display: flex;
+        gap: 18px;
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        will-change: transform;
+      }
+
+      .what-card {
+        flex: 0 0 min(580px, 86vw);
+        max-width: 580px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.01) 100%);
+        padding: 36px 32px;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Three Lines Menu Button (Clean, Icon-Only) */
+      .nav-menu-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 10px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        color: #ffffff;
+      }
+
+      .nav-menu-btn:hover {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.45);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+      }
+
+      .hamburger-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 20px;
+        height: 14px;
+      }
+
+      .hamburger-line {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #ffffff;
+        border-radius: 9999px;
+        transition: all 0.2s ease;
+      }
+
+      /* Vertical Navigation Drawer */
+      .vertical-nav-drawer {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        justify-content: flex-end;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .vertical-nav-drawer.active {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .vertical-nav-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.78);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .vertical-nav-panel {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        height: 100%;
+        background: #09090b;
+        border-left: 1px solid rgba(255, 255, 255, 0.14);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 36px 42px;
+        box-shadow: -24px 0 70px rgba(0, 0, 0, 0.9);
+        transform: translateX(100%);
+        transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 10;
+      }
+
+      .vertical-nav-drawer.active .vertical-nav-panel {
+        transform: translateX(0);
+      }
+
+      .vertical-nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-close-btn {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 9999px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .nav-close-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.45);
+        transform: rotate(90deg);
+      }
+
+      .vertical-nav-body {
+        padding: 36px 0;
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .vertical-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .vertical-nav-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 18px;
+      }
+
+      .vertical-nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        padding: 6px 0;
+      }
+
+      .vertical-nav-num {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.35);
+        margin-right: 20px;
+        letter-spacing: 0.08em;
+        transition: color 0.25s ease;
+      }
+
+      .vertical-nav-text {
+        font-size: 34px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        letter-spacing: -0.025em;
+        transition: all 0.25s ease;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        flex: 1;
+      }
+
+      .vertical-nav-link:hover .vertical-nav-text {
+        color: #ffffff;
+        transform: translateX(8px);
+      }
+
+      .vertical-nav-link:hover .vertical-nav-num {
+        color: #ffffff;
+      }
+
+      .vertical-nav-arrow {
+        color: rgba(255, 255, 255, 0.3);
+        transition: all 0.25s ease;
+      }
+
+      .vertical-nav-link:hover .vertical-nav-arrow {
+        color: #ffffff;
+        transform: translateX(6px);
+      }
+
+      .vertical-nav-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 24px;
+      }
+
+      .vertical-nav-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 16px 24px;
+        background: #ffffff;
+        color: #09090b;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.25s ease;
+      }
+
+      .vertical-nav-cta:hover {
+        background: #e4e4e7;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+      }
+
+      .vertical-nav-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 14px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Classic WriteMate FAQ Styling with Elevated Answer Box */
+      .faq-btn {
+        transition: all 0.2s ease;
+      }
+      .faq-btn:hover h3 {
+        color: #ffffff;
+      }
+      .faq-btn:hover .faq-arrow {
+        color: #ffffff;
+      }
+      .faq-arrow {
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+      }
+      .faq-ans {
+        font-size: 15px;
+        line-height: 1.7;
+        color: #d4d4d8;
+        padding-top: 4px;
+        animation: faqFadeIn 0.22s ease forwards;
+      }
+      .faq-ans.hidden {
+        display: none;
+      }
+      .faq-ans:not(.hidden) {
+        display: block;
+      }
+      @keyframes faqFadeIn {
+        from { opacity: 0; transform: translateY(-3px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .faq-ans code {
+        background: rgba(255, 255, 255, 0.1);
+        color: #93c5fd;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .faq-ans strong {
+        color: #ffffff;
+        font-weight: 600;
+      }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="antialiased bg-theme-dark">
+            <!-- Header with Brand on Left and Three Icons Menu Button on Right -->
+            <header class="sticky top-0 z-50 transition-all duration-300 bg-theme-dark/80 backdrop-blur-lg border-b border-white/10">
+                <nav>
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div style="display: flex; align-items: center; justify-content: space-between; min-height: 68px;">
+                            <!-- Left: Logo with slight extra space after square -->
+                            <div style="display: flex; align-items: center;">
+                                <a href="/" style="display: flex; align-items: center; text-decoration: none;" class="group">
+                                    <svg width="20" height="20" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-transform group-hover:scale-105 duration-200">
+                                        <rect x="0.75" y="0.75" width="17.5" height="17.5" rx="4" stroke="white" stroke-width="1.5"/>
+                                    </svg>
+                                    <span style="color: #ffffff; font-weight: 700; font-size: 21px; letter-spacing: -0.02em; line-height: 1; margin-left: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">DepScan</span>
+                                    <span style="color: rgba(255, 255, 255, 0.6); font-weight: 400; font-size: 21px; line-height: 1; margin-left: 5px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">AI</span>
+                                </a>
+                            </div>
+
+                            <!-- Right: Three Horizontal Lines Button (Triggers Large Vertical Navigation) -->
+                            <div style="display: flex; align-items: center;">
+                                <button id="nav-menu-btn" class="nav-menu-btn" aria-label="Open Navigation Menu">
+                                    <div class="hamburger-box">
+                                        <span class="hamburger-line"></span>
+                                        <span class="hamburger-line"></span>
+                                        <span class="hamburger-line"></span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            <!-- Vertical Navigation Drawer (Large Typography with 01-04 Sections) -->
+            <div id="nav-drawer" class="vertical-nav-drawer" aria-hidden="true">
+                <div id="nav-backdrop" class="vertical-nav-backdrop"></div>
+                <div class="vertical-nav-panel">
+                    <div class="vertical-nav-header">
+                        <a href="/" style="display: flex; align-items: center; text-decoration: none;">
+                            <svg width="20" height="20" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.75" y="0.75" width="17.5" height="17.5" rx="4" stroke="white" stroke-width="1.5"/>
+                            </svg>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 20px; margin-left: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">DepScan</span>
+                            <span style="color: rgba(255, 255, 255, 0.6); font-weight: 400; font-size: 20px; margin-left: 5px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">AI</span>
+                        </a>
+                        <button id="nav-close-btn" class="nav-close-btn" aria-label="Close Navigation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="vertical-nav-body">
+                        <ul class="vertical-nav-list">
+                            <li class="vertical-nav-item">
+                                <a href="#capabilities" class="vertical-nav-link">
+                                    <span class="vertical-nav-num">01</span>
+                                    <span class="vertical-nav-text">Capabilities</span>
+                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li class="vertical-nav-item">
+                                <a href="#ecosystems" class="vertical-nav-link">
+                                    <span class="vertical-nav-num">02</span>
+                                    <span class="vertical-nav-text">Ecosystems</span>
+                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li class="vertical-nav-item">
+                                <a href="#use-cases" class="vertical-nav-link">
+                                    <span class="vertical-nav-num">03</span>
+                                    <span class="vertical-nav-text">Use Cases</span>
+                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li class="vertical-nav-item">
+                                <a href="#faq" class="vertical-nav-link">
+                                    <span class="vertical-nav-num">04</span>
+                                    <span class="vertical-nav-text">FAQ</span>
+                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="vertical-nav-footer">
+                        <a href="/dashboard" class="vertical-nav-cta">
+                            <span>Launch Scanner</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <div class="vertical-nav-meta">
+                            <span>DepScan Engine v2.4</span>
+                            <span>•</span>
+                            <span>Zero-day heuristics active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Section -->
+            <section class="border-y border-white/20 overflow-hidden relative">
+                <div class="absolute left-1/2 -translate-x-1/2 pointer-events-none w-full h-full">
+                    <img class="w-full h-full" alt="" src="/images/Gradient.png">
+                </div>
+                <div class="max-w-7xl mx-auto px-6 relative z-20">
+                    <div class="border-x border-white/20 pt-6 xl:py-30">
+                        <div class="max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto px-4 py-14 text-center">
+                            <h1 class="text-4xl lg:text-5xl -tracking-[1.5px] xl:text-6xl font-normal text-white text-center xl:leading-16 mb-6">
+                                Scan Smarter. Patch Faster.<br>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-400">Secure Every Dependency.</span>
+                            </h1>
+                            <p class="text-white/80 text-base max-w-xl text-center mx-auto mb-8 xl:mb-12">
+                                Your all-in-one software supply chain security analyzer — identify risky dependencies, typosquatting indicators, build provenance flaws, and synthesize 1-click AI remediation patches.
+                            </p>
+                            <div class="flex justify-center items-center">
+                                <a href="/dashboard" class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center bg-white text-black font-mono text-base font-semibold px-8 py-4 hover:bg-gray-200 transition-all duration-300 gap-2.5 shadow-2xl hover:scale-[1.03] active:scale-[0.98]">
+                                    <span>Start</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12H19M13 6L19 12L13 18" stroke="#060606" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Supported Ecosystems & Registries (Auto-Moving Marquee & Moving Scrollbar) -->
+            <section id="ecosystems" class="py-16">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div>
+                        <div class="flex gap-10 items-center w-[290px] mx-auto justify-center mb-12">
+                            <span class="w-2 h-1 bg-white inline-block"></span>
+                            <span class="text-white font-mono uppercase tracking-wider text-sm">Supported Ecosystems &amp; Registries</span>
+                            <span class="w-2 h-1 bg-white inline-block"></span>
+                        </div>
+
+                        <!-- Auto-moving continuous marquee -->
+                        <div class="marquee-wrapper">
+                            <div class="marquee-track">
+                                <!-- Set 1 -->
+                                <!-- 1. npm -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M1.5 8.25h21v7.5H12V18H7.5v-2.25H1.5V8.25zm16.5 6V9.75h-3v4.5h3zm-4.5-4.5h-1.5v4.5H12v-4.5zm-3 4.5h1.5V9.75H10.5v4.5zm-3-4.5H6v3H4.5V9.75H3v4.5h4.5V9.75z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">npm</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">JavaScript / TS</span>
+                                </div>
+
+                                <!-- 2. PyPI -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M11.91 1C6.27 1 6.64 3.45 6.64 3.45l.01 2.55h5.36v.76H4.25S1 6.38 1 12.04c0 5.65 2.84 5.45 2.84 5.45h1.7v-2.39s-.09-2.84 2.79-2.84h4.74s2.69.04 2.69-2.62V3.62S16.32 1 11.91 1zm-1.5 1.54a.97.97 0 1 1 0 1.94.97.97 0 0 1 0-1.94zm1.68 20.46c5.64 0 5.27-2.45 5.27-2.45l-.01-2.55h-5.36v-.76h7.76s3.25.38 3.25-5.28c0-5.65-2.84-5.45-2.84-5.45h-1.7v2.39s.09 2.84-2.79 2.84h-4.74s-2.69-.04-2.69 2.62v6.02s-.56 2.62 3.85 2.62zm1.5-1.54a.97.97 0 1 1 0-1.94.97.97 0 0 1 0 1.94z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">PyPI</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Python</span>
+                                </div>
+
+                                <!-- 3. Go -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M1.98 12.63c0-3.32 2.37-6.07 5.76-6.07 2.14 0 3.73 1.05 4.6 2.53l-1.92 1.34c-.58-.94-1.48-1.52-2.68-1.52-2.02 0-3.41 1.63-3.41 3.72 0 2.09 1.39 3.72 3.41 3.72 1.37 0 2.31-.73 2.75-1.87h-2.9v-2.22h5.3v5.67h-2.18v-1.12c-.78.89-1.84 1.48-3.17 1.48-3.39 0-5.76-2.75-5.76-6.07zm14.47 0c0-3.32 2.45-6.07 5.86-6.07s5.86 2.75 5.86 6.07-2.45 6.07-5.86 6.07-5.86-2.75-5.86-6.07zm9.37 0c0-2.09-1.44-3.72-3.51-3.72s-3.51 1.63-3.51 3.72 1.44 3.72 3.51 3.72 3.51-1.63 3.51-3.72z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Go</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">go.mod / sum</span>
+                                </div>
+
+                                <!-- 4. Maven -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                                            <line x1="6" y1="2" x2="6" y2="5"/>
+                                            <line x1="10" y1="2" x2="10" y2="5"/>
+                                            <line x1="14" y1="2" x2="14" y2="5"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Maven</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Java / pom.xml</span>
+                                </div>
+
+                                <!-- 5. Cargo -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Cargo</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Rust</span>
+                                </div>
+
+                                <!-- 6. Packagist -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Packagist</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">PHP / Composer</span>
+                                </div>
+
+                                <!-- 7. NuGet -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
+                                            <path d="M8 12h8M12 8v8"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">NuGet</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">.NET / C#</span>
+                                </div>
+
+                                <!-- 8. RubyGems -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
+                                            <path d="M2 9h20M12 21 8 9l4-6 4 6-4 12z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">RubyGems</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Ruby / Gemfile</span>
+                                </div>
+
+                                <!-- Duplicate Set for Seamless Infinite Loop -->
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M1.5 8.25h21v7.5H12V18H7.5v-2.25H1.5V8.25zm16.5 6V9.75h-3v4.5h3zm-4.5-4.5h-1.5v4.5H12v-4.5zm-3 4.5h1.5V9.75H10.5v4.5zm-3-4.5H6v3H4.5V9.75H3v4.5h4.5V9.75z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">npm</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">JavaScript / TS</span>
+                                </div>
+
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M11.91 1C6.27 1 6.64 3.45 6.64 3.45l.01 2.55h5.36v.76H4.25S1 6.38 1 12.04c0 5.65 2.84 5.45 2.84 5.45h1.7v-2.39s-.09-2.84 2.79-2.84h4.74s2.69.04 2.69-2.62V3.62S16.32 1 11.91 1zm-1.5 1.54a.97.97 0 1 1 0 1.94.97.97 0 0 1 0-1.94zm1.68 20.46c5.64 0 5.27-2.45 5.27-2.45l-.01-2.55h-5.36v-.76h7.76s3.25.38 3.25-5.28c0-5.65-2.84-5.45-2.84-5.45h-1.7v2.39s.09 2.84-2.79 2.84h-4.74s-2.69-.04-2.69 2.62v6.02s-.56 2.62 3.85 2.62zm1.5-1.54a.97.97 0 1 1 0-1.94.97.97 0 0 1 0 1.94z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">PyPI</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Python</span>
+                                </div>
+
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M1.98 12.63c0-3.32 2.37-6.07 5.76-6.07 2.14 0 3.73 1.05 4.6 2.53l-1.92 1.34c-.58-.94-1.48-1.52-2.68-1.52-2.02 0-3.41 1.63-3.41 3.72 0 2.09 1.39 3.72 3.41 3.72 1.37 0 2.31-.73 2.75-1.87h-2.9v-2.22h5.3v5.67h-2.18v-1.12c-.78.89-1.84 1.48-3.17 1.48-3.39 0-5.76-2.75-5.76-6.07zm14.47 0c0-3.32 2.45-6.07 5.86-6.07s5.86 2.75 5.86 6.07-2.45 6.07-5.86 6.07-5.86-2.75-5.86-6.07zm9.37 0c0-2.09-1.44-3.72-3.51-3.72s-3.51 1.63-3.51 3.72 1.44 3.72 3.51 3.72 3.51-1.63 3.51-3.72z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Go</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">go.mod / sum</span>
+                                </div>
+
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                                            <line x1="6" y1="2" x2="6" y2="5"/>
+                                            <line x1="10" y1="2" x2="10" y2="5"/>
+                                            <line x1="14" y1="2" x2="14" y2="5"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Maven</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Java / pom.xml</span>
+                                </div>
+
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Cargo</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Rust</span>
+                                </div>
+
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">Packagist</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">PHP / Composer</span>
+                                </div>
+
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
+                                            <path d="M8 12h8M12 8v8"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">NuGet</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">.NET / C#</span>
+                                </div>
+
+                                <div class="ecosystem-card">
+                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
+                                            <path d="M2 9h20M12 21 8 9l4-6 4 6-4 12z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-mono font-bold text-sm">RubyGems</span>
+                                    <span class="text-white/50 text-xs mt-1 font-mono">Ruby / Gemfile</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Auto-moving visual scrollbar indicator -->
+                        <div class="moving-scrollbar-track">
+                            <div class="moving-scrollbar-thumb"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What You Get Section (Fixed Overlap & Responsive Carousel) -->
+            <section id="capabilities" class="border-y border-white/20 mb-20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="border-x border-white/20 p-5 lg:p-20">
+                        <div class="flex flex-col sm:flex-row justify-between gap-5 lg:items-end mb-12">
+                            <div class="lg:max-w-xl">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                                    <span class="text-white/60 font-mono text-xs uppercase tracking-widest">Platform Core Features</span>
+                                </div>
+                                <h2 class="text-3xl sm:text-4xl mb-4 font-medium text-white">What You Get</h2>
+                                <p class="text-base text-white/80">Advanced dependency reasoning, blast radius computation, known CVE correlation, and automated Git diff patch synthesis.</p>
+                            </div>
+                            <div class="flex gap-3 items-center">
+                                <button id="what-prev-btn" aria-label="Previous Slide" class="size-12 border border-white/30 items-center justify-center cursor-pointer bg-white/5 text-white font-mono flex hover:bg-white/15 transition duration-200 active:scale-95">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                        <path d="M19 12H5M11 18L5 12L11 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <button id="what-next-btn" aria-label="Next Slide" class="size-12 border border-white/30 items-center justify-center cursor-pointer bg-white/5 text-white font-mono flex hover:bg-white/15 transition duration-200 active:scale-95">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Responsive Carousel Container (Completely unclipped, no black cutoff) -->
+                        <div class="overflow-hidden w-full pb-4">
+                            <div id="what-track" class="what-track">
+                                <!-- Card 1: Dependency Graph & Blast Radius -->
+                                <div class="what-card">
+                                    <div class="mb-6 flex items-center justify-between">
+                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="18" cy="5" r="3"></circle>
+                                                <circle cx="6" cy="12" r="3"></circle>
+                                                <circle cx="18" cy="19" r="3"></circle>
+                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                            </svg>
+                                        </div>
+                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">01 // TOPOLOGY</span>
+                                    </div>
+                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">Dependency Graph &amp; Blast Radius</h3>
+                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
+                                        NetworkX graph reasoning computing exact transitive reach and mathematical blast radius across your upstream and downstream service graph.
+                                    </p>
+                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
+                                        <span>Try now</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                    </a>
+                                </div>
+
+                                <!-- Card 2: Known CVE & GHSA Correlation (Second card - completely clean & visible!) -->
+                                <div class="what-card">
+                                    <div class="mb-6 flex items-center justify-between">
+                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                                <path d="M9 12l2 2 4-4"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">02 // ADVISORY</span>
+                                    </div>
+                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">Known CVE &amp; GHSA Correlation</h3>
+                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
+                                        High-speed synchronization with OSV.dev and GitHub Advisory Database to instantly correlate exact semver ranges against confirmed zero-day disclosures.
+                                    </p>
+                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
+                                        <span>Try now</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                    </a>
+                                </div>
+
+                                <!-- Card 3: Typosquatting & Scope Shield -->
+                                <div class="what-card">
+                                    <div class="mb-6 flex items-center justify-between">
+                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="22" y1="12" x2="18" y2="12"></line>
+                                                <line x1="6" y1="12" x2="2" y2="12"></line>
+                                                <line x1="12" y1="6" x2="12" y2="2"></line>
+                                                <line x1="12" y1="22" x2="12" y2="18"></line>
+                                            </svg>
+                                        </div>
+                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">03 // HEURISTIC</span>
+                                    </div>
+                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">Typosquatting &amp; Scope Shield</h3>
+                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
+                                        Levenshtein distance matching and internal namespace audit preventing dependency confusion and malicious lookalike package substitution.
+                                    </p>
+                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
+                                        <span>Try now</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                    </a>
+                                </div>
+
+                                <!-- Card 4: 1-Click Auto-Remediation Patch -->
+                                <div class="what-card">
+                                    <div class="mb-6 flex items-center justify-between">
+                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                <polyline points="14 2 14 8 20 8"></polyline>
+                                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                <polyline points="10 9 9 9 8 9"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">04 // SYNTHESIS</span>
+                                    </div>
+                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">1-Click Auto-Remediation Patch</h3>
+                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
+                                        AI-synthesized unified Git diff patches with deterministic version bumping and backward compatibility checks to eliminate triage bottlenecks.
+                                    </p>
+                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
+                                        <span>Try now</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DepScan Security Use Cases (Top 0.00000001% Craftsmanship) -->
+            <section id="use-cases" class="border-y border-white/20 mb-20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="border-x border-white/20 py-16 xl:py-24 px-6 xl:px-14">
+                        <div class="max-w-3xl mx-auto text-center mb-16">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/20 rounded-full mb-4">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span class="text-white/80 font-mono text-xs uppercase tracking-widest">Enterprise Defense Matrix</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl mb-6 font-medium text-white tracking-tight">DepScan Security Use Cases</h2>
+                            <p class="text-base lg:text-lg text-white/80 leading-relaxed max-w-2xl mx-auto">Empower security engineers, DevOps, and developers to eliminate supply chain vulnerabilities before code reaches production.</p>
+                        </div>
+
+                        <!-- 6 Use Cases Luxury Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- 1. Monorepo & Polyglot Auditing -->
+                            <div class="usecase-card">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                            <polyline points="2 17 12 22 22 17"></polyline>
+                                            <polyline points="2 12 12 17 22 12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white/40 font-mono text-xs tracking-wider">01 // AUDIT</span>
+                                </div>
+                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Monorepo &amp; Polyglot Auditing</h3>
+                                <p class="text-sm text-white/70 leading-relaxed">Recursively discover and trace dependencies across npm, PyPI, Go, Maven, and Cargo simultaneously.</p>
+                            </div>
+
+                            <!-- 2. Pre-Deployment CI/CD Pipeline Gates -->
+                            <div class="usecase-card">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                            <polyline points="9 12 11 14 15 10"></polyline>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white/40 font-mono text-xs tracking-wider">02 // PIPELINE</span>
+                                </div>
+                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Pre-Deployment CI/CD Pipeline Gates</h3>
+                                <p class="text-sm text-white/70 leading-relaxed">Deterministic risk thresholds (P0-P3) to block compromised dependencies from production builds.</p>
+                            </div>
+
+                            <!-- 3. Zero-Day Dependency Confusion Shield -->
+                            <div class="usecase-card">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white/40 font-mono text-xs tracking-wider">03 // SHIELD</span>
+                                </div>
+                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Zero-Day Dependency Confusion Shield</h3>
+                                <p class="text-sm text-white/70 leading-relaxed">Levenshtein distance checks preventing public registry substitution and internal scope hijacking.</p>
+                            </div>
+
+                            <!-- 4. Transitive Blast Radius Impact -->
+                            <div class="usecase-card">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white/40 font-mono text-xs tracking-wider">04 // GRAPH</span>
+                                </div>
+                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Transitive Blast Radius Impact</h3>
+                                <p class="text-sm text-white/70 leading-relaxed">Compute exact mathematical blast radius across entire upstream and downstream service graphs.</p>
+                            </div>
+
+                            <!-- 5. Lifecycle Script Execution Audits -->
+                            <div class="usecase-card">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="4 17 10 11 4 5"></polyline>
+                                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white/40 font-mono text-xs tracking-wider">05 // HOOKS</span>
+                                </div>
+                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Lifecycle Script Execution Audits</h3>
+                                <p class="text-sm text-white/70 leading-relaxed">Inspect npm preinstall/postinstall hooks for hidden remote execution or credential exfiltration.</p>
+                            </div>
+
+                            <!-- 6. Gemini AI Exploit Reasoning -->
+                            <div class="usecase-card">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-white/40 font-mono text-xs tracking-wider">06 // AI REASONING</span>
+                                </div>
+                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Gemini AI Exploit Reasoning</h3>
+                                <p class="text-sm text-white/70 leading-relaxed">Synthesize real-world attacker exploit scenarios and produce 1-click unified Git diff patches.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trusted by Security Engineers (Compact Horizontal Scrollbar) -->
+            <section class="mb-14 border-y border-white/20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="py-12 lg:py-16">
+                        <div class="max-w-2xl mx-auto text-center mb-10">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/20 rounded-full mb-3">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                <span class="text-white/80 font-mono text-xs uppercase tracking-widest">Industry Practitioners</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-4xl font-medium text-white tracking-tight mb-3">Trusted by Security Engineers</h2>
+                            <p class="text-base text-zinc-300 leading-relaxed">DevSecOps teams rely on DepScan AI to prevent malicious supply chain compromises before production release.</p>
+                        </div>
+
+                        <!-- Horizontal Scrollbar Container for Testimonials -->
+                        <div class="testimonials-scroll-container">
+                            <!-- 1. Alex K. -->
+                            <div class="testimonial-card">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-semibold">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                            Verified AppSec
+                                        </span>
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" fill-opacity="0.35">
+                                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-[15px] leading-relaxed mb-6 font-normal">
+                                        "DepScan's blast radius calculation pinpointed 14 downstream microservices vulnerable to an obscure transitive dependency in seconds."
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-3 pt-4 border-t border-white/15">
+                                    <div class="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-mono text-white text-xs font-bold tracking-wider">AK</div>
+                                    <div>
+                                        <p class="text-white text-base font-semibold tracking-tight">Alex K.</p>
+                                        <p class="text-zinc-300 text-xs font-mono font-medium">Lead AppSec Engineer</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Sarah M. -->
+                            <div class="testimonial-card">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-semibold">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                            Verified DevOps
+                                        </span>
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" fill-opacity="0.35">
+                                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-[15px] leading-relaxed mb-6 font-normal">
+                                        "The typosquatting heuristic caught a malicious lookalike package before our CI build ran. Zero code execution guarantee is a lifesaver."
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-3 pt-4 border-t border-white/15">
+                                    <div class="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-mono text-white text-xs font-bold tracking-wider">SM</div>
+                                    <div>
+                                        <p class="text-white text-base font-semibold tracking-tight">Sarah M.</p>
+                                        <p class="text-zinc-300 text-xs font-mono font-medium">Principal DevOps Architect</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. David L. -->
+                            <div class="testimonial-card">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-semibold">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                            Verified Infra
+                                        </span>
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" fill-opacity="0.35">
+                                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-[15px] leading-relaxed mb-6 font-normal">
+                                        "Automated unified git diffs generated by Gemini mean our engineers don't debate vulnerability fixes — they just verify and merge."
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-3 pt-4 border-t border-white/15">
+                                    <div class="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-mono text-white text-xs font-bold tracking-wider">DL</div>
+                                    <div>
+                                        <p class="text-white text-base font-semibold tracking-tight">David L.</p>
+                                        <p class="text-zinc-300 text-xs font-mono font-medium">Head of Infrastructure</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section (Classic WriteMate Layout with Proper Answer Boxes) -->
+            <section id="faq" class="border-y border-white/20 mb-20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="border-x border-white/20 p-5 lg:p-20">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-28">
+                            <!-- Left Column: Headline & Subtitle -->
+                            <div class="mb-10 lg:mb-0">
+                                <h2 class="text-3xl sm:text-4xl mb-6 font-medium text-white tracking-tight">Frequently Asked Questions</h2>
+                                <p class="text-base text-white/80 mb-6 leading-relaxed">
+                                    Find answers to common questions about DepScan AI. If you can't find what you're looking for, explore our documentation or start a scan.
+                                </p>
+                            </div>
+
+                            <!-- Right Column: FAQ Accordion List -->
+                            <div>
+                                <!-- Question 1: What is DepScan? -->
+                                <div class="py-6 border-b border-white/10 faq-item">
+                                    <button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between" aria-expanded="false">
+                                        <h3 class="text-lg text-zinc-50 -tracking-[0.18px] pr-4">What is DepScan?</h3>
+                                        <span class="text-white/80 transition-transform duration-200 faq-arrow flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </span>
+                                    </button>
+                                    <div class="faq-ans text-zinc-300 text-sm mt-3 leading-relaxed hidden">
+                                        DepScan AI is an automated, zero-code-execution Software Supply Chain Security Analyzer and Remediation Engine. It statically inspects polyglot source code and dependency manifests to identify direct and transitive CVE vulnerabilities, typosquatting indicators, build provenance flaws, and calculates mathematical blast radius across services, while generating 1-click AI remediation patches.
+                                    </div>
+                                </div>
+
+                                <!-- Question 2: How does DepScan calculate the Blast Radius? -->
+                                <div class="py-6 border-b border-white/10 faq-item">
+                                    <button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between" aria-expanded="false">
+                                        <h3 class="text-lg text-zinc-50 -tracking-[0.18px] pr-4">How does DepScan calculate the Blast Radius?</h3>
+                                        <span class="text-white/80 transition-transform duration-200 faq-arrow flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </span>
+                                    </button>
+                                    <div class="faq-ans text-zinc-300 text-sm mt-3 leading-relaxed hidden">
+                                        DepScan constructs a full Directed Acyclic Graph (DAG) using NetworkX from your project manifests. When a vulnerable or poisoned package is detected, the engine executes recursive topological traversal to trace all upstream parent services and downstream dependents. An exact <strong>Blast Radius Impact Score (0.10 to 1.00)</strong> is computed based on transitive nesting depth, reverse dependency density, and critical-path reachability.
+                                    </div>
+                                </div>
+
+                                <!-- Question 3: How does DepScan ensure Zero Code Execution? -->
+                                <div class="py-6 border-b border-white/10 faq-item">
+                                    <button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between" aria-expanded="false">
+                                        <h3 class="text-lg text-zinc-50 -tracking-[0.18px] pr-4">How does DepScan ensure Zero Code Execution?</h3>
+                                        <span class="text-white/80 transition-transform duration-200 faq-arrow flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </span>
+                                    </button>
+                                    <div class="faq-ans text-zinc-300 text-sm mt-3 leading-relaxed hidden">
+                                        Traditional dependency audit tools often invoke package manager CLI commands that execute arbitrary dynamic lifecycle scripts (such as <code>postinstall</code> in npm or <code>setup.py</code> in Python), exposing the host machine to immediate remote code execution or credential harvesting. DepScan guarantees <strong>100% safety through static Abstract Syntax Tree (AST) parsing and deterministic manifest deserialization</strong>, never executing <code>npm install</code>, <code>pip install</code>, or arbitrary setup hooks.
+                                    </div>
+                                </div>
+
+                                <!-- Question 4: Which package ecosystems are supported? -->
+                                <div class="py-6 border-b border-white/10 faq-item">
+                                    <button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between" aria-expanded="false">
+                                        <h3 class="text-lg text-zinc-50 -tracking-[0.18px] pr-4">Which package ecosystems are supported?</h3>
+                                        <span class="text-white/80 transition-transform duration-200 faq-arrow flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </span>
+                                    </button>
+                                    <div class="faq-ans text-zinc-300 text-sm mt-3 leading-relaxed hidden">
+                                        DepScan delivers simultaneous, first-class polyglot inspection across <strong>8 major package ecosystems</strong>: <strong>npm</strong> (JavaScript &amp; TypeScript), <strong>PyPI</strong> (Python), <strong>Go</strong> (go.mod, go.sum), <strong>Maven</strong> (Java pom.xml &amp; Gradle), <strong>Cargo</strong> (Rust Cargo.toml &amp; lock), <strong>Packagist</strong> (PHP Composer), <strong>NuGet</strong> (.NET / C#), and <strong>RubyGems</strong> (Ruby Gemfile). Monorepos with multiple languages are scanned concurrently.
+                                    </div>
+                                </div>
+
+                                <!-- Question 5: What if Gemini API key is not configured? -->
+                                <div class="py-6 border-b border-white/10 faq-item">
+                                    <button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between" aria-expanded="false">
+                                        <h3 class="text-lg text-zinc-50 -tracking-[0.18px] pr-4">What if Gemini API key is not configured?</h3>
+                                        <span class="text-white/80 transition-transform duration-200 faq-arrow flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </span>
+                                    </button>
+                                    <div class="faq-ans text-zinc-300 text-sm mt-3 leading-relaxed hidden">
+                                        <strong>DepScan is fully functional offline without any AI API key.</strong> All deterministic security features — static AST parsing, live OSV.dev and GHSA advisory matching, NetworkX DAG blast radius graphing, typosquatting heuristic detection, and P0–P3 risk gating — run autonomously and deterministically on your local system. When a Google Gemini API key is configured, it unlocks optional generative capabilities: plain-English vulnerability explainers, real-world attack scenario simulations, and 1-click automated unified Git diff patch synthesis.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Call to Action Section -->
+            <section class="bg-theme-dark py-20 relative overflow-hidden">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-full pointer-events-none">
+                    <img class="w-full h-full" alt="" src="/images/shape-4.png">
+                </div>
+                <div class="max-w-2xl mx-auto relative z-10 px-5">
+                    <h2 class="text-white text-5xl text-center mb-4">Ready to secure your software supply chain?</h2>
+                    <p class="mb-8 text-white/80 text-center">Analyze your repositories, discover hidden blast radius threats, and generate 1-click Git patches in seconds.</p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center bg-white px-8 py-3.5 text-theme-dark-500 transition-all duration-300 w-auto text-base hover:bg-white/90 font-mono font-semibold" href="/dashboard">
+                            <span>Start</span>
+                        </a>
+                        <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center text-white bg-white/5 border py-3.5 border-white/40 transition-all duration-300 hover:bg-white/15 px-8 w-auto text-base font-mono" href="/docs" target="_blank">
+                            <span>API Documentation</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="pt-10 lg:pt-20 border-t border-white/20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pb-12 lg:pb-24 gap-8 lg:gap-4">
+                        <article>
+                            <h3 class="mb-4 font-semibold text-white text-sm">Product</h3>
+                            <nav class="space-y-4">
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/dashboard">Scanner Dashboard</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs">API Reference</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#ecosystems">Supported Registries</a>
+                            </nav>
+                        </article>
+                        <article>
+                            <h3 class="mb-4 font-semibold text-white text-sm">Capabilities</h3>
+                            <nav class="space-y-4">
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#capabilities">Blast Radius Analysis</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#capabilities">Zero-Day Shield</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#use-cases">Git Diff Patches</a>
+                            </nav>
+                        </article>
+                        <article>
+                            <h3 class="mb-4 font-semibold text-white text-sm">Security</h3>
+                            <nav class="space-y-4">
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#use-cases">Static AST Engine</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#faq">Zero Code Execution</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#use-cases">GHSA Correlation</a>
+                            </nav>
+                        </article>
+                        <article>
+                            <h3 class="mb-4 font-semibold text-white text-sm">Platform</h3>
+                            <nav class="space-y-4">
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/">Home</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/dashboard">Launch Scanner</a>
+                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs">OpenAPI Schema</a>
+                            </nav>
+                        </article>
+                    </div>
+                    <div class="pt-6 pb-12 border-t border-white/20 flex flex-col items-center justify-center text-center gap-2.5">
+                        <p class="text-zinc-400 text-sm leading-5 transition text-center m-0">© 2026 DepScan AI. All rights reserved.</p>
+                        <p class="text-zinc-500 text-xs font-mono text-center m-0">Polyglot Software Supply Chain Defense &middot; Static Analysis Only &middot; Zero Code Execution</p>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </form>
-    <div class="flex items-center justify-center gap-2 mt-4 text-xs font-mono text-white/60 flex-wrap">
-        <span class="text-white/40 uppercase text-[10px]">Sample repos:</span>
-        <button type="button" onclick="fillAndSubmit('https://github.com/Amey2007-FullStack/Test_repo_kurukshetra.git')" class="px-2.5 py-1 bg-white/5 hover:bg-white/10 text-white/80 rounded border border-white/10 hover:border-white/30 transition cursor-pointer">⚡ Test_repo_kurukshetra</button>
-        <button type="button" onclick="fillAndSubmit('https://github.com/expressjs/express.git')" class="px-2.5 py-1 bg-white/5 hover:bg-white/10 text-white/80 rounded border border-white/10 hover:border-white/30 transition cursor-pointer">📦 expressjs/express</button>
     </div>
-</div></div></div></div></section><section class="py-16"><div class="max-w-7xl mx-auto px-6"><div><div class="flex gap-10 items-center w-[278px] mx-auto justify-center mb-16" style="opacity: 1; transform: none;"><span class="w-2 h-1 bg-white inline-block"></span><span class="text-white font-mono uppercase tracking-wider text-sm">Supported Ecosystems &amp; Registries</span><span class="w-2 h-1 bg-white inline-block"></span></div><div id="ecosystems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto px-4">
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">📦</span>
-        <span class="text-white font-mono font-bold text-sm">npm</span>
-        <span class="text-white/50 text-xs">JavaScript/TS</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🐍</span>
-        <span class="text-white font-mono font-bold text-sm">PyPI</span>
-        <span class="text-white/50 text-xs">Python</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🔷</span>
-        <span class="text-white font-mono font-bold text-sm">Go</span>
-        <span class="text-white/50 text-xs">go.mod / sum</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">☕</span>
-        <span class="text-white font-mono font-bold text-sm">Maven</span>
-        <span class="text-white/50 text-xs">Java / pom.xml</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🦀</span>
-        <span class="text-white font-mono font-bold text-sm">Cargo</span>
-        <span class="text-white/50 text-xs">Rust</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🐘</span>
-        <span class="text-white font-mono font-bold text-sm">Packagist</span>
-        <span class="text-white/50 text-xs">PHP / Composer</span>
-    </div>
-</div></div></div></section><section class="border-y border-white/20 mb-20"><div class="max-w-7xl mx-auto px-6"><div class="border-x border-white/20 p-5 lg:p-20"><div class="flex flex-col sm:flex-row justify-between gap-5 lg:items-end mb-16"><div class="lg:max-w-xl"><h2 class="text-3xl sm:text-4xl mb-6 font-medium text-white" style="opacity: 1; transform: none;">What You Get</h2><p class="text-base text-white/80" style="opacity: 1; transform: none;">Advanced dependency reasoning, blast radius computation, known CVE correlation, and automated Git diff patch synthesis.</p></div><div class="flex gap-3"><button class="ring size-12 ring-white/40 items-center justify-center cursor-pointer bg-white/5 text-white font-mono flex hover:bg-white/10 transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 11.9966L20.0014 11.9966M9.99599 6L4 11.9998L9.99599 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button class="ring size-12 ring-white/40 items-center justify-center cursor-pointer bg-white/5 text-white font-mono flex hover:bg-white/10 transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20.0014 11.9966L4 11.9966M14.0054 6L20.0014 11.9998L14.0054 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div></div><div style="opacity: 1; transform: none;"><div class="swiper swiper-initialized swiper-horizontal swiper-backface-hidden"><div class="swiper-wrapper"><div class="swiper-slide swiper-slide-active" data-swiper-slide-index="0" style="width: 726px; margin-right: 8px;"><div class="p-8 border border-white/20 group duration-300 ease-in-out hover:border-white/60 transition-all relative overflow-hidden h-full"><div class="relative z-10"><div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"><g clip-path="url(#clip0_116_1232)"><path d="M17.25 13.75C26.6388 13.75 34.25 21.3612 34.25 30.75C34.25 40.1388 26.6388 47.75 17.25 47.75C7.8612 47.75 0.25 40.1388 0.25 30.75C0.25 21.3612 7.8612 13.75 17.25 13.75ZM47.75 0.25V47.75H34.75V13.25H0.25V0.25H47.75Z" stroke="white" stroke-width="0.5"></path></g><defs><clipPath id="clip0_116_1232"><rect width="48" height="48" fill="white"></rect></clipPath></defs></svg></div><h3 class="text-white mb-3 text-2xl -tracking-[1px]">Dependency Graph & Blast Radius</h3><p class="text-base text-white/80 mb-14">NetworkX graph reasoning computing transitive reach and blast radius for every package.</p><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center ring px-6 ring-white/40 bg-white/5 transition duration-300 hover:bg-white/10 text-white font-mono w-auto py-3 text-base" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Try now</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Try now</span></span></a></div><img class="absolute -bottom-14 right-0 w-full h-full opacity-0 group-hover:opacity-100 transition duration-300" alt="Decorative shape" src="/images/shape-3.png"></div></div><div class="swiper-slide swiper-slide-next" data-swiper-slide-index="1" style="width: 726px; margin-right: 8px;"><div class="p-8 border border-white/20 group duration-300 ease-in-out hover:border-white/60 transition-all relative overflow-hidden h-full"><div class="relative z-10"><div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"><g clip-path="url(#clip0_118_780)"><path d="M5.25 0.25C15.4672 0.25 23.75 8.53282 23.75 18.75H24.25C24.25 8.53282 32.5328 0.25 42.75 0.25H47.75V47.75H0.25V0.25H5.25ZM5.25 24.25C15.4672 24.25 23.75 32.5328 23.75 42.75H24.25C24.25 32.5328 32.5328 24.25 42.75 24.25V23.75H5.25V24.25Z" stroke="white" stroke-width="0.5"></path></g><defs><clipPath id="clip0_118_780"><rect width="48" height="48" fill="white"></rect></clipPath></defs></svg></div><h3 class="text-white mb-3 text-2xl -tracking-[1px]">Known CVE & GHSA Correlation</h3><p class="text-base text-white/80 mb-14">NetworkX graph reasoning computing transitive reach and blast radius for every package.</p><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center ring px-6 ring-white/40 bg-white/5 transition duration-300 hover:bg-white/10 text-white font-mono w-auto py-3 text-base" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Try now</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Try now</span></span></a></div><img class="absolute -bottom-14 right-0 w-full h-full opacity-0 group-hover:opacity-100 transition duration-300" alt="Decorative shape" src="/images/shape-3.png"></div></div><div class="swiper-slide" data-swiper-slide-index="2" style="width: 726px; margin-right: 8px;"><div class="p-8 border border-white/20 group duration-300 ease-in-out hover:border-white/60 transition-all relative overflow-hidden h-full"><div class="relative z-10"><div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"><g clip-path="url(#clip0_116_1232)"><path d="M17.25 13.75C26.6388 13.75 34.25 21.3612 34.25 30.75C34.25 40.1388 26.6388 47.75 17.25 47.75C7.8612 47.75 0.25 40.1388 0.25 30.75C0.25 21.3612 7.8612 13.75 17.25 13.75ZM47.75 0.25V47.75H34.75V13.25H0.25V0.25H47.75Z" stroke="white" stroke-width="0.5"></path></g><defs><clipPath id="clip0_116_1232"><rect width="48" height="48" fill="white"></rect></clipPath></defs></svg></div><h3 class="text-white mb-3 text-2xl -tracking-[1px]">Typosquatting & Scope Shield</h3><p class="text-base text-white/80 mb-14">NetworkX graph reasoning computing transitive reach and blast radius for every package.</p><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center ring px-6 ring-white/40 bg-white/5 transition duration-300 hover:bg-white/10 text-white font-mono w-auto py-3 text-base" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Try now</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Try now</span></span></a></div><img class="absolute -bottom-14 right-0 w-full h-full opacity-0 group-hover:opacity-100 transition duration-300" alt="Decorative shape" src="/images/shape-3.png"></div></div><div class="swiper-slide" data-swiper-slide-index="3" style="width: 726px; margin-right: 8px;"><div class="p-8 border border-white/20 group duration-300 ease-in-out hover:border-white/60 transition-all relative overflow-hidden h-full"><div class="relative z-10"><div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"><g clip-path="url(#clip0_118_792)"><path d="M26.75 47.75H5.77832L26.75 26.7783V47.75ZM47.75 0.25V38.791L37.75 47.4512V10.25H0.543945L9.11523 0.25H47.75ZM16.7217 21.25L0.25 37.7217V21.25H16.7217Z" stroke="white" stroke-width="0.5"></path></g><defs><clipPath id="clip0_118_792"><rect width="48" height="48" fill="white"></rect></clipPath></defs></svg></div><h3 class="text-white mb-3 text-2xl -tracking-[1px]">1-Click Auto-Remediation Patch</h3><p class="text-base text-white/80 mb-14">NetworkX graph reasoning computing transitive reach and blast radius for every package.</p><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center ring px-6 ring-white/40 bg-white/5 transition duration-300 hover:bg-white/10 text-white font-mono w-auto py-3 text-base" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Try now</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Try now</span></span></a></div><img class="absolute -bottom-14 right-0 w-full h-full opacity-0 group-hover:opacity-100 transition duration-300" alt="Decorative shape" src="/images/shape-3.png"></div></div></div></div></div></div></div></section><section class="border-y border-white/20 mb-20"><div class="max-w-7xl mx-auto px-6"><div class="border-x border-white/20 py-10 xl:py-20 px-6 xl:px-12"><div class="max-w-[590px] mx-auto text-center mb-16"><h2 class="text-3xl sm:text-4xl mb-6 font-medium text-white" style="opacity: 1; transform: none;">DepScan Security Use Cases</h2><p class="text-base text-white/80" style="opacity: 1; transform: none;">Empower security engineers, DevOps, and developers to eliminate supply chain vulnerabilities before code reaches production.</p></div><div class="border border-white/20" style="opacity: 1; transform: none;"><div class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/20"><div class="divide-y divide-white/20"><div class="lg:px-8 p-5 lg:py-12 hover:bg-white/5 transition duration-300 ease-in-out"><h3 class="mb-3 text-2xl -tracking-[1px] text-white">Monorepo & Polyglot Auditing</h3><p class="text-base text-white/80">Recursively discover and trace dependencies across npm, PyPI, Go, Maven, and Cargo simultaneously.</p></div><div class="lg:px-8 p-5 lg:py-12 hover:bg-white/5 transition duration-300 ease-in-out"><h3 class="mb-3 text-2xl -tracking-[1px] text-white">Pre-Deployment CI/CD Pipeline Gates</h3><p class="text-base text-white/80">Deterministic risk thresholds (P0-P3) to block compromised dependencies from production builds.</p></div></div><div class="divide-y divide-white/20"><div class="lg:px-8 p-5 lg:py-12 hover:bg-white/5 transition duration-300 ease-in-out"><h3 class="mb-3 text-2xl -tracking-[1px] text-white">Zero-Day Dependency Confusion Shield</h3><p class="text-base text-white/80">Levenshtein distance checks preventing public registry substitution and internal scope hijacking.</p></div><div class="lg:px-8 p-5 lg:py-12 hover:bg-white/5 transition duration-300 ease-in-out"><h3 class="mb-3 text-2xl -tracking-[1px] text-white">Transitive Blast Radius Impact</h3><p class="text-base text-white/80">Compute exact mathematical blast radius across entire upstream and downstream service graphs.</p></div></div><div class="divide-y divide-white/20"><div class="lg:px-8 p-5 lg:py-12 hover:bg-white/5 transition duration-300 ease-in-out"><h3 class="mb-3 text-2xl -tracking-[1px] text-white">Lifecycle Script Execution Audits</h3><p class="text-base text-white/80">Inspect npm preinstall/postinstall hooks for hidden remote execution or credential exfiltration.</p></div><div class="lg:px-8 p-5 lg:py-12 hover:bg-white/5 transition duration-300 ease-in-out"><h3 class="mb-3 text-2xl -tracking-[1px] text-white">Gemini AI Exploit Reasoning</h3><p class="text-base text-white/80">Synthesize real-world attacker exploit scenarios and produce 1-click unified Git diff patches.</p></div></div></div></div></div></div></section><section class="border-y border-white/20 mb-20"><div class="max-w-7xl mx-auto px-6"><div class="border-x border-white/20 p-5 lg:p-20"><div class="mb-8 lg:mb-16"><div class="lg:max-w-xl mx-auto text-center"><h2 class="text-3xl sm:text-4xl mb-6 font-medium text-white" style="opacity: 1; transform: none;">Plans &amp; Pricing</h2><p class="text-base text-white/80" style="opacity: 1; transform: none;">Supercharge your content creation with AI-driven design, copy, images, and SEO optimization. Edit visually, publish, or export clean HTML/CSS.</p></div></div><div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 "><div style="opacity: 1; transform: none;"><article class="min-h-135 flex flex-col py-8 px-6 border border-white/20 bg-white/3 relative overflow-hidden "><div class="relative z-10  justify-between "><h3 class="text-xl font-medium text-white">Starter</h3><p class="text-white/80 text-base">For individuals exploring the power of AI-driven content</p><div class="py-6 flex items-end gap-1"><span class="text-white/80 text-4xl">$</span><h3 class="text-white text-6xl leading-none">0</h3><p><span class="text-white block">free</span><span class="text-white/60 block">forever</span></p></div><div class="pb-6"><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center text-white bg-white/5 border py-3 w-full border-white/40 transition-all duration-300 hover:bg-white/10 px-6 text-base font-mono" href="/dashboard" data-discover="true"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Get Started</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Get Started</span></span></a></div><ul class="space-y-2"><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>AI-powered content suggestions</li><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>Basic grammar and spell check</li><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>Standard tone adjustments</li></ul></div></article></div><div style="opacity: 1; transform: none;"><article class="min-h-135 flex flex-col py-8 px-6 border border-white/20 bg-white/3 relative overflow-hidden "><div class="absolute top-0 right-0"><img class="" alt="Decorative shape" src="/images/shape-price.png"></div><span class="absolute z-20 top-6 right-6 px-3 py-1 bg-linear-to-b from-white to-transparent border border-white/40 text-theme-dark-500 font-mono  rounded-md  text-sm font-medium">Most Popular</span><div class="relative z-10  justify-between "><h3 class="text-xl font-medium text-white">Plus</h3><p class="text-white/80 text-base">For freelancers and small teams seeking advanced AI tools</p><div class="py-6 flex items-end gap-1"><span class="text-white/80 text-4xl">$</span><h3 class="text-white text-6xl leading-none">29</h3><p><span class="text-white block">per month</span><span class="text-white/60 block">billed annually</span></p></div><div class="pb-6"><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center bg-white px-6 py-3 text-theme-dark-500 transition-all duration-300 w-full text-base hover:bg-white/90 font-mono" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Start for free</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Start for free</span></span></a></div><ul class="space-y-2"><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>AI-powered content suggestions</li><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>Basic grammar and spell check</li><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>Standard tone adjustments</li><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>Priority support</li></ul></div></article></div><div style="opacity: 1; transform: none;"><article class="min-h-135 flex flex-col py-8 px-6 border border-white/20 bg-white/3 relative overflow-hidden "><div class="relative z-10  justify-between "><h3 class="text-xl font-medium text-white">Premium</h3><p class="text-white/80 text-base">For large teams and enterprises requiring dedicated support</p><div class="py-6 flex items-end gap-1"><span class="text-white/80 text-4xl">$</span><h3 class="text-white text-6xl leading-none">99</h3><p><span class="text-white block">per month</span><span class="text-white/60 block">billed annually</span></p></div><div class="pb-6"><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center text-white bg-white/5 border py-3 w-full border-white/40 transition-all duration-300 hover:bg-white/10 px-6 text-base font-mono" href="/dashboard" data-discover="true"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Contact Us</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Contact Us</span></span></a></div><ul class="space-y-2"><li class="flex gap-2 items-center text-white/80 text-base"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="shrink-0"><g clip-path="url(#clip0_2001_106)"><path d="M14.5339 6.66666C14.8384 8.16086 14.6214 9.71428 13.9192 11.0679C13.2169 12.4214 12.0719 13.4934 10.675 14.1049C9.27803 14.7164 7.7137 14.8305 6.24281 14.4282C4.77193 14.026 3.48341 13.1316 2.59213 11.8943C1.70085 10.657 1.26069 9.15148 1.34505 7.62892C1.42941 6.10635 2.0332 4.65872 3.05571 3.52744C4.07823 2.39616 5.45767 1.64961 6.96399 1.4123C8.47031 1.17498 10.0125 1.46123 11.3333 2.22333M5.99994 7.33333L7.99994 9.33333L14.6666 2.66666" stroke="white" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_2001_106"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>AI-powered content suggestions</li></ul></div></article></div></div></div></div></section><section class="mb-20 border-y border-white/20"><div class="max-w-7xl mx-auto px-6"><div class="py-20"><div class="lg:max-w-lg mx-auto text-center mb-16"><h2 class="text-3xl sm:text-4xl mb-6 font-medium text-white" style="opacity: 1; transform: none;">Hear From Our Community</h2><p class="text-base text-white/80" style="opacity: 1; transform: none;">Creators, founders, and teams use our AI Writer to produce clean, consistent content in minutes — not hours.</p></div><div id="ecosystems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto px-4">
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">📦</span>
-        <span class="text-white font-mono font-bold text-sm">npm</span>
-        <span class="text-white/50 text-xs">JavaScript/TS</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🐍</span>
-        <span class="text-white font-mono font-bold text-sm">PyPI</span>
-        <span class="text-white/50 text-xs">Python</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🔷</span>
-        <span class="text-white font-mono font-bold text-sm">Go</span>
-        <span class="text-white/50 text-xs">go.mod / sum</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">☕</span>
-        <span class="text-white font-mono font-bold text-sm">Maven</span>
-        <span class="text-white/50 text-xs">Java / pom.xml</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🦀</span>
-        <span class="text-white font-mono font-bold text-sm">Cargo</span>
-        <span class="text-white/50 text-xs">Rust</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🐘</span>
-        <span class="text-white font-mono font-bold text-sm">Packagist</span>
-        <span class="text-white/50 text-xs">PHP / Composer</span>
-    </div>
-</div><div id="ecosystems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto px-4">
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">📦</span>
-        <span class="text-white font-mono font-bold text-sm">npm</span>
-        <span class="text-white/50 text-xs">JavaScript/TS</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🐍</span>
-        <span class="text-white font-mono font-bold text-sm">PyPI</span>
-        <span class="text-white/50 text-xs">Python</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🔷</span>
-        <span class="text-white font-mono font-bold text-sm">Go</span>
-        <span class="text-white/50 text-xs">go.mod / sum</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">☕</span>
-        <span class="text-white font-mono font-bold text-sm">Maven</span>
-        <span class="text-white/50 text-xs">Java / pom.xml</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🦀</span>
-        <span class="text-white font-mono font-bold text-sm">Cargo</span>
-        <span class="text-white/50 text-xs">Rust</span>
-    </div>
-    <div class="flex flex-col items-center justify-center p-4 border border-white/10 bg-white/5 hover:border-white/30 transition rounded-lg">
-        <span class="text-2xl mb-1">🐘</span>
-        <span class="text-white font-mono font-bold text-sm">Packagist</span>
-        <span class="text-white/50 text-xs">PHP / Composer</span>
-    </div>
-</div></div></div></section><section class="border-y border-white/20 mb-20"><div class="max-w-7xl mx-auto px-6"><div class="border-x border-white/20 p-5 lg:p-20"><div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-28"><div class="mb-10 lg:mb-0"><h2 class="text-3xl sm:text-4xl mb-6 font-medium text-white" style="opacity: 0; transform: translateY(20px);">Frequently Asked Questions</h2><p class="text-base text-white/80 mb-6" style="opacity: 0; transform: translateY(20px);">Find answers to common questions about DepScan AI. If you can't find what you're looking for, feel free to contact our support team.</p></div><div><div style="opacity: 0; transform: translateY(20px);"><div class="py-6 border-b border-white/10"><button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between"><h3 class="text-lg text-zinc-50 -tracking-[0.18px]">What is DepScan?</h3><p class="faq-ans text-white/70 text-sm mt-3 hidden">DepScan is an automated Software Supply Chain Security Analyzer that identifies risky dependencies, suspicious package behavior, typosquatting, and generates 1-click AI remediation patches.</p><span class="text-white/80 transition-transform "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button></div></div><div style="opacity: 0; transform: translateY(20px);"><div class="py-6 border-b border-white/10"><button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between"><h3 class="text-lg text-zinc-50 -tracking-[0.18px]">How does DepScan calculate the Blast Radius?</h3><p class="faq-ans text-white/70 text-sm mt-3 hidden">DepScan builds directed NetworkX dependency trees. If a child package is compromised, it traces all upstream ancestor services that rely on it to compute an impact blast radius from 0.10 to 1.00.</p><span class="text-white/80 transition-transform "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button></div></div><div style="opacity: 0; transform: translateY(20px);"><div class="py-6 border-b border-white/10"><button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between"><h3 class="text-lg text-zinc-50 -tracking-[0.18px]">How does DepScan ensure Zero Code Execution?</h3><p class="faq-ans text-white/70 text-sm mt-3 hidden">DepScan uses pure static AST and manifest parsing. No package manager install hooks, setup scripts, or postinstall commands are ever executed, ensuring safe analysis of untrusted repositories.</p><span class="text-white/80 transition-transform "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button></div></div><div style="opacity: 0; transform: translateY(20px);"><div class="py-6 border-b border-white/10"><button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between"><h3 class="text-lg text-zinc-50 -tracking-[0.18px]">Which package ecosystems are supported?</h3><span class="text-white/80 transition-transform "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button></div></div><div style="opacity: 0; transform: translateY(20px);"><div class="py-6 border-b border-white/10"><button class="faq-btn flex w-full text-left cursor-pointer items-center justify-between"><h3 class="text-lg text-zinc-50 -tracking-[0.18px]">What if Gemini API key is not configured?</h3><span class="text-white/80 transition-transform "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5.75 9.625L12 15.875L18.25 9.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button></div></div></div></div></div></div></section><section class="bg-theme-dark py-20 relative overflow-hidden"><div class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-full pointer-events-none"><img class="w-full h-full" alt="" src="/images/shape-4.png"></div><div class="max-w-2xl mx-auto relative z-10 px-5"><h2 class="text-white text-5xl text-center mb-4" style="opacity: 0; transform: translateY(20px);">Ready to secure your software supply chain?</h2><p class="mb-8 text-white text-center" style="opacity: 0; transform: translateY(20px);">Analyze your repositories, discover hidden blast radius threats, and generate 1-click Git patches in seconds.</p><div class="flex flex-col sm:flex-row gap-6 justify-center" style="opacity: 0; transform: translateY(20px);"><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center bg-white px-6 py-3 text-theme-dark-500 transition-all duration-300 w-auto text-base hover:bg-white/90 font-mono" href="/dashboard"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">Start for free</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">Start for free</span></span></a><a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center text-white bg-white/5 border py-3 border-white/40 transition-all duration-300 hover:bg-white/50 px-6 w-auto text-base" href="/docs" data-discover="true"><span class="block relative h-full w-full overflow-hidden"><span class="flex h-full w-full items-center justify-center" style="transform: none;">API Documentation</span><span class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="transform: translateY(100%);">API Documentation</span></span></a></div></div></section><footer class="pt-10 lg:pt-20 border-t border-white/20"><div class="max-w-7xl mx-auto px-6"><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pb-12 lg:pb-24 gap-8 lg:gap-4"><article><h3 class="mb-4 font-semibold text-white text-sm">Product</h3><nav class="space-y-4"><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs" data-discover="true">Tools</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/dashboard" data-discover="true">Pricing</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs" data-discover="true">Documentation</a></nav></article><article><h3 class="mb-4 font-semibold text-white text-sm">Resources</h3><nav class="space-y-4"><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs" data-discover="true">Getting Started</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs" data-discover="true">API Reference</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/support" data-discover="true">Help Center</a></nav></article><article><h3 class="mb-4 font-semibold text-white text-sm">Company</h3><nav class="space-y-4"><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/" data-discover="true">About Us</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/" data-discover="true">Careers</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/support" data-discover="true">Contact</a></nav></article><article><h3 class="mb-4 font-semibold text-white text-sm">Legal</h3><nav class="space-y-4"><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/" data-discover="true">Privacy Policy</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/" data-discover="true">Terms of Service</a><a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/" data-discover="true">Cookie Policy</a></nav></article></div><div class="pt-4 pb-8 border-t flex flex-col sm:flex-row gap-5 justify-between border-white/20"><div><p class="text-zinc-400 text-sm leading-5  transition">© 2026 DepScan AI. All rights reserved.</p></div><div><nav class="flex gap-4 items-center"><a class="text-zinc-400 text-sm leading-5 hover:text-white transition" href="/" data-discover="true">Privacy Policy</a><a class="text-zinc-400 text-sm leading-5 hover:text-white transition" href="/" data-discover="true">Terms of Service</a></nav></div></div></div></footer></div></div>
-  
 
-
+    <!-- Scripts for Interactive Carousel & FAQs -->
     <script>
-    function handleHeroSubmit(e) {
-        if (e && e.preventDefault) e.preventDefault();
-        const input = document.getElementById("hero-repo-url");
-        if (!input) return false;
-        const val = input.value.trim();
-        if (!val) { input.focus(); return false; }
-        window.location.href = "/dashboard?repo=" + encodeURIComponent(val);
-        return false;
-    }
-    function fillAndSubmit(url) {
-        const input = document.getElementById("hero-repo-url");
-        if (input) input.value = url;
-        window.location.href = "/dashboard?repo=" + encodeURIComponent(url);
-    }
     document.addEventListener("DOMContentLoaded", () => {
-        document.querySelectorAll(".faq-btn").forEach(btn => {
+        // 1. Classic FAQ Accordion Controls
+        const faqBtns = document.querySelectorAll(".faq-btn");
+        faqBtns.forEach(btn => {
             btn.addEventListener("click", () => {
-                const ans = btn.parentElement.querySelector(".faq-ans");
-                if (ans) ans.classList.toggle("hidden");
+                const item = btn.closest(".faq-item");
+                if (!item) return;
+                const ans = item.querySelector(".faq-ans");
+                const arrow = btn.querySelector(".faq-arrow");
+                if (!ans) return;
+
+                const isHidden = ans.classList.contains("hidden");
+
+                // Close all other FAQs
+                document.querySelectorAll(".faq-item").forEach(other => {
+                    if (other !== item) {
+                        const otherAns = other.querySelector(".faq-ans");
+                        const otherArrow = other.querySelector(".faq-arrow");
+                        const otherBtn = other.querySelector(".faq-btn");
+                        if (otherAns) otherAns.classList.add("hidden");
+                        if (otherArrow) otherArrow.style.transform = "rotate(0deg)";
+                        if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+                    }
+                });
+
+                // Toggle current FAQ
+                if (isHidden) {
+                    ans.classList.remove("hidden");
+                    if (arrow) arrow.style.transform = "rotate(180deg)";
+                    btn.setAttribute("aria-expanded", "true");
+                } else {
+                    ans.classList.add("hidden");
+                    if (arrow) arrow.style.transform = "rotate(0deg)";
+                    btn.setAttribute("aria-expanded", "false");
+                }
             });
+        });
+
+        // 2. "What You Get" Carousel Navigation
+        const track = document.getElementById("what-track");
+        const prevBtn = document.getElementById("what-prev-btn");
+        const nextBtn = document.getElementById("what-next-btn");
+        
+        if (track && prevBtn && nextBtn) {
+            let slideIndex = 0;
+            const cards = track.querySelectorAll(".what-card");
+            const totalSlides = cards.length;
+
+            function updateCarousel() {
+                if (cards.length === 0) return;
+                const cardWidth = cards[0].offsetWidth;
+                const gap = 18;
+                const maxSlide = Math.max(0, totalSlides - (window.innerWidth >= 1024 ? 2 : 1));
+                
+                if (slideIndex > maxSlide) slideIndex = maxSlide;
+                if (slideIndex < 0) slideIndex = 0;
+
+                const offset = slideIndex * (cardWidth + gap);
+                track.style.transform = `translateX(-${offset}px)`;
+
+                prevBtn.style.opacity = slideIndex === 0 ? "0.4" : "1";
+                nextBtn.style.opacity = slideIndex >= maxSlide ? "0.4" : "1";
+            }
+
+            prevBtn.addEventListener("click", () => {
+                if (slideIndex > 0) {
+                    slideIndex--;
+                    updateCarousel();
+                }
+            });
+
+            nextBtn.addEventListener("click", () => {
+                const maxSlide = Math.max(0, totalSlides - (window.innerWidth >= 1024 ? 2 : 1));
+                if (slideIndex < maxSlide) {
+                    slideIndex++;
+                    updateCarousel();
+                }
+            });
+
+            window.addEventListener("resize", updateCarousel);
+            updateCarousel();
+        }
+
+        // 3. Vertical Navigation Drawer Controls
+        const navMenuBtn = document.getElementById("nav-menu-btn");
+        const navDrawer = document.getElementById("nav-drawer");
+        const navCloseBtn = document.getElementById("nav-close-btn");
+        const navBackdrop = document.getElementById("nav-backdrop");
+        const verticalNavLinks = document.querySelectorAll(".vertical-nav-link");
+
+        function openNavDrawer() {
+            if (navDrawer) {
+                navDrawer.classList.add("active");
+                navDrawer.setAttribute("aria-hidden", "false");
+                document.body.style.overflow = "hidden";
+            }
+        }
+
+        function closeNavDrawer() {
+            if (navDrawer) {
+                navDrawer.classList.remove("active");
+                navDrawer.setAttribute("aria-hidden", "true");
+                document.body.style.overflow = "";
+            }
+        }
+
+        if (navMenuBtn) {
+            navMenuBtn.addEventListener("click", openNavDrawer);
+        }
+        if (navCloseBtn) {
+            navCloseBtn.addEventListener("click", closeNavDrawer);
+        }
+        if (navBackdrop) {
+            navBackdrop.addEventListener("click", closeNavDrawer);
+        }
+
+        verticalNavLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                closeNavDrawer();
+            });
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                closeNavDrawer();
+            }
         });
     });
     </script>
-    </body></html>
+</body>
+</html>

@@ -62,6 +62,12 @@ window.runAIAnalysis = runAIAnalysis;
 window.copyPatchDiff = copyPatchDiff;
 window.copyVerifyCommands = copyVerifyCommands;
 window.copySingleCommand = copySingleCommand;
+window.fillAndScan = function(url) {
+    if (repoInput) {
+        repoInput.value = url;
+        startScan();
+    }
+};
 
 // Auto-run if redirected from landing page with ?repo=
 window.addEventListener("DOMContentLoaded", () => {
