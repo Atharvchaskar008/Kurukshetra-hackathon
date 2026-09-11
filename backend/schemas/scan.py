@@ -233,3 +233,25 @@ class ScanDetailResponse(BaseModel):
     created_at: str = Field(description="Start time.")
     updated_at: str = Field(description="Last updated time.")
     completed_at: Optional[str] = Field(default=None, description="Completion time.")
+
+
+class AttackScenario(BaseModel):
+    """Attack scenario synthesized by the AI security reasoning engine."""
+
+    title: str = Field(description="Headline describing the attack vector.")
+    severity: str = Field(default="HIGH", description="Severity level of the attack vector.")
+    attack_vector: str = Field(description="Detailed narrative of how an attacker exploits this issue.")
+
+
+class AIExplanationResponse(BaseModel):
+    """AI-powered security explanation, attack narratives, and auto-patch diff."""
+
+    scan_id: str = Field(description="Target scan identifier.")
+    summary: str = Field(description="Plain-English executive security assessment.")
+    attack_scenarios: List[AttackScenario] = Field(default_factory=list, description="Synthesized exploit vectors.")
+    prioritized_actions: List[str] = Field(default_factory=list, description="Step-by-step developer remediation checklist.")
+    unified_diff: str = Field(description="Ready-to-apply Git diff patch for automated remediation.")
+    verification_commands: List[str] = Field(default_factory=list, description="Terminal commands to verify fix.")
+    generated_by: str = Field(description="Provider or model that generated this explanation (e.g. gemini-1.5-flash).")
+    findings_analyzed: int = Field(default=0, ge=0, description="Total findings considered.")
+

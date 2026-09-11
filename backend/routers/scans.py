@@ -28,6 +28,7 @@ from backend.models.domain import Repository, Scan
 from backend.models.enums import ScanStatus
 from backend.pipeline import run_scan
 from backend.schemas.scan import (
+    AIExplanationResponse,
     DependencyResponse,
     GitHubScanRequest,
     ScanCreateResponse,
@@ -275,3 +276,32 @@ async def get_scan_details(scan_id: str) -> ScanDetailResponse:
         updated_at=doc.get("updated_at", ""),
         completed_at=doc.get("completed_at"),
     )
+
+
+@router.post(
+    "/{scan_id}/explain",
+    response_model=AIExplanationResponse,
+    summary="Generate AI Threat Explanation & Auto-Patch Diff",
+)
+async def explain_scan(
+    scan_id: str, finding_id: Optional[str] = None
+) -> AIExplanationResponse:
+    """
+    Generate AI-powered threat analysis, attack vectors, and automated Git diff patch.
+    Powered by Google Gemini with deterministic expert fallback.
+    """
+    doc = _load_scan(scan_id)
+    from backend.ai import generate_security_explanation
+
+    explanation = generate_security_explanation(doc, finding_id=finding_id)
+    return AIExplanationResponse(
+        scan_id=scan_id,
+        summary=explanation["summary"],
+        attack_scenarios=explanation.get("attack_scenarios", []),
+        prioritized_actions=explanation.get("prioritized_actions", []),
+        unified_diff=explanation.get("unified_diff", ""),
+        verification_commands=explanation.get("verification_commands", []),
+        generated_by=explanation.get("generated_by", "expert_security_engine"),
+        findings_analyzed=explanation.get("findings_analyzed", 0),
+    )
+
