@@ -56,7 +56,18 @@ async function startScan() {
             throw new Error(err.detail || `HTTP ${res.status}`);
         }
 
-        const data = await res.json();
+        const createData = await res.json();
+        const scanId = createData.scan_id;
+
+        // Fetch complete scan results (score, risk_level, findings, dependencies)
+        showStatus("⏳ Analyzing repository security signals...", "loading");
+        const resultsRes = await fetch(`${API_BASE}/scans/${scanId}/results`);
+        if (!resultsRes.ok) {
+            const err = await resultsRes.json().catch(() => ({}));
+            throw new Error(err.detail || `HTTP ${resultsRes.status}`);
+        }
+
+        const data = await resultsRes.json();
         showStatus("✅ Scan completed! Rendering results...", "success");
         renderResults(data);
 
@@ -89,14 +100,24 @@ function renderResults(data) {
     riskBadge.className = `risk-badge risk-${risk}`;
 
     // Summary cards
-    valDeps.textContent = data.dependency_count || data.dependencies_count || 0;
-    valFindings.textContent = data.findings_count || 0;
+    const deps = data.dependencies || [];
+    const findings = data.findings || [];
 
-    const bySev = data.findings_by_severity || {};
-    valCritical.textContent = bySev.CRITICAL || 0;
-    valHigh.textContent = bySev.HIGH || 0;
-    valMedium.textContent = bySev.MEDIUM || 0;
-    valLow.textContent = (bySev.LOW || 0) + (bySev.INFO || 0);
+    valDeps.textContent = data.dependency_count || deps.length;
+    valFindings.textContent = findings.length;
+
+    let critCount = 0, highCount = 0, medCount = 0, lowCount = 0;
+    findings.forEach(f => {
+        const s = (f.severity || "").toUpperCase();
+        if (s === "CRITICAL") critCount++;
+        else if (s === "HIGH") highCount++;
+        else if (s === "MEDIUM") medCount++;
+        else lowCount++;
+    });
+    valCritical.textContent = critCount;
+    valHigh.textContent = highCount;
+    valMedium.textContent = medCount;
+    valLow.textContent = lowCount;
 
     // Ecosystems
     ecosystemsBar.innerHTML = "";
@@ -109,7 +130,6 @@ function renderResults(data) {
     });
 
     // Findings table
-    const findings = data.findings || [];
     findingsTbody.innerHTML = "";
 
     if (findings.length === 0) {
@@ -125,7 +145,7 @@ function renderResults(data) {
             const sev = (f.severity || "UNKNOWN").toUpperCase();
             const confidence = f.confidence != null ? `${(f.confidence * 100).toFixed(0)}%` : "—";
             const blast = f.blast_radius != null ? f.blast_radius.toFixed(2) : "—";
-            const summary = f.summary || f.type || "";
+            const detailText = f.title || f.summary || f.type || "";
 
             tr.innerHTML = `
                 <td><span class="priority-${priority}">${priority}</span></td>
@@ -134,7 +154,7 @@ function renderResults(data) {
                 <td><span class="sev-badge sev-${sev}">${sev}</span></td>
                 <td>${confidence}</td>
                 <td>${blast}</td>
-                <td class="finding-detail">${escapeHtml(summary)}</td>
+                <td class="finding-detail">${escapeHtml(detailText)}</td>
             `;
             findingsTbody.appendChild(tr);
         });
