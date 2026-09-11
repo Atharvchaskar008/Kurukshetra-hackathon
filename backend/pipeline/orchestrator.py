@@ -24,6 +24,7 @@ from typing import Any, Dict, List, Optional
 from backend.database.repository import ScanRepository, get_scan_repository
 from backend.ecosystems import detect_ecosystems
 from backend.ecosystems.models import ManifestType
+from backend.graph import build_dependency_graph
 from backend.ingestion.workspace import RepositoryWorkspace
 from backend.models.domain import Repository
 from backend.models.enums import ScanStatus
@@ -102,7 +103,10 @@ class ScanOrchestrator:
                     has_partial_failures = True
                     errors.append(f"{manifest.path}: {parse_err}")
 
-            # 4. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
+            # 4. Stage: Dependency Graph & Blast Radius Analysis
+            dep_graph = build_dependency_graph(declared_dependencies)
+
+            # 5. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
             final_status = (
                 ScanStatus.PARTIAL.value if has_partial_failures and declared_dependencies
                 else ScanStatus.COMPLETED.value
@@ -110,7 +114,7 @@ class ScanOrchestrator:
 
             completed_time = datetime.now(timezone.utc).isoformat()
 
-            # 5. Construct canonical scan context/result
+            # 6. Construct canonical scan context/result
             result: Dict[str, Any] = {
                 "scan_id": scan_id,
                 "status": final_status,
@@ -126,7 +130,7 @@ class ScanOrchestrator:
                 "transitive_dependencies_count": 0,
                 "findings": [],
                 "findings_count": 0,
-                "graph": None,
+                "graph": dep_graph,
                 "score": None,
                 "risk_level": None,
                 "is_monorepo": detection.is_monorepo,

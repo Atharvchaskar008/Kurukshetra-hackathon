@@ -46,7 +46,8 @@ def test_orchestrator_complete_scan(tmp_path):
     assert set(res["ecosystems"]) == {Ecosystem.NPM.value, Ecosystem.PYPI.value}
     assert len(res["dependencies"]) == 3
     assert res["findings"] == []
-    assert res["graph"] is None
+    assert isinstance(res["graph"], dict)
+    assert len(res["graph"]["nodes"]) >= 3
     assert res["score"] is None
 
     # Check persistence
