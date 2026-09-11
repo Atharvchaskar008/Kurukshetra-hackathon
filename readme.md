@@ -35,3 +35,24 @@ SupplyGuard is an automated security platform designed to analyze dependencies, 
    cp .env.example .env
    ```
 2. Configure your environment variables in `.env`.
+3. Create a virtual environment and install Python dependencies:
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+4. Run the backend:
+   ```bash
+   python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
+   ```
+5. Open http://127.0.0.1:8000/health and http://127.0.0.1:8000/docs
+
+Run tests from the repository root:
+
+```bash
+python -m pytest
+```
+
+Firebase is optional. If credentials are unset, scans persist in memory for the process lifetime.
+
+The frontend dashboard is not wired yet (see `IMPLEMENTATION_PLAN.md` and `NEXT_25_PROMPTS.md`).
