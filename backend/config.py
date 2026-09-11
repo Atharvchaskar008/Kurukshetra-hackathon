@@ -89,9 +89,18 @@ class Settings(BaseModel):
     max_upload_size_bytes: int = Field(
         default_factory=lambda: int(os.getenv("MAX_UPLOAD_SIZE_BYTES", str(50 * 1024 * 1024)))
     )  # 50 MB
+    max_extracted_size_bytes: int = Field(
+        default_factory=lambda: int(os.getenv("MAX_EXTRACTED_SIZE_BYTES", str(100 * 1024 * 1024)))
+    )  # 100 MB uncompressed
+    max_single_file_size_bytes: int = Field(
+        default_factory=lambda: int(os.getenv("MAX_SINGLE_FILE_SIZE_BYTES", str(10 * 1024 * 1024)))
+    )  # 10 MB per file
     scan_timeout_seconds: int = Field(
         default_factory=lambda: int(os.getenv("SCAN_TIMEOUT_SECONDS", "180"))
     )  # 3 minutes
+    zip_extraction_timeout_seconds: int = Field(
+        default_factory=lambda: int(os.getenv("ZIP_EXTRACTION_TIMEOUT_SECONDS", "30"))
+    )  # 30 seconds
     max_scan_files: int = Field(
         default_factory=lambda: int(os.getenv("MAX_SCAN_FILES", "5000"))
     )
