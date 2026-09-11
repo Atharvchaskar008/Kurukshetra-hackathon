@@ -145,23 +145,41 @@ async def upload_zip_archive(file: UploadFile = File(...)) -> ScanCreateResponse
 async def create_github_scan(payload: GitHubScanRequest) -> ScanCreateResponse:
     target_url = payload.get_url()
     scan_id = str(uuid.uuid4())
-    cloner = GitCloner()
     workspace = None
+    is_local_dir = False
+
     try:
-        workspace = cloner.clone(
-            target_url,
-            branch=payload.branch,
-            commit_hash=payload.commit_hash,
-        )
-        files = workspace.list_files()
-        repo_metadata = Repository(
-            url=target_url,
-            name=target_url.rstrip("/").split("/")[-1],
-            default_branch=payload.branch or "main",
-            commit_hash=payload.commit_hash,
-            file_count=len(files),
-            metadata={"source": "github"},
-        )
+        local_path = Path(target_url).resolve()
+        if local_path.is_dir():
+            is_local_dir = True
+            from backend.ingestion.workspace import RepositoryWorkspace
+            workspace = RepositoryWorkspace(workspace_dir=local_path, auto_cleanup=False)
+            files = workspace.list_files()
+            repo_metadata = Repository(
+                url=str(local_path),
+                name=local_path.name,
+                file_count=len(files),
+                metadata={"source": "local_directory"},
+            )
+            msg = "Local directory analyzed."
+        else:
+            cloner = GitCloner()
+            workspace = cloner.clone(
+                target_url,
+                branch=payload.branch,
+                commit_hash=payload.commit_hash,
+            )
+            files = workspace.list_files()
+            repo_metadata = Repository(
+                url=target_url,
+                name=target_url.rstrip("/").split("/")[-1],
+                default_branch=payload.branch or "main",
+                commit_hash=payload.commit_hash,
+                file_count=len(files),
+                metadata={"source": "github"},
+            )
+            msg = "GitHub repository cloned and analyzed."
+
         store = get_scan_repository()
         store.create_scan(scan_id, Scan(scan_id=scan_id, repository=repo_metadata, status=ScanStatus.PENDING))
         result = run_scan(scan_id, workspace, repo_metadata)
@@ -170,10 +188,10 @@ async def create_github_scan(payload: GitHubScanRequest) -> ScanCreateResponse:
             scan_id=scan_id,
             status=status,
             target=target_url,
-            message="GitHub repository cloned and analyzed.",
+            message=msg,
         )
     finally:
-        if workspace is not None:
+        if workspace is not None and not is_local_dir:
             try:
                 workspace.cleanup()
             except Exception:
