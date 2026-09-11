@@ -91,6 +91,10 @@ class ScanStatusResponse(BaseModel):
         le=100.0,
         description="Estimated scan progress percentage (0.0 - 100.0).",
     )
+    progress: Optional[float] = Field(
+        default=0.0,
+        description="Progress percentage alias.",
+    )
     current_stage: str = Field(
         default="queued",
         description="Current pipeline stage (e.g. ingesting, sbom, graph, analyzing, reporting).",
@@ -99,6 +103,23 @@ class ScanStatusResponse(BaseModel):
         default=None,
         description="Sanitized failure reason if status is FAILED.",
     )
+
+
+class ScanResultsResponse(BaseModel):
+    """Scan results response providing core security telemetry."""
+
+    scan_id: str = Field(description="Unique scan tracking identifier.")
+    repository: Any = Field(default="", description="Repository identifier or metadata.")
+    status: str = Field(description="Scan lifecycle status.")
+    ecosystems: List[str] = Field(default_factory=list, description="Detected ecosystems.")
+    dependency_count: int = Field(default=0, description="Total declared dependencies.")
+    dependencies: List[Dict[str, Any]] = Field(default_factory=list, description="Extracted dependencies.")
+    findings: List[Dict[str, Any]] = Field(default_factory=list, description="Security findings.")
+    graph: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Dependency graph.")
+    score: Optional[float] = Field(default=None, description="0-100 deterministic security score.")
+    risk_level: Optional[str] = Field(default=None, description="Calculated risk tier.")
+    completed_at: Optional[str] = Field(default=None)
+    error_message: Optional[str] = Field(default=None)
 
 
 # ------------------------------------------------------------------------------

@@ -32,6 +32,7 @@ from backend.schemas.scan import (
     GitHubScanRequest,
     ScanCreateResponse,
     ScanDetailResponse,
+    ScanResultsResponse,
     ScanStatusResponse,
 )
 
@@ -189,15 +190,53 @@ def _load_scan(scan_id: str) -> dict:
 @router.get("/{scan_id}", response_model=ScanStatusResponse, summary="Get scan status")
 async def get_scan_status(scan_id: str) -> ScanStatusResponse:
     doc = _load_scan(scan_id)
+    progress_val = float(doc.get("progress_percent") or 0.0)
     return ScanStatusResponse(
         scan_id=scan_id,
         status=doc.get("status", ScanStatus.PENDING),
         created_at=doc.get("created_at", ""),
         updated_at=doc.get("updated_at", ""),
         completed_at=doc.get("completed_at"),
-        progress_percent=float(doc.get("progress_percent") or 0.0),
+        progress_percent=progress_val,
+        progress=progress_val,
         current_stage=doc.get("current_stage", "queued"),
         error_message=doc.get("error_message"),
+    )
+
+
+@router.get("/{scan_id}/results", response_model=ScanResultsResponse, summary="Get scan results")
+async def get_scan_results(scan_id: str) -> ScanResultsResponse:
+    doc = _load_scan(scan_id)
+    repo_info = doc.get("repository") or {}
+    if isinstance(repo_info, dict):
+        repo_display = repo_info.get("url") or repo_info.get("name") or str(repo_info)
+    else:
+        repo_display = str(repo_info)
+
+    deps = doc.get("dependencies") or []
+    findings = doc.get("findings") or []
+    graph_data = doc.get("graph") if doc.get("graph") is not None else {}
+    ecosystems = doc.get("ecosystems") or doc.get("ecosystems_detected") or []
+
+    raw_err = doc.get("error_message")
+    sanitized_err = None
+    if raw_err:
+        # Sanitize any file paths or stack traces from error
+        sanitized_err = str(raw_err).split("\n")[0][:200]
+
+    return ScanResultsResponse(
+        scan_id=scan_id,
+        repository=repo_display,
+        status=str(doc.get("status", ScanStatus.COMPLETED.value)),
+        ecosystems=ecosystems,
+        dependency_count=len(deps),
+        dependencies=deps,
+        findings=findings,
+        graph=graph_data,
+        score=doc.get("score"),
+        risk_level=doc.get("risk_level"),
+        completed_at=doc.get("completed_at"),
+        error_message=sanitized_err,
     )
 
 
