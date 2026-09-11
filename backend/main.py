@@ -70,12 +70,12 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # Root welcome / info endpoint
-    @app.get("/", tags=["Root"])
-    async def root() -> JSONResponse:
+    # API discovery endpoint
+    @app.get("/api", tags=["Root"])
+    async def root_api() -> JSONResponse:
         return JSONResponse(
             {
-                "name": settings.app_name,
+                "name": "DepScan",
                 "version": settings.app_version,
                 "docs": "/docs",
                 "health": "/health",
@@ -97,7 +97,19 @@ def create_app() -> FastAPI:
     frontend_dir = pathlib.Path(__file__).resolve().parent.parent / "frontend"
     if frontend_dir.is_dir():
         app.mount("/static", StaticFiles(directory=str(frontend_dir)), name="static")
+        images_dir = frontend_dir / "images"
+        if images_dir.is_dir():
+            app.mount("/images", StaticFiles(directory=str(images_dir)), name="images")
 
+        # Root route serves the WriteMate-styled DepScan landing page
+        @app.get("/", tags=["Landing"])
+        async def landing():
+            landing_file = frontend_dir / "landing.html"
+            if landing_file.is_file():
+                return FileResponse(str(landing_file))
+            return FileResponse(str(frontend_dir / "index.html"))
+
+        # Main security analyzer dashboard
         @app.get("/dashboard", tags=["Dashboard"])
         async def dashboard():
             return FileResponse(str(frontend_dir / "index.html"))

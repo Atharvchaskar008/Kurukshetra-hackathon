@@ -63,6 +63,16 @@ window.copyPatchDiff = copyPatchDiff;
 window.copyVerifyCommands = copyVerifyCommands;
 window.copySingleCommand = copySingleCommand;
 
+// Auto-run if redirected from landing page with ?repo=
+window.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const repoParam = urlParams.get("repo");
+    if (repoParam && repoInput) {
+        repoInput.value = repoParam.trim();
+        setTimeout(() => startScan(), 200);
+    }
+});
+
 async function startScan() {
     const url = repoInput.value.trim();
     if (!url) {
