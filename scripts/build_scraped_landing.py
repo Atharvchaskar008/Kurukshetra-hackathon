@@ -20,10 +20,12 @@ def main():
 
     # 2. Update Logo and brand in header
     old_logo = '<a href="/" data-discover="true"><img alt="WriteMate AI Logo" src="/images/logo.svg"></a>'
-    new_logo = '''<a href="/" class="flex items-center gap-3">
-        <img alt="DepScan Logo" src="/images/logo.svg" class="h-8 w-auto">
-        <span class="text-white font-mono font-bold text-xl tracking-tight">DepScan</span>
-        <span class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold tracking-wider">SECURITY AI</span>
+    new_logo = '''<a href="/" class="flex items-center gap-2.5 group">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-transform group-hover:scale-105 duration-200">
+            <rect x="0.75" y="0.75" width="24.5" height="24.5" rx="5.5" stroke="white" stroke-width="1.5"/>
+        </svg>
+        <span class="text-white font-bold text-xl tracking-tight" style="font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">DepScan</span>
+        <span class="text-white/60 font-normal text-xl" style="font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">AI</span>
     </a>'''
     if old_logo in html:
         html = html.replace(old_logo, new_logo, 1)
