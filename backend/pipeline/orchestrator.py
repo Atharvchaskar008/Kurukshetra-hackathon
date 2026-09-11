@@ -30,6 +30,7 @@ from backend.models.domain import Repository
 from backend.models.enums import ScanStatus
 from backend.parsers.package_json import parse_package_json_file
 from backend.parsers.python_deps import parse_pyproject_toml_file, parse_requirements_txt_file
+from backend.scanner.osv import OSVScanner
 
 logger = logging.getLogger("supplyguard.pipeline.orchestrator")
 
@@ -105,8 +106,22 @@ class ScanOrchestrator:
 
             # 4. Stage: Dependency Graph & Blast Radius Analysis
             dep_graph = build_dependency_graph(declared_dependencies)
+            blast_map = {
+                n["package"].lower(): n["blast_radius"]
+                for n in dep_graph.get("nodes", [])
+                if "package" in n and "blast_radius" in n
+            }
 
-            # 5. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
+            # 5. Stage: OSV Vulnerability Analysis
+            findings: List[Dict[str, Any]] = []
+            try:
+                osv_scanner = OSVScanner(timeout=3.0)
+                osv_findings = osv_scanner.scan_dependencies(declared_dependencies, blast_radii=blast_map)
+                findings.extend(osv_findings)
+            except Exception as osv_err:
+                logger.warning("OSV scanner execution failed gracefully: %s", osv_err)
+
+            # 6. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
             final_status = (
                 ScanStatus.PARTIAL.value if has_partial_failures and declared_dependencies
                 else ScanStatus.COMPLETED.value
@@ -114,7 +129,7 @@ class ScanOrchestrator:
 
             completed_time = datetime.now(timezone.utc).isoformat()
 
-            # 6. Construct canonical scan context/result
+            # 7. Construct canonical scan context/result
             result: Dict[str, Any] = {
                 "scan_id": scan_id,
                 "status": final_status,
@@ -128,8 +143,8 @@ class ScanOrchestrator:
                 "dependencies_count": len(declared_dependencies),
                 "direct_dependencies_count": len(declared_dependencies),
                 "transitive_dependencies_count": 0,
-                "findings": [],
-                "findings_count": 0,
+                "findings": findings,
+                "findings_count": len(findings),
                 "graph": dep_graph,
                 "score": None,
                 "risk_level": None,

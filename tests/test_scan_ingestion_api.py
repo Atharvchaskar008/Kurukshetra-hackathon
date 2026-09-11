@@ -39,7 +39,7 @@ def test_post_scans_github_repo_url_success(tmp_path):
     (tmp_path / "package.json").write_text('{"name": "gh-app", "dependencies": {"express": "^4.19.0"}}', encoding="utf-8")
     (tmp_path / "requirements.txt").write_text("requests==2.31.0\n", encoding="utf-8")
 
-    with patch("backend.routers.scans.GitCloner.clone") as mock_clone:
+    with patch("backend.routers.scans.GitCloner.clone") as mock_clone, patch("backend.scanner.osv.OSVScanner.query", return_value=[]):
         mock_ws = RepositoryWorkspace(workspace_dir=tmp_path, auto_cleanup=False)
         mock_clone.return_value = mock_ws
 
@@ -66,7 +66,7 @@ def test_post_scans_github_repository_url_success(tmp_path):
 
     (tmp_path / "requirements.txt").write_text("fastapi>=0.110.0\n", encoding="utf-8")
 
-    with patch("backend.routers.scans.GitCloner.clone") as mock_clone:
+    with patch("backend.routers.scans.GitCloner.clone") as mock_clone, patch("backend.scanner.osv.OSVScanner.query", return_value=[]):
         mock_ws = RepositoryWorkspace(workspace_dir=tmp_path, auto_cleanup=False)
         mock_clone.return_value = mock_ws
 
@@ -87,10 +87,11 @@ def test_post_scans_upload_zip_success():
         "requirements.txt": "flask>=3.0.0\n",
     })
 
-    res = client.post(
-        "/api/v1/scans/upload",
-        files={"file": ("project.zip", zip_bytes, "application/zip")},
-    )
+    with patch("backend.scanner.osv.OSVScanner.query", return_value=[]):
+        res = client.post(
+            "/api/v1/scans/upload",
+            files={"file": ("project.zip", zip_bytes, "application/zip")},
+        )
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == ScanStatus.COMPLETED.value
