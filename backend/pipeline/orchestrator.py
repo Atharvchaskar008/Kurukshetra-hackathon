@@ -30,6 +30,7 @@ from backend.models.domain import Repository
 from backend.models.enums import ScanStatus
 from backend.parsers.package_json import parse_package_json_file
 from backend.parsers.python_deps import parse_pyproject_toml_file, parse_requirements_txt_file
+from backend.scanner.heuristics import SupplyChainHeuristicsScanner
 from backend.scanner.osv import OSVScanner
 
 logger = logging.getLogger("supplyguard.pipeline.orchestrator")
@@ -121,7 +122,15 @@ class ScanOrchestrator:
             except Exception as osv_err:
                 logger.warning("OSV scanner execution failed gracefully: %s", osv_err)
 
-            # 6. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
+            # 6. Stage: Supply Chain Heuristics (Typosquatting & Dependency Confusion)
+            try:
+                heuristics_scanner = SupplyChainHeuristicsScanner()
+                heuristic_findings = heuristics_scanner.scan(declared_dependencies, blast_radii=blast_map)
+                findings.extend(heuristic_findings)
+            except Exception as h_err:
+                logger.warning("Supply chain heuristics scanner failed gracefully: %s", h_err)
+
+            # 7. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
             final_status = (
                 ScanStatus.PARTIAL.value if has_partial_failures and declared_dependencies
                 else ScanStatus.COMPLETED.value
@@ -129,7 +138,7 @@ class ScanOrchestrator:
 
             completed_time = datetime.now(timezone.utc).isoformat()
 
-            # 7. Construct canonical scan context/result
+            # 8. Construct canonical scan context/result
             result: Dict[str, Any] = {
                 "scan_id": scan_id,
                 "status": final_status,
