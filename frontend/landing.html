@@ -44,9 +44,9 @@
 
       .marquee-track {
         display: flex;
-        gap: 16px;
+        gap: 20px;
         width: max-content;
-        animation: marquee-glide 34s linear infinite;
+        animation: marquee-glide 38s linear infinite;
         will-change: transform;
       }
 
@@ -84,133 +84,563 @@
       }
 
       .ecosystem-card {
-        flex: 0 0 184px;
-        min-width: 184px;
+        flex: 0 0 230px;
+        min-width: 230px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        padding: 22px 16px;
+        text-align: center;
+        padding: 28px 20px;
         border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.035);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
         border-radius: 14px;
         backdrop-filter: blur(8px);
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+        transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
         user-select: none;
       }
 
       .ecosystem-card:hover {
-        border-color: rgba(255, 255, 255, 0.45);
-        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.32);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.65);
       }
 
-      /* Use Case Glass Cards */
-      .usecase-card {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 16px;
-        padding: 32px 28px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .usecase-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .usecase-card:hover {
-        border-color: rgba(255, 255, 255, 0.35);
-        transform: translateY(-3px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.05);
-      }
-
-      .usecase-card:hover::before {
-        opacity: 1;
-      }
-
-      /* Compact Testimonials Horizontal Scrollbar */
-      .testimonials-scroll-container {
+      .ecosystem-icon-box {
+        width: 54px;
+        height: 54px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
-        gap: 20px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding-bottom: 20px;
-        padding-top: 4px;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        scrollbar-color: #ffffff #18181b;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        transition: all 0.2s ease;
       }
 
-      .testimonials-scroll-container::-webkit-scrollbar {
-        height: 6px;
-        display: block !important;
-      }
-      .testimonials-scroll-container::-webkit-scrollbar-track {
-        background: #111114;
-        border-radius: 9999px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-      }
-      .testimonials-scroll-container::-webkit-scrollbar-thumb {
-        background: #ffffff;
-        border-radius: 9999px;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-      }
-      .testimonials-scroll-container::-webkit-scrollbar-thumb:hover {
-        background: #e4e4e7;
+      .ecosystem-card:hover .ecosystem-icon-box {
+        background: rgba(255, 255, 255, 0.09);
+        border-color: rgba(255, 255, 255, 0.22);
       }
 
-      .testimonial-card {
-        flex: 0 0 400px;
-        min-width: 350px;
-        max-width: 440px;
-        background: #0d0d11;
-        border: 1px solid rgba(255, 255, 255, 0.18);
+      .ecosystem-name {
+        color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        font-weight: 600;
+        font-size: 17px;
+        letter-spacing: -0.015em;
+        margin-bottom: 4px;
+      }
+
+      .ecosystem-desc {
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 13px;
+        line-height: 1.4;
+        margin-bottom: 12px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .ecosystem-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 9px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        color: rgba(255, 255, 255, 0.55);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.02em;
+        transition: all 0.2s ease;
+      }
+
+      .ecosystem-card:hover .ecosystem-badge {
+        color: rgba(255, 255, 255, 0.85);
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      /* Professional Cybersecurity Feature Cards with Light Faint White Border */
+      .usecase-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.006) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         border-radius: 14px;
-        padding: 24px;
+        padding: 28px 24px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
         position: relative;
       }
 
-      .testimonial-card:hover {
-        border-color: rgba(255, 255, 255, 0.45);
-        background: #121217;
+      .usecase-card:hover {
+        border-color: rgba(255, 255, 255, 0.28);
         transform: translateY(-2px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
       }
 
-      /* What You Get responsive carousel track */
-      .what-track {
+      .usecase-icon-box {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        background: rgba(99, 102, 241, 0.08);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: #818cf8;
         display: flex;
-        gap: 18px;
-        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        will-change: transform;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        transition: all 0.2s ease;
       }
 
-      .what-card {
-        flex: 0 0 min(580px, 86vw);
-        max-width: 580px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.01) 100%);
-        padding: 36px 32px;
-        border-radius: 16px;
-        transition: all 0.3s ease;
+      .usecase-card:hover .usecase-icon-box {
+        background: rgba(99, 102, 241, 0.14);
+        border-color: rgba(129, 140, 248, 0.35);
+        color: #c7d2fe;
+      }
+
+      .usecase-card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+        margin-bottom: 8px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .usecase-card-desc {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.68);
+        line-height: 1.55;
+        margin-bottom: 20px;
+        flex: 1;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .usecase-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #818cf8;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        width: fit-content;
+      }
+
+      .usecase-link svg {
+        transition: transform 0.2s ease;
+      }
+
+      .usecase-link:hover {
+        color: #ffffff;
+      }
+
+      .usecase-link:hover svg {
+        transform: translateX(3px);
+      }
+
+      /* Why DeepScan 3-Column Info Cards */
+      .why-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.008) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        border-radius: 14px;
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        position: relative;
+      }
+
+      .why-card:hover {
+        border-color: rgba(255, 255, 255, 0.28);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+      }
+
+      .why-icon-box {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(99, 102, 241, 0.08);
+        border: 1px solid rgba(99, 102, 241, 0.22);
+        color: #818cf8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .why-card:hover .why-icon-box {
+        background: rgba(99, 102, 241, 0.14);
+        border-color: rgba(129, 140, 248, 0.38);
+        color: #a5b4fc;
+      }
+
+      .why-card-title {
+        font-size: 19px;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+        margin-bottom: 10px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .why-card-desc {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.68);
+        line-height: 1.6;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      /* Premium Cybersecurity Scan Repository Button */
+      .scan-repo-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        color: #09090b;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        padding: 0 28px;
+        height: 48px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        cursor: pointer;
+        user-select: none;
+        line-height: 1;
+      }
+
+      .scan-repo-btn:hover {
+        background-color: #f4f4f5;
+        border-color: #d4d4d8;
+        color: #000000;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+      }
+
+      .scan-repo-btn:active {
+        transform: translateY(0) scale(0.98);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      }
+
+      /* Secondary CTA Button - Identical height, alignment, and subtle cyber border */
+      .cta-secondary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.9);
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        padding: 0 28px;
+        height: 48px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        text-decoration: none;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        cursor: pointer;
+        user-select: none;
+        line-height: 1;
+      }
+
+      .cta-secondary-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.45);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .cta-secondary-btn:active {
+        transform: translateY(0) scale(0.98);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Bottom CTA Section */
+      .bottom-cta-section {
+        background-color: #050507;
+        padding: 72px 24px 64px 24px;
         position: relative;
         overflow: hidden;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .bottom-cta-container {
+        max-width: 680px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        text-align: center;
+      }
+
+      .bottom-cta-heading {
+        color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        font-size: clamp(1.85rem, 3.6vw, 2.4rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+        margin: 0 0 14px 0;
+        text-align: center;
+        max-width: 620px;
+      }
+
+      .bottom-cta-subtext {
+        color: rgba(255, 255, 255, 0.72);
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+        line-height: 1.6;
+        margin: 0 0 28px 0;
+        text-align: center;
+        max-width: 560px;
+      }
+
+      .bottom-cta-buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      /* Minimal, Balanced Footer Section */
+      .site-footer {
+        background-color: #000000;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 56px 24px 36px 24px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .site-footer-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .footer-nav-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 36px;
+        width: 100%;
+        margin: 0 auto;
+        padding-bottom: 40px;
+      }
+
+      @media (max-width: 768px) {
+        .footer-nav-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 32px;
+          max-width: 480px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-nav-grid {
+          grid-template-columns: 1fr;
+          gap: 26px;
+          max-width: 280px;
+        }
+        .bottom-cta-buttons {
+          flex-direction: column;
+          gap: 12px;
+        }
+        .scan-repo-btn,
+        .cta-secondary-btn {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+
+      .footer-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-col-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: -0.01em;
+        margin-bottom: 14px;
+        text-align: center;
+      }
+
+      .footer-col-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 11px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .footer-nav-link {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.62);
+        text-decoration: none;
+        transition: color 0.2s ease;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      .footer-nav-link:hover {
+        color: #ffffff;
+      }
+
+      .footer-bottom-bar {
+        padding-top: 28px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 6px;
+      }
+
+      .footer-bottom-copy {
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 13px;
+        line-height: 1.4;
+        margin: 0;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .footer-bottom-sub {
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 12px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        margin: 0;
+        text-align: center;
+      }
+
+      /* Core Features / What You Get 2-Column Grid */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 22px;
+        width: 100%;
+      }
+
+      @media (min-width: 768px) {
+        .feature-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 28px;
+        }
+      }
+
+      .feature-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.006) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        border-radius: 14px;
+        padding: 34px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+      }
+
+      .feature-card:hover {
+        border-color: rgba(255, 255, 255, 0.28);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+      }
+
+      .feature-icon-box {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(99, 102, 241, 0.08);
+        border: 1px solid rgba(99, 102, 241, 0.22);
+        color: #818cf8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 22px;
+        transition: all 0.2s ease;
+      }
+
+      .feature-card:hover .feature-icon-box {
+        background: rgba(99, 102, 241, 0.14);
+        border-color: rgba(129, 140, 248, 0.38);
+        color: #a5b4fc;
+      }
+
+      .feature-card-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+        margin-bottom: 10px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .feature-card-desc {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.6;
+        margin-bottom: 26px;
+        flex: 1;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .feature-card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #a5b4fc;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+        width: fit-content;
+      }
+
+      .feature-card-link svg {
+        transition: transform 0.2s ease;
+      }
+
+      .feature-card:hover .feature-card-link {
+        color: #ffffff;
+      }
+
+      .feature-card:hover .feature-card-link svg {
+        transform: translateX(4px);
       }
 
       /* Three Lines Menu Button (Clean, Icon-Only) */
@@ -252,7 +682,7 @@
         transition: all 0.2s ease;
       }
 
-      /* Vertical Navigation Drawer */
+      /* Vertical Navigation Drawer (Clean, Minimal, Professional) */
       .vertical-nav-drawer {
         position: fixed;
         inset: 0;
@@ -262,7 +692,7 @@
         visibility: hidden;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .vertical-nav-drawer.active {
@@ -274,26 +704,33 @@
       .vertical-nav-backdrop {
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0.78);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+        background: rgba(0, 0, 0, 0.72);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
       }
 
       .vertical-nav-panel {
         position: relative;
         width: 100%;
-        max-width: 500px;
+        max-width: 380px;
         height: 100%;
         background: #09090b;
-        border-left: 1px solid rgba(255, 255, 255, 0.14);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 36px 42px;
-        box-shadow: -24px 0 70px rgba(0, 0, 0, 0.9);
+        padding: 24px 28px;
+        box-shadow: -16px 0 50px rgba(0, 0, 0, 0.85);
         transform: translateX(100%);
-        transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 10;
+      }
+
+      @media (max-width: 480px) {
+        .vertical-nav-panel {
+          max-width: 100%;
+          padding: 20px 20px;
+        }
       }
 
       .vertical-nav-drawer.active .vertical-nav-panel {
@@ -304,35 +741,36 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-bottom: 24px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
 
       .nav-close-btn {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 9999px;
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #ffffff;
+        color: rgba(255, 255, 255, 0.8);
         cursor: pointer;
         transition: all 0.2s ease;
       }
 
       .nav-close-btn:hover {
-        background: rgba(255, 255, 255, 0.15);
-        border-color: rgba(255, 255, 255, 0.45);
-        transform: rotate(90deg);
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #ffffff;
       }
 
       .vertical-nav-body {
-        padding: 36px 0;
+        padding: 24px 0;
         flex: 1;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
       }
 
       .vertical-nav-list {
@@ -342,12 +780,10 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 16px;
       }
 
       .vertical-nav-item {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding-bottom: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       }
 
       .vertical-nav-link {
@@ -355,85 +791,51 @@
         align-items: center;
         justify-content: space-between;
         text-decoration: none;
-        transition: all 0.25s ease;
-        padding: 6px 0;
-      }
-
-      .vertical-nav-num {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.35);
-        margin-right: 20px;
-        letter-spacing: 0.08em;
-        transition: color 0.25s ease;
+        padding: 16px 2px;
+        transition: all 0.2s ease;
       }
 
       .vertical-nav-text {
-        font-size: 34px;
+        font-size: 18px;
         font-weight: 600;
         color: rgba(255, 255, 255, 0.85);
-        letter-spacing: -0.025em;
-        transition: all 0.25s ease;
-        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        letter-spacing: -0.015em;
+        transition: all 0.2s ease;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
         flex: 1;
       }
 
-      .vertical-nav-link:hover .vertical-nav-text {
-        color: #ffffff;
-        transform: translateX(8px);
-      }
-
-      .vertical-nav-link:hover .vertical-nav-num {
-        color: #ffffff;
-      }
-
       .vertical-nav-arrow {
-        color: rgba(255, 255, 255, 0.3);
-        transition: all 0.25s ease;
+        color: rgba(255, 255, 255, 0.35);
+        transition: all 0.2s ease;
       }
 
-      .vertical-nav-link:hover .vertical-nav-arrow {
+      .vertical-nav-link:hover .vertical-nav-text,
+      .vertical-nav-link:active .vertical-nav-text {
         color: #ffffff;
-        transform: translateX(6px);
+        transform: translateX(4px);
+      }
+
+      .vertical-nav-link:hover .vertical-nav-arrow,
+      .vertical-nav-link:active .vertical-nav-arrow {
+        color: #ffffff;
+        transform: translateX(3px);
       }
 
       .vertical-nav-footer {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        padding-top: 24px;
-      }
-
-      .vertical-nav-cta {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        width: 100%;
-        padding: 16px 24px;
-        background: #ffffff;
-        color: #09090b;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 15px;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: all 0.25s ease;
-      }
-
-      .vertical-nav-cta:hover {
-        background: #e4e4e7;
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 16px;
       }
 
       .vertical-nav-meta {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        margin-top: 14px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        gap: 8px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.42);
+        letter-spacing: 0.01em;
       }
 
       /* Classic WriteMate FAQ Styling with Elevated Answer Box */
@@ -514,20 +916,20 @@
                 </nav>
             </header>
 
-            <!-- Vertical Navigation Drawer (Large Typography with 01-04 Sections) -->
+            <!-- Vertical Navigation Drawer (Cybersecurity Clean Minimal Nav) -->
             <div id="nav-drawer" class="vertical-nav-drawer" aria-hidden="true">
                 <div id="nav-backdrop" class="vertical-nav-backdrop"></div>
                 <div class="vertical-nav-panel">
                     <div class="vertical-nav-header">
                         <a href="/" style="display: flex; align-items: center; text-decoration: none;">
-                            <svg width="20" height="20" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="18" height="18" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="0.75" y="0.75" width="17.5" height="17.5" rx="4" stroke="white" stroke-width="1.5"/>
                             </svg>
-                            <span style="color: #ffffff; font-weight: 700; font-size: 20px; margin-left: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">DepScan</span>
-                            <span style="color: rgba(255, 255, 255, 0.6); font-weight: 400; font-size: 20px; margin-left: 5px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">AI</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 18px; margin-left: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; letter-spacing: -0.02em;">DepScan</span>
+                            <span style="color: rgba(255, 255, 255, 0.5); font-weight: 400; font-size: 18px; margin-left: 5px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">AI</span>
                         </a>
                         <button id="nav-close-btn" class="nav-close-btn" aria-label="Close Navigation">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
                             </svg>
@@ -538,44 +940,36 @@
                         <ul class="vertical-nav-list">
                             <li class="vertical-nav-item">
                                 <a href="#capabilities" class="vertical-nav-link">
-                                    <span class="vertical-nav-num">01</span>
                                     <span class="vertical-nav-text">Capabilities</span>
-                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    <svg class="vertical-nav-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
                             </li>
                             <li class="vertical-nav-item">
                                 <a href="#ecosystems" class="vertical-nav-link">
-                                    <span class="vertical-nav-num">02</span>
                                     <span class="vertical-nav-text">Ecosystems</span>
-                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    <svg class="vertical-nav-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
                             </li>
                             <li class="vertical-nav-item">
                                 <a href="#use-cases" class="vertical-nav-link">
-                                    <span class="vertical-nav-num">03</span>
                                     <span class="vertical-nav-text">Use Cases</span>
-                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    <svg class="vertical-nav-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
                             </li>
                             <li class="vertical-nav-item">
                                 <a href="#faq" class="vertical-nav-link">
-                                    <span class="vertical-nav-num">04</span>
                                     <span class="vertical-nav-text">FAQ</span>
-                                    <svg class="vertical-nav-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    <svg class="vertical-nav-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="vertical-nav-footer">
-                        <a href="/dashboard" class="vertical-nav-cta">
-                            <span>Launch Scanner</span>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
                         <div class="vertical-nav-meta">
-                            <span>DepScan Engine v2.4</span>
+                            <span>Software Supply Chain Security</span>
                             <span>•</span>
-                            <span>Zero-day heuristics active</span>
+                            <span>Developer First</span>
                         </div>
                     </div>
                 </div>
@@ -597,11 +991,8 @@
                                 Your all-in-one software supply chain security analyzer — identify risky dependencies, typosquatting indicators, build provenance flaws, and synthesize 1-click AI remediation patches.
                             </p>
                             <div class="flex justify-center items-center">
-                                <a href="/dashboard" class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center bg-white text-black font-mono text-base font-semibold px-8 py-4 hover:bg-gray-200 transition-all duration-300 gap-2.5 shadow-2xl hover:scale-[1.03] active:scale-[0.98]">
-                                    <span>Start</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                        <path d="M5 12H19M13 6L19 12L13 18" stroke="#060606" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                <a href="/dashboard" class="scan-repo-btn">
+                                    Scan Repository &rarr;
                                 </a>
                             </div>
                         </div>
@@ -613,52 +1004,46 @@
             <section id="ecosystems" class="py-16">
                 <div class="max-w-7xl mx-auto px-6">
                     <div>
-                        <div class="flex gap-10 items-center w-[290px] mx-auto justify-center mb-12">
-                            <span class="w-2 h-1 bg-white inline-block"></span>
-                            <span class="text-white font-mono uppercase tracking-wider text-sm">Supported Ecosystems &amp; Registries</span>
-                            <span class="w-2 h-1 bg-white inline-block"></span>
+                        <div class="max-w-2xl mx-auto text-center mb-12">
+                            <div class="inline-flex items-center gap-2 mb-3">
+                                <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+                                <span class="text-white/60 font-mono text-xs uppercase tracking-widest">ECOSYSTEMS</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-4xl font-medium text-white tracking-tight mb-3">Supported Ecosystems &amp; Registries</h2>
+                            <p class="text-base text-white/70 leading-relaxed max-w-lg mx-auto">Scan dependencies across the ecosystems your projects use.</p>
                         </div>
 
                         <!-- Auto-moving continuous marquee -->
                         <div class="marquee-wrapper">
                             <div class="marquee-track">
                                 <!-- Set 1 -->
-                                <!-- 1. npm -->
+                                <!-- 1. PyPI -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
-                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                                            <path d="M1.5 8.25h21v7.5H12V18H7.5v-2.25H1.5V8.25zm16.5 6V9.75h-3v4.5h3zm-4.5-4.5h-1.5v4.5H12v-4.5zm-3 4.5h1.5V9.75H10.5v4.5zm-3-4.5H6v3H4.5V9.75H3v4.5h4.5V9.75z"/>
-                                        </svg>
-                                    </div>
-                                    <span class="text-white font-mono font-bold text-sm">npm</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">JavaScript / TS</span>
-                                </div>
-
-                                <!-- 2. PyPI -->
-                                <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
                                             <path d="M11.91 1C6.27 1 6.64 3.45 6.64 3.45l.01 2.55h5.36v.76H4.25S1 6.38 1 12.04c0 5.65 2.84 5.45 2.84 5.45h1.7v-2.39s-.09-2.84 2.79-2.84h4.74s2.69.04 2.69-2.62V3.62S16.32 1 11.91 1zm-1.5 1.54a.97.97 0 1 1 0 1.94.97.97 0 0 1 0-1.94zm1.68 20.46c5.64 0 5.27-2.45 5.27-2.45l-.01-2.55h-5.36v-.76h7.76s3.25.38 3.25-5.28c0-5.65-2.84-5.45-2.84-5.45h-1.7v2.39s.09 2.84-2.79 2.84h-4.74s-2.69-.04-2.69 2.62v6.02s-.56 2.62 3.85 2.62zm1.5-1.54a.97.97 0 1 1 0-1.94.97.97 0 0 1 0 1.94z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">PyPI</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Python</span>
+                                    <div class="ecosystem-name">PyPI</div>
+                                    <div class="ecosystem-desc">Python Packages</div>
+                                    <span class="ecosystem-badge">Python</span>
                                 </div>
 
-                                <!-- 3. Go -->
+                                <!-- 2. Go -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
                                             <path d="M1.98 12.63c0-3.32 2.37-6.07 5.76-6.07 2.14 0 3.73 1.05 4.6 2.53l-1.92 1.34c-.58-.94-1.48-1.52-2.68-1.52-2.02 0-3.41 1.63-3.41 3.72 0 2.09 1.39 3.72 3.41 3.72 1.37 0 2.31-.73 2.75-1.87h-2.9v-2.22h5.3v5.67h-2.18v-1.12c-.78.89-1.84 1.48-3.17 1.48-3.39 0-5.76-2.75-5.76-6.07zm14.47 0c0-3.32 2.45-6.07 5.86-6.07s5.86 2.75 5.86 6.07-2.45 6.07-5.86 6.07-5.86-2.75-5.86-6.07zm9.37 0c0-2.09-1.44-3.72-3.51-3.72s-3.51 1.63-3.51 3.72 1.44 3.72 3.51 3.72 3.51-1.63 3.51-3.72z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Go</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">go.mod / sum</span>
+                                    <div class="ecosystem-name">Go</div>
+                                    <div class="ecosystem-desc">Go Modules</div>
+                                    <span class="ecosystem-badge">go.mod / go.sum</span>
                                 </div>
 
-                                <!-- 4. Maven -->
+                                <!-- 3. Maven -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
                                             <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
@@ -667,91 +1052,103 @@
                                             <line x1="14" y1="2" x2="14" y2="5"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Maven</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Java / pom.xml</span>
+                                    <div class="ecosystem-name">Maven</div>
+                                    <div class="ecosystem-desc">Java Packages</div>
+                                    <span class="ecosystem-badge">pom.xml</span>
                                 </div>
 
-                                <!-- 5. Cargo -->
+                                <!-- 4. Cargo -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                                             <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
                                             <line x1="12" y1="22.08" x2="12" y2="12"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Cargo</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Rust</span>
+                                    <div class="ecosystem-name">Cargo</div>
+                                    <div class="ecosystem-desc">Rust Packages</div>
+                                    <span class="ecosystem-badge">Cargo</span>
                                 </div>
 
-                                <!-- 6. Packagist -->
+                                <!-- 5. Packagist -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Packagist</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">PHP / Composer</span>
+                                    <div class="ecosystem-name">Packagist</div>
+                                    <div class="ecosystem-desc">PHP Packages</div>
+                                    <span class="ecosystem-badge">Composer</span>
                                 </div>
 
-                                <!-- 7. NuGet -->
+                                <!-- 6. NuGet -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
                                             <path d="M8 12h8M12 8v8"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">NuGet</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">.NET / C#</span>
+                                    <div class="ecosystem-name">NuGet</div>
+                                    <div class="ecosystem-desc">.NET Packages</div>
+                                    <span class="ecosystem-badge">.NET / C#</span>
                                 </div>
 
-                                <!-- 8. RubyGems -->
+                                <!-- 7. RubyGems -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
                                             <path d="M2 9h20M12 21 8 9l4-6 4 6-4 12z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">RubyGems</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Ruby / Gemfile</span>
+                                    <div class="ecosystem-name">RubyGems</div>
+                                    <div class="ecosystem-desc">Ruby Packages</div>
+                                    <span class="ecosystem-badge">Gemfile</span>
+                                </div>
+
+                                <!-- 8. npm -->
+                                <div class="ecosystem-card">
+                                    <div class="ecosystem-icon-box">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M1.5 8.25h21v7.5H12V18H7.5v-2.25H1.5V8.25zm16.5 6V9.75h-3v4.5h3zm-4.5-4.5h-1.5v4.5H12v-4.5zm-3 4.5h1.5V9.75H10.5v4.5zm-3-4.5H6v3H4.5V9.75H3v4.5h4.5V9.75z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ecosystem-name">npm</div>
+                                    <div class="ecosystem-desc">JavaScript Packages</div>
+                                    <span class="ecosystem-badge">package.json</span>
                                 </div>
 
                                 <!-- Duplicate Set for Seamless Infinite Loop -->
+                                <!-- 1. PyPI -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
-                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                                            <path d="M1.5 8.25h21v7.5H12V18H7.5v-2.25H1.5V8.25zm16.5 6V9.75h-3v4.5h3zm-4.5-4.5h-1.5v4.5H12v-4.5zm-3 4.5h1.5V9.75H10.5v4.5zm-3-4.5H6v3H4.5V9.75H3v4.5h4.5V9.75z"/>
-                                        </svg>
-                                    </div>
-                                    <span class="text-white font-mono font-bold text-sm">npm</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">JavaScript / TS</span>
-                                </div>
-
-                                <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
                                             <path d="M11.91 1C6.27 1 6.64 3.45 6.64 3.45l.01 2.55h5.36v.76H4.25S1 6.38 1 12.04c0 5.65 2.84 5.45 2.84 5.45h1.7v-2.39s-.09-2.84 2.79-2.84h4.74s2.69.04 2.69-2.62V3.62S16.32 1 11.91 1zm-1.5 1.54a.97.97 0 1 1 0 1.94.97.97 0 0 1 0-1.94zm1.68 20.46c5.64 0 5.27-2.45 5.27-2.45l-.01-2.55h-5.36v-.76h7.76s3.25.38 3.25-5.28c0-5.65-2.84-5.45-2.84-5.45h-1.7v2.39s.09 2.84-2.79 2.84h-4.74s-2.69-.04-2.69 2.62v6.02s-.56 2.62 3.85 2.62zm1.5-1.54a.97.97 0 1 1 0-1.94.97.97 0 0 1 0 1.94z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">PyPI</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Python</span>
+                                    <div class="ecosystem-name">PyPI</div>
+                                    <div class="ecosystem-desc">Python Packages</div>
+                                    <span class="ecosystem-badge">Python</span>
                                 </div>
 
+                                <!-- 2. Go -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
                                             <path d="M1.98 12.63c0-3.32 2.37-6.07 5.76-6.07 2.14 0 3.73 1.05 4.6 2.53l-1.92 1.34c-.58-.94-1.48-1.52-2.68-1.52-2.02 0-3.41 1.63-3.41 3.72 0 2.09 1.39 3.72 3.41 3.72 1.37 0 2.31-.73 2.75-1.87h-2.9v-2.22h5.3v5.67h-2.18v-1.12c-.78.89-1.84 1.48-3.17 1.48-3.39 0-5.76-2.75-5.76-6.07zm14.47 0c0-3.32 2.45-6.07 5.86-6.07s5.86 2.75 5.86 6.07-2.45 6.07-5.86 6.07-5.86-2.75-5.86-6.07zm9.37 0c0-2.09-1.44-3.72-3.51-3.72s-3.51 1.63-3.51 3.72 1.44 3.72 3.51 3.72 3.51-1.63 3.51-3.72z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Go</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">go.mod / sum</span>
+                                    <div class="ecosystem-name">Go</div>
+                                    <div class="ecosystem-desc">Go Modules</div>
+                                    <span class="ecosystem-badge">go.mod / go.sum</span>
                                 </div>
 
+                                <!-- 3. Maven -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
                                             <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
@@ -760,52 +1157,73 @@
                                             <line x1="14" y1="2" x2="14" y2="5"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Maven</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Java / pom.xml</span>
+                                    <div class="ecosystem-name">Maven</div>
+                                    <div class="ecosystem-desc">Java Packages</div>
+                                    <span class="ecosystem-badge">pom.xml</span>
                                 </div>
 
+                                <!-- 4. Cargo -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                                             <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
                                             <line x1="12" y1="22.08" x2="12" y2="12"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Cargo</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Rust</span>
+                                    <div class="ecosystem-name">Cargo</div>
+                                    <div class="ecosystem-desc">Rust Packages</div>
+                                    <span class="ecosystem-badge">Cargo</span>
                                 </div>
 
+                                <!-- 5. Packagist -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">Packagist</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">PHP / Composer</span>
+                                    <div class="ecosystem-name">Packagist</div>
+                                    <div class="ecosystem-desc">PHP Packages</div>
+                                    <span class="ecosystem-badge">Composer</span>
                                 </div>
 
+                                <!-- 6. NuGet -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
                                             <path d="M8 12h8M12 8v8"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">NuGet</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">.NET / C#</span>
+                                    <div class="ecosystem-name">NuGet</div>
+                                    <div class="ecosystem-desc">.NET Packages</div>
+                                    <span class="ecosystem-badge">.NET / C#</span>
                                 </div>
 
+                                <!-- 7. RubyGems -->
                                 <div class="ecosystem-card">
-                                    <div class="w-10 h-10 mb-2 flex items-center justify-center">
+                                    <div class="ecosystem-icon-box">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
                                             <path d="M2 9h20M12 21 8 9l4-6 4 6-4 12z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-white font-mono font-bold text-sm">RubyGems</span>
-                                    <span class="text-white/50 text-xs mt-1 font-mono">Ruby / Gemfile</span>
+                                    <div class="ecosystem-name">RubyGems</div>
+                                    <div class="ecosystem-desc">Ruby Packages</div>
+                                    <span class="ecosystem-badge">Gemfile</span>
+                                </div>
+
+                                <!-- 8. npm -->
+                                <div class="ecosystem-card">
+                                    <div class="ecosystem-icon-box">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                                            <path d="M1.5 8.25h21v7.5H12V18H7.5v-2.25H1.5V8.25zm16.5 6V9.75h-3v4.5h3zm-4.5-4.5h-1.5v4.5H12v-4.5zm-3 4.5h1.5V9.75H10.5v4.5zm-3-4.5H6v3H4.5V9.75H3v4.5h4.5V9.75z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ecosystem-name">npm</div>
+                                    <div class="ecosystem-desc">JavaScript Packages</div>
+                                    <span class="ecosystem-badge">package.json</span>
                                 </div>
                             </div>
                         </div>
@@ -818,330 +1236,373 @@
                 </div>
             </section>
 
-            <!-- What You Get Section (Fixed Overlap & Responsive Carousel) -->
+            <!-- What You Get / Core Features Section -->
             <section id="capabilities" class="border-y border-white/20 mb-20">
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="border-x border-white/20 p-5 lg:p-20">
-                        <div class="flex flex-col sm:flex-row justify-between gap-5 lg:items-end mb-12">
-                            <div class="lg:max-w-xl">
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                                    <span class="text-white/60 font-mono text-xs uppercase tracking-widest">Platform Core Features</span>
-                                </div>
-                                <h2 class="text-3xl sm:text-4xl mb-4 font-medium text-white">What You Get</h2>
-                                <p class="text-base text-white/80">Advanced dependency reasoning, blast radius computation, known CVE correlation, and automated Git diff patch synthesis.</p>
+                    <div class="border-x border-white/20 p-6 sm:p-10 lg:p-16">
+                        <div class="max-w-2xl mb-12">
+                            <div class="inline-flex items-center gap-2 mb-3">
+                                <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+                                <span class="text-white/60 font-mono text-xs uppercase tracking-widest">CORE FEATURES</span>
                             </div>
-                            <div class="flex gap-3 items-center">
-                                <button id="what-prev-btn" aria-label="Previous Slide" class="size-12 border border-white/30 items-center justify-center cursor-pointer bg-white/5 text-white font-mono flex hover:bg-white/15 transition duration-200 active:scale-95">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
-                                        <path d="M19 12H5M11 18L5 12L11 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                                <button id="what-next-btn" aria-label="Next Slide" class="size-12 border border-white/30 items-center justify-center cursor-pointer bg-white/5 text-white font-mono flex hover:bg-white/15 transition duration-200 active:scale-95">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
-                                        <path d="M5 12H19M13 6L19 12L13 18" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                            </div>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl mb-3 font-medium text-white tracking-tight">What You Get</h2>
+                            <p class="text-base sm:text-lg text-white/70 leading-relaxed">Powerful analysis. Clear insights. Actionable security.</p>
                         </div>
 
-                        <!-- Responsive Carousel Container (Completely unclipped, no black cutoff) -->
-                        <div class="overflow-hidden w-full pb-4">
-                            <div id="what-track" class="what-track">
-                                <!-- Card 1: Dependency Graph & Blast Radius -->
-                                <div class="what-card">
-                                    <div class="mb-6 flex items-center justify-between">
-                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="18" cy="5" r="3"></circle>
-                                                <circle cx="6" cy="12" r="3"></circle>
-                                                <circle cx="18" cy="19" r="3"></circle>
-                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                            </svg>
-                                        </div>
-                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">01 // TOPOLOGY</span>
+                        <!-- 2 Cards Per Row Desktop Grid -->
+                        <div class="feature-grid">
+                            <!-- Card 1: Dependency Vulnerability Detection -->
+                            <div class="feature-card">
+                                <div>
+                                    <div class="feature-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                            <line x1="12" y1="8" x2="12" y2="12"/>
+                                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                        </svg>
                                     </div>
-                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">Dependency Graph &amp; Blast Radius</h3>
-                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
-                                        NetworkX graph reasoning computing exact transitive reach and mathematical blast radius across your upstream and downstream service graph.
-                                    </p>
-                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
-                                        <span>Try now</span>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </a>
+                                    <h3 class="feature-card-title">Dependency Vulnerability Detection</h3>
+                                    <p class="feature-card-desc">Identify vulnerable direct and transitive dependencies and understand their severity.</p>
                                 </div>
+                                <a href="/dashboard" class="feature-card-link">
+                                    <span>Learn more</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
 
-                                <!-- Card 2: Known CVE & GHSA Correlation (Second card - completely clean & visible!) -->
-                                <div class="what-card">
-                                    <div class="mb-6 flex items-center justify-between">
-                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                                <path d="M9 12l2 2 4-4"></path>
-                                            </svg>
-                                        </div>
-                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">02 // ADVISORY</span>
+                            <!-- Card 2: Typosquatting Detection -->
+                            <div class="feature-card">
+                                <div>
+                                    <div class="feature-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"/>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                            <line x1="11" y1="8" x2="11" y2="11"/>
+                                            <line x1="11" y1="14" x2="11.01" y2="14"/>
+                                        </svg>
                                     </div>
-                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">Known CVE &amp; GHSA Correlation</h3>
-                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
-                                        High-speed synchronization with OSV.dev and GitHub Advisory Database to instantly correlate exact semver ranges against confirmed zero-day disclosures.
-                                    </p>
-                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
-                                        <span>Try now</span>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </a>
+                                    <h3 class="feature-card-title">Typosquatting Detection</h3>
+                                    <p class="feature-card-desc">Detect lookalike package names that may indicate potential typosquatting risks.</p>
                                 </div>
+                                <a href="/dashboard" class="feature-card-link">
+                                    <span>Learn more</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
 
-                                <!-- Card 3: Typosquatting & Scope Shield -->
-                                <div class="what-card">
-                                    <div class="mb-6 flex items-center justify-between">
-                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="22" y1="12" x2="18" y2="12"></line>
-                                                <line x1="6" y1="12" x2="2" y2="12"></line>
-                                                <line x1="12" y1="6" x2="12" y2="2"></line>
-                                                <line x1="12" y1="22" x2="12" y2="18"></line>
-                                            </svg>
-                                        </div>
-                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">03 // HEURISTIC</span>
+                            <!-- Card 3: Dependency Confusion Detection -->
+                            <div class="feature-card">
+                                <div>
+                                    <div class="feature-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                        </svg>
                                     </div>
-                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">Typosquatting &amp; Scope Shield</h3>
-                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
-                                        Levenshtein distance matching and internal namespace audit preventing dependency confusion and malicious lookalike package substitution.
-                                    </p>
-                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
-                                        <span>Try now</span>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </a>
+                                    <h3 class="feature-card-title">Dependency Confusion Detection</h3>
+                                    <p class="feature-card-desc">Identify packages that could introduce dependency-confusion risks into your project.</p>
                                 </div>
+                                <a href="/dashboard" class="feature-card-link">
+                                    <span>Learn more</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
 
-                                <!-- Card 4: 1-Click Auto-Remediation Patch -->
-                                <div class="what-card">
-                                    <div class="mb-6 flex items-center justify-between">
-                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                                <polyline points="14 2 14 8 20 8"></polyline>
-                                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                                <polyline points="10 9 9 9 8 9"></polyline>
-                                            </svg>
-                                        </div>
-                                        <span class="text-white/40 font-mono text-xs uppercase tracking-wider">04 // SYNTHESIS</span>
+                            <!-- Card 4: Supply-Chain Risk Analysis -->
+                            <div class="feature-card">
+                                <div>
+                                    <div class="feature-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                        </svg>
                                     </div>
-                                    <h3 class="text-white mb-3 text-2xl font-medium tracking-tight">1-Click Auto-Remediation Patch</h3>
-                                    <p class="text-base text-white/75 mb-10 leading-relaxed">
-                                        AI-synthesized unified Git diff patches with deterministic version bumping and backward compatibility checks to eliminate triage bottlenecks.
-                                    </p>
-                                    <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center border border-white/40 bg-white/5 transition duration-300 hover:bg-white/15 text-white font-mono px-6 py-3 text-sm gap-2" href="/dashboard">
-                                        <span>Try now</span>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </a>
+                                    <h3 class="feature-card-title">Supply-Chain Risk Analysis</h3>
+                                    <p class="feature-card-desc">Combine security signals to prioritize the dependencies that need attention first.</p>
                                 </div>
+                                <a href="/dashboard" class="feature-card-link">
+                                    <span>Learn more</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+
+                            <!-- Card 5: Dependency Graph -->
+                            <div class="feature-card">
+                                <div>
+                                    <div class="feature-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="18" cy="5" r="3"/>
+                                            <circle cx="6" cy="12" r="3"/>
+                                            <circle cx="18" cy="19" r="3"/>
+                                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="feature-card-title">Dependency Graph</h3>
+                                    <p class="feature-card-desc">Visualize direct and transitive dependencies to understand how risk spreads through your project.</p>
+                                </div>
+                                <a href="/dashboard" class="feature-card-link">
+                                    <span>Learn more</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+
+                            <!-- Card 6: Prioritized Remediation -->
+                            <div class="feature-card">
+                                <div>
+                                    <div class="feature-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M9 11l3 3L22 4"/>
+                                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="feature-card-title">Prioritized Remediation</h3>
+                                    <p class="feature-card-desc">Get clear, actionable recommendations for fixing the highest-risk dependencies first.</p>
+                                </div>
+                                <a href="/dashboard" class="feature-card-link">
+                                    <span>Learn more</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- DepScan Security Use Cases (Top 0.00000001% Craftsmanship) -->
+            <!-- Core Features / What You Get (3x2 Grid) -->
             <section id="use-cases" class="border-y border-white/20 mb-20">
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="border-x border-white/20 py-16 xl:py-24 px-6 xl:px-14">
-                        <div class="max-w-3xl mx-auto text-center mb-16">
+                    <div class="border-x border-white/20 py-16 xl:py-20 px-6 xl:px-14">
+                        <div class="max-w-3xl mx-auto text-center mb-14">
                             <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/20 rounded-full mb-4">
-                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-                                <span class="text-white/80 font-mono text-xs uppercase tracking-widest">Enterprise Defense Matrix</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                <span class="text-white/80 font-mono text-xs uppercase tracking-widest">CORE FEATURES</span>
                             </div>
-                            <h2 class="text-3xl sm:text-4xl lg:text-5xl mb-6 font-medium text-white tracking-tight">DepScan Security Use Cases</h2>
-                            <p class="text-base lg:text-lg text-white/80 leading-relaxed max-w-2xl mx-auto">Empower security engineers, DevOps, and developers to eliminate supply chain vulnerabilities before code reaches production.</p>
+                            <h2 class="text-3xl sm:text-4xl font-medium text-white tracking-tight mb-4">What You Get</h2>
+                            <p class="text-base sm:text-lg text-white/75 leading-relaxed max-w-2xl mx-auto">Everything you need to understand, detect, and prioritize software supply-chain risks.</p>
                         </div>
 
-                        <!-- 6 Use Cases Luxury Grid -->
+                        <!-- 6 Cards 3x2 Grid on Desktop -->
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- 1. Monorepo & Polyglot Auditing -->
+                            <!-- 1. Dependency Analysis -->
                             <div class="usecase-card">
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <div>
+                                    <div class="usecase-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                                             <polyline points="2 17 12 22 22 17"></polyline>
                                             <polyline points="2 12 12 17 22 12"></polyline>
                                         </svg>
                                     </div>
-                                    <span class="text-white/40 font-mono text-xs tracking-wider">01 // AUDIT</span>
+                                    <h3 class="usecase-card-title">Dependency Analysis</h3>
+                                    <p class="usecase-card-desc">Discover direct and transitive dependencies across your repository.</p>
                                 </div>
-                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Monorepo &amp; Polyglot Auditing</h3>
-                                <p class="text-sm text-white/70 leading-relaxed">Recursively discover and trace dependencies across npm, PyPI, Go, Maven, and Cargo simultaneously.</p>
+                                <a href="/dashboard" class="usecase-link">
+                                    <span>Learn more</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
                             </div>
 
-                            <!-- 2. Pre-Deployment CI/CD Pipeline Gates -->
+                            <!-- 2. Vulnerability Detection -->
                             <div class="usecase-card">
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <div>
+                                    <div class="usecase-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                            <polyline points="9 12 11 14 15 10"></polyline>
+                                            <path d="M9 12l2 2 4-4"></path>
                                         </svg>
                                     </div>
-                                    <span class="text-white/40 font-mono text-xs tracking-wider">02 // PIPELINE</span>
+                                    <h3 class="usecase-card-title">Vulnerability Detection</h3>
+                                    <p class="usecase-card-desc">Correlate dependencies with known security vulnerabilities and advisories.</p>
                                 </div>
-                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Pre-Deployment CI/CD Pipeline Gates</h3>
-                                <p class="text-sm text-white/70 leading-relaxed">Deterministic risk thresholds (P0-P3) to block compromised dependencies from production builds.</p>
+                                <a href="/dashboard" class="usecase-link">
+                                    <span>Learn more</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
                             </div>
 
-                            <!-- 3. Zero-Day Dependency Confusion Shield -->
+                            <!-- 3. Typosquatting Detection -->
                             <div class="usecase-card">
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                <div>
+                                    <div class="usecase-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            <line x1="11" y1="8" x2="11" y2="11"></line>
+                                            <line x1="11" y1="14" x2="11.01" y2="14"></line>
                                         </svg>
                                     </div>
-                                    <span class="text-white/40 font-mono text-xs tracking-wider">03 // SHIELD</span>
+                                    <h3 class="usecase-card-title">Typosquatting Detection</h3>
+                                    <p class="usecase-card-desc">Identify suspicious package names that may indicate potential typosquatting.</p>
                                 </div>
-                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Zero-Day Dependency Confusion Shield</h3>
-                                <p class="text-sm text-white/70 leading-relaxed">Levenshtein distance checks preventing public registry substitution and internal scope hijacking.</p>
+                                <a href="/dashboard" class="usecase-link">
+                                    <span>Learn more</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
                             </div>
 
-                            <!-- 4. Transitive Blast Radius Impact -->
+                            <!-- 4. Dependency Confusion -->
                             <div class="usecase-card">
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                <div>
+                                    <div class="usecase-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                                         </svg>
                                     </div>
-                                    <span class="text-white/40 font-mono text-xs tracking-wider">04 // GRAPH</span>
+                                    <h3 class="usecase-card-title">Dependency Confusion</h3>
+                                    <p class="usecase-card-desc">Detect packages that may introduce dependency-confusion risks.</p>
                                 </div>
-                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Transitive Blast Radius Impact</h3>
-                                <p class="text-sm text-white/70 leading-relaxed">Compute exact mathematical blast radius across entire upstream and downstream service graphs.</p>
+                                <a href="/dashboard" class="usecase-link">
+                                    <span>Learn more</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
                             </div>
 
-                            <!-- 5. Lifecycle Script Execution Audits -->
+                            <!-- 5. Supply-Chain Risk Analysis -->
                             <div class="usecase-card">
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="4 17 10 11 4 5"></polyline>
-                                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                                <div>
+                                    <div class="usecase-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                                         </svg>
                                     </div>
-                                    <span class="text-white/40 font-mono text-xs tracking-wider">05 // HOOKS</span>
+                                    <h3 class="usecase-card-title">Supply-Chain Risk Analysis</h3>
+                                    <p class="usecase-card-desc">Combine multiple security signals to identify suspicious dependencies and prioritize risk.</p>
                                 </div>
-                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Lifecycle Script Execution Audits</h3>
-                                <p class="text-sm text-white/70 leading-relaxed">Inspect npm preinstall/postinstall hooks for hidden remote execution or credential exfiltration.</p>
+                                <a href="/dashboard" class="usecase-link">
+                                    <span>Learn more</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
                             </div>
 
-                            <!-- 6. Gemini AI Exploit Reasoning -->
+                            <!-- 6. Risk-Based Remediation -->
                             <div class="usecase-card">
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                                <div>
+                                    <div class="usecase-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M9 11l3 3L22 4"></path>
+                                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                                         </svg>
                                     </div>
-                                    <span class="text-white/40 font-mono text-xs tracking-wider">06 // AI REASONING</span>
+                                    <h3 class="usecase-card-title">Risk-Based Remediation</h3>
+                                    <p class="usecase-card-desc">Get clear, actionable recommendations for fixing the highest-risk dependencies first.</p>
                                 </div>
-                                <h3 class="mb-3 text-xl font-semibold text-white tracking-tight">Gemini AI Exploit Reasoning</h3>
-                                <p class="text-sm text-white/70 leading-relaxed">Synthesize real-world attacker exploit scenarios and produce 1-click unified Git diff patches.</p>
+                                <a href="/dashboard" class="usecase-link">
+                                    <span>Learn more</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Trusted by Security Engineers (Compact Horizontal Scrollbar) -->
+            <!-- Why DeepScan Section (Visibility -> Risk Understanding -> Action) -->
             <section class="mb-14 border-y border-white/20">
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="py-12 lg:py-16">
-                        <div class="max-w-2xl mx-auto text-center mb-10">
+                    <div class="py-14 lg:py-20">
+                        <div class="max-w-2xl mx-auto text-center mb-12">
                             <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/20 rounded-full mb-3">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                <span class="text-white/80 font-mono text-xs uppercase tracking-widest">Industry Practitioners</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                                <span class="text-white/80 font-mono text-xs uppercase tracking-widest">Why DeepScan</span>
                             </div>
-                            <h2 class="text-3xl sm:text-4xl font-medium text-white tracking-tight mb-3">Trusted by Security Engineers</h2>
-                            <p class="text-base text-zinc-300 leading-relaxed">DevSecOps teams rely on DepScan AI to prevent malicious supply chain compromises before production release.</p>
+                            <h2 class="text-3xl sm:text-4xl font-medium text-white tracking-tight mb-3">Security insights developers can act on</h2>
+                            <p class="text-base text-zinc-300 leading-relaxed max-w-xl mx-auto">DeepScan turns dependency data and supply-chain signals into clear, prioritized security findings.</p>
                         </div>
 
-                        <!-- Horizontal Scrollbar Container for Testimonials -->
-                        <div class="testimonials-scroll-container">
-                            <!-- 1. Alex K. -->
-                            <div class="testimonial-card">
+                        <!-- 3-Column Info Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Card 1: See Every Dependency -->
+                            <div class="why-card">
                                 <div>
-                                    <div class="flex items-center justify-between mb-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-semibold">
-                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                            Verified AppSec
-                                        </span>
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" fill-opacity="0.35">
-                                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                                        </svg>
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div class="why-icon-box">
+                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="18" cy="5" r="3"/>
+                                                <circle cx="6" cy="12" r="3"/>
+                                                <circle cx="18" cy="19" r="3"/>
+                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                            </svg>
+                                        </div>
+                                        <span class="text-[11px] font-mono tracking-wider text-white/50 bg-white/[0.04] border border-white/10 px-2.5 py-1 rounded-full uppercase">Visibility</span>
                                     </div>
-                                    <p class="text-white text-[15px] leading-relaxed mb-6 font-normal">
-                                        "DepScan's blast radius calculation pinpointed 14 downstream microservices vulnerable to an obscure transitive dependency in seconds."
-                                    </p>
+                                    <h3 class="why-card-title">See Every Dependency</h3>
+                                    <p class="why-card-desc">Discover direct and transitive dependencies and understand how they connect to your project.</p>
                                 </div>
-                                <div class="flex items-center gap-3 pt-4 border-t border-white/15">
-                                    <div class="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-mono text-white text-xs font-bold tracking-wider">AK</div>
-                                    <div>
-                                        <p class="text-white text-base font-semibold tracking-tight">Alex K.</p>
-                                        <p class="text-zinc-300 text-xs font-mono font-medium">Lead AppSec Engineer</p>
+                                <div class="mt-6 pt-5 border-t border-white/10">
+                                    <div class="flex items-center justify-between text-[11px] font-mono bg-black/40 border border-white/10 rounded-lg py-2.5 px-3">
+                                        <span class="text-white/80 font-medium">Repository</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-400 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                        <span class="text-indigo-300 font-medium">Direct Deps</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-400 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                        <span class="text-white/70 font-medium">Transitive</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- 2. Sarah M. -->
-                            <div class="testimonial-card">
+                            <!-- Card 2: Understand the Risk -->
+                            <div class="why-card">
                                 <div>
-                                    <div class="flex items-center justify-between mb-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-semibold">
-                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                            Verified DevOps
-                                        </span>
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" fill-opacity="0.35">
-                                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                                        </svg>
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div class="why-icon-box">
+                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                            </svg>
+                                        </div>
+                                        <span class="text-[11px] font-mono tracking-wider text-white/50 bg-white/[0.04] border border-white/10 px-2.5 py-1 rounded-full uppercase">Risk Analysis</span>
                                     </div>
-                                    <p class="text-white text-[15px] leading-relaxed mb-6 font-normal">
-                                        "The typosquatting heuristic caught a malicious lookalike package before our CI build ran. Zero code execution guarantee is a lifesaver."
-                                    </p>
+                                    <h3 class="why-card-title">Understand the Risk</h3>
+                                    <p class="why-card-desc">Correlate vulnerabilities and supply-chain signals to identify which dependencies need attention first.</p>
                                 </div>
-                                <div class="flex items-center gap-3 pt-4 border-t border-white/15">
-                                    <div class="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-mono text-white text-xs font-bold tracking-wider">SM</div>
-                                    <div>
-                                        <p class="text-white text-base font-semibold tracking-tight">Sarah M.</p>
-                                        <p class="text-zinc-300 text-xs font-mono font-medium">Principal DevOps Architect</p>
+                                <div class="mt-6 pt-5 border-t border-white/10">
+                                    <div class="grid grid-cols-4 gap-1.5 text-center text-[11px] font-mono">
+                                        <div class="py-2 px-1 rounded bg-red-950/40 border border-red-500/30 text-red-400 font-medium flex items-center justify-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                            <span>Critical</span>
+                                        </div>
+                                        <div class="py-2 px-1 rounded bg-orange-950/40 border border-orange-500/30 text-orange-400 font-medium flex items-center justify-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                            <span>High</span>
+                                        </div>
+                                        <div class="py-2 px-1 rounded bg-amber-950/40 border border-amber-500/30 text-amber-400 font-medium flex items-center justify-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                            <span>Medium</span>
+                                        </div>
+                                        <div class="py-2 px-1 rounded bg-blue-950/40 border border-blue-500/30 text-blue-400 font-medium flex items-center justify-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                            <span>Low</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- 3. David L. -->
-                            <div class="testimonial-card">
+                            <!-- Card 3: Know What to Fix -->
+                            <div class="why-card">
                                 <div>
-                                    <div class="flex items-center justify-between mb-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-semibold">
-                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                            Verified Infra
-                                        </span>
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" fill-opacity="0.35">
-                                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                                        </svg>
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div class="why-icon-box">
+                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                                <polyline points="22 4 12 14.01 9 11.01"/>
+                                            </svg>
+                                        </div>
+                                        <span class="text-[11px] font-mono tracking-wider text-white/50 bg-white/[0.04] border border-white/10 px-2.5 py-1 rounded-full uppercase">Action</span>
                                     </div>
-                                    <p class="text-white text-[15px] leading-relaxed mb-6 font-normal">
-                                        "Automated unified git diffs generated by Gemini mean our engineers don't debate vulnerability fixes — they just verify and merge."
-                                    </p>
+                                    <h3 class="why-card-title">Know What to Fix</h3>
+                                    <p class="why-card-desc">Get prioritized remediation guidance instead of a long list of security alerts.</p>
                                 </div>
-                                <div class="flex items-center gap-3 pt-4 border-t border-white/15">
-                                    <div class="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-mono text-white text-xs font-bold tracking-wider">DL</div>
-                                    <div>
-                                        <p class="text-white text-base font-semibold tracking-tight">David L.</p>
-                                        <p class="text-zinc-300 text-xs font-mono font-medium">Head of Infrastructure</p>
+                                <div class="mt-6 pt-5 border-t border-white/10">
+                                    <div class="flex items-center justify-between text-[11px] font-mono bg-black/40 border border-white/10 rounded-lg py-2.5 px-3">
+                                        <span class="text-amber-400/90 font-medium">Risk detected</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/40 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                        <span class="text-indigo-300 font-medium">Priority</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/40 flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                        <span class="text-emerald-400 font-medium">Action</span>
                                     </div>
                                 </div>
                             </div>
@@ -1236,64 +1697,61 @@
             </section>
 
             <!-- Bottom Call to Action Section -->
-            <section class="bg-theme-dark py-20 relative overflow-hidden">
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-full pointer-events-none">
-                    <img class="w-full h-full" alt="" src="/images/shape-4.png">
-                </div>
-                <div class="max-w-2xl mx-auto relative z-10 px-5">
-                    <h2 class="text-white text-5xl text-center mb-4">Ready to secure your software supply chain?</h2>
-                    <p class="mb-8 text-white/80 text-center">Analyze your repositories, discover hidden blast radius threats, and generate 1-click Git patches in seconds.</p>
-                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                        <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center bg-white px-8 py-3.5 text-theme-dark-500 transition-all duration-300 w-auto text-base hover:bg-white/90 font-mono font-semibold" href="/dashboard">
-                            <span>Start</span>
+            <section class="bottom-cta-section">
+                <div class="bottom-cta-container">
+                    <h2 class="bottom-cta-heading">Ready to secure your software supply chain?</h2>
+                    <p class="bottom-cta-subtext">Analyze your repositories, discover hidden blast radius threats, and generate 1-click Git patches in seconds.</p>
+                    <div class="bottom-cta-buttons">
+                        <a href="/dashboard" class="scan-repo-btn">
+                            Scan Repository &rarr;
                         </a>
-                        <a class="cursor-pointer relative overflow-hidden group inline-flex items-center justify-center text-white bg-white/5 border py-3.5 border-white/40 transition-all duration-300 hover:bg-white/15 px-8 w-auto text-base font-mono" href="/docs" target="_blank">
-                            <span>API Documentation</span>
+                        <a href="/docs" target="_blank" class="cta-secondary-btn">
+                            API Documentation
                         </a>
                     </div>
                 </div>
             </section>
 
             <!-- Footer -->
-            <footer class="pt-10 lg:pt-20 border-t border-white/20">
-                <div class="max-w-7xl mx-auto px-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pb-12 lg:pb-24 gap-8 lg:gap-4">
-                        <article>
-                            <h3 class="mb-4 font-semibold text-white text-sm">Product</h3>
-                            <nav class="space-y-4">
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/dashboard">Scanner Dashboard</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs">API Reference</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#ecosystems">Supported Registries</a>
+            <footer class="site-footer">
+                <div class="site-footer-inner">
+                    <div class="footer-nav-grid">
+                        <article class="footer-col">
+                            <h3 class="footer-col-title">Product</h3>
+                            <nav class="footer-col-nav">
+                                <a class="footer-nav-link" href="/dashboard">Scanner Dashboard</a>
+                                <a class="footer-nav-link" href="/docs">API Reference</a>
+                                <a class="footer-nav-link" href="#ecosystems">Supported Registries</a>
                             </nav>
                         </article>
-                        <article>
-                            <h3 class="mb-4 font-semibold text-white text-sm">Capabilities</h3>
-                            <nav class="space-y-4">
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#capabilities">Blast Radius Analysis</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#capabilities">Zero-Day Shield</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#use-cases">Git Diff Patches</a>
+                        <article class="footer-col">
+                            <h3 class="footer-col-title">Capabilities</h3>
+                            <nav class="footer-col-nav">
+                                <a class="footer-nav-link" href="#capabilities">Blast Radius Analysis</a>
+                                <a class="footer-nav-link" href="#capabilities">Zero-Day Shield</a>
+                                <a class="footer-nav-link" href="#use-cases">Git Diff Patches</a>
                             </nav>
                         </article>
-                        <article>
-                            <h3 class="mb-4 font-semibold text-white text-sm">Security</h3>
-                            <nav class="space-y-4">
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#use-cases">Static AST Engine</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#faq">Zero Code Execution</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="#use-cases">GHSA Correlation</a>
+                        <article class="footer-col">
+                            <h3 class="footer-col-title">Security</h3>
+                            <nav class="footer-col-nav">
+                                <a class="footer-nav-link" href="#use-cases">Static AST Engine</a>
+                                <a class="footer-nav-link" href="#faq">Zero Code Execution</a>
+                                <a class="footer-nav-link" href="#use-cases">GHSA Correlation</a>
                             </nav>
                         </article>
-                        <article>
-                            <h3 class="mb-4 font-semibold text-white text-sm">Platform</h3>
-                            <nav class="space-y-4">
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/">Home</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/dashboard">Launch Scanner</a>
-                                <a class="text-zinc-400 block text-sm leading-5 hover:text-white transition" href="/docs">OpenAPI Schema</a>
+                        <article class="footer-col">
+                            <h3 class="footer-col-title">Platform</h3>
+                            <nav class="footer-col-nav">
+                                <a class="footer-nav-link" href="/">Home</a>
+                                <a class="footer-nav-link" href="/dashboard">Launch Scanner</a>
+                                <a class="footer-nav-link" href="/docs">OpenAPI Schema</a>
                             </nav>
                         </article>
                     </div>
-                    <div class="pt-6 pb-12 border-t border-white/20 flex flex-col items-center justify-center text-center gap-2.5">
-                        <p class="text-zinc-400 text-sm leading-5 transition text-center m-0">© 2026 DepScan AI. All rights reserved.</p>
-                        <p class="text-zinc-500 text-xs font-mono text-center m-0">Polyglot Software Supply Chain Defense &middot; Static Analysis Only &middot; Zero Code Execution</p>
+                    <div class="footer-bottom-bar">
+                        <p class="footer-bottom-copy">&copy; 2026 DepScan AI. All rights reserved.</p>
+                        <p class="footer-bottom-sub">Polyglot Software Supply Chain Defense &middot; Static Analysis Only &middot; Zero Code Execution</p>
                     </div>
                 </div>
             </footer>
@@ -1340,50 +1798,7 @@
             });
         });
 
-        // 2. "What You Get" Carousel Navigation
-        const track = document.getElementById("what-track");
-        const prevBtn = document.getElementById("what-prev-btn");
-        const nextBtn = document.getElementById("what-next-btn");
-        
-        if (track && prevBtn && nextBtn) {
-            let slideIndex = 0;
-            const cards = track.querySelectorAll(".what-card");
-            const totalSlides = cards.length;
 
-            function updateCarousel() {
-                if (cards.length === 0) return;
-                const cardWidth = cards[0].offsetWidth;
-                const gap = 18;
-                const maxSlide = Math.max(0, totalSlides - (window.innerWidth >= 1024 ? 2 : 1));
-                
-                if (slideIndex > maxSlide) slideIndex = maxSlide;
-                if (slideIndex < 0) slideIndex = 0;
-
-                const offset = slideIndex * (cardWidth + gap);
-                track.style.transform = `translateX(-${offset}px)`;
-
-                prevBtn.style.opacity = slideIndex === 0 ? "0.4" : "1";
-                nextBtn.style.opacity = slideIndex >= maxSlide ? "0.4" : "1";
-            }
-
-            prevBtn.addEventListener("click", () => {
-                if (slideIndex > 0) {
-                    slideIndex--;
-                    updateCarousel();
-                }
-            });
-
-            nextBtn.addEventListener("click", () => {
-                const maxSlide = Math.max(0, totalSlides - (window.innerWidth >= 1024 ? 2 : 1));
-                if (slideIndex < maxSlide) {
-                    slideIndex++;
-                    updateCarousel();
-                }
-            });
-
-            window.addEventListener("resize", updateCarousel);
-            updateCarousel();
-        }
 
         // 3. Vertical Navigation Drawer Controls
         const navMenuBtn = document.getElementById("nav-menu-btn");

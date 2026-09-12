@@ -75,7 +75,7 @@ def create_app() -> FastAPI:
     async def root_api() -> JSONResponse:
         return JSONResponse(
             {
-                "name": "DepScan",
+                "name": settings.app_name,
                 "version": settings.app_version,
                 "docs": "/docs",
                 "health": "/health",
@@ -100,8 +100,10 @@ def create_app() -> FastAPI:
         images_dir = frontend_dir / "images"
         if images_dir.is_dir():
             app.mount("/images", StaticFiles(directory=str(images_dir)), name="images")
+        # Root route serves landing page for browsers, or API metadata for JSON/API clients
 
         # Root route: serves landing page for browsers, or API metadata for JSON/API clients
+ main
         @app.get("/", tags=["Landing"])
         async def landing(request: Request):
             accept = request.headers.get("accept", "")
@@ -110,7 +112,8 @@ def create_app() -> FastAPI:
                 if landing_file.is_file():
                     return FileResponse(str(landing_file))
                 return FileResponse(str(frontend_dir / "index.html"))
-
+ 
+ main
             return JSONResponse(
                 {
                     "name": settings.app_name,

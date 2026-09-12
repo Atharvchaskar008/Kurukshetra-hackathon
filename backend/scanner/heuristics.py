@@ -86,23 +86,30 @@ COMBOSQUATTING_AFFIXES = [
 ]
 
 
-def _levenshtein(s1: str, s2: str) -> int:
-    """Pure Python fallback Levenshtein distance."""
-    if len(s1) < len(s2):
-        return _levenshtein(s2, s1)
-    if len(s2) == 0:
-        return len(s1)
+import difflib
 
-    prev_row = range(len(s2) + 1)
-    for i, c1 in enumerate(s1):
-        curr_row = [i + 1]
-        for j, c2 in enumerate(s2):
-            insertions = prev_row[j + 1] + 1
-            deletions = curr_row[j] + 1
-            substitutions = prev_row[j] + (c1 != c2)
-            curr_row.append(min(insertions, deletions, substitutions))
-        prev_row = curr_row
-    return prev_row[-1]
+
+def _damerau_levenshtein(s1: str, s2: str) -> int:
+    """Pure Python Damerau-Levenshtein distance supporting transposition."""
+    d = {}
+    len1, len2 = len(s1), len(s2)
+    for i in range(-1, len1 + 1):
+        d[(i, -1)] = i + 1
+    for j in range(-1, len2 + 1):
+        d[(-1, j)] = j + 1
+
+    for i in range(len1):
+        for j in range(len2):
+            cost = 0 if s1[i] == s2[j] else 1
+            d[(i, j)] = min(
+                d[(i - 1, j)] + 1,        # deletion
+                d[(i, j - 1)] + 1,        # insertion
+                d[(i - 1, j - 1)] + cost, # substitution
+            )
+            if i > 0 and j > 0 and s1[i] == s2[j - 1] and s1[i - 1] == s2[j]:
+                d[(i, j)] = min(d[(i, j)], d[(i - 2, j - 2)] + 1)  # transposition
+
+    return d[(len1 - 1, len2 - 1)]
 
 
 def detect_homoglyph_attack(
@@ -267,8 +274,8 @@ def detect_typosquatting(
             ratio = float(fuzz.ratio(clean_name, trusted))
             dist = int(distance.Levenshtein.distance(clean_name, trusted))
         else:
-            dist = _levenshtein(clean_name, trusted)
-            ratio = max(0.0, 100.0 - (dist / max(len(clean_name), len(trusted)) * 100.0))
+            dist = _damerau_levenshtein(clean_name, trusted)
+            ratio = difflib.SequenceMatcher(None, clean_name, trusted).ratio() * 100.0
 
         # A candidate typosquat has high similarity and edit distance 1 or 2
         if dist in (1, 2) and ratio >= threshold:
