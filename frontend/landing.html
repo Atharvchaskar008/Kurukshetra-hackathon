@@ -247,6 +247,130 @@
         transform: translateX(3px);
       }
 
+      /* Interactive Terminal Horizontal Structure for Core Capabilities */
+      .capabilities-terminal-bar {
+        width: 100%;
+        background: #09090b;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 12px;
+        padding: 16px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        user-select: none;
+        outline: none;
+      }
+
+      .capabilities-terminal-bar:hover {
+        border-color: rgba(255, 255, 255, 0.55);
+        background: #121215;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 255, 255, 0.06);
+        transform: translateY(-1px);
+      }
+
+      .terminal-bar-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .terminal-dots {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .terminal-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .terminal-dot.red { background: #ff5f56; }
+      .terminal-dot.yellow { background: #ffbd2e; }
+      .terminal-dot.green { background: #27c93f; }
+
+      .terminal-prompt {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+
+      .terminal-dollar {
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .terminal-title {
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .terminal-cursor {
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 700;
+        animation: terminal-blink 1s step-end infinite;
+      }
+
+      @keyframes terminal-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .terminal-bar-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .terminal-action-hint {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        transition: color 0.2s ease;
+      }
+
+      .capabilities-terminal-bar:hover .terminal-action-hint {
+        color: #ffffff;
+      }
+
+      .terminal-chevron {
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .capabilities-terminal-bar[aria-expanded="true"] .terminal-chevron {
+        transform: rotate(180deg);
+      }
+
+      .capabilities-content {
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .capabilities-content.is-open {
+        display: block !important;
+        animation: terminal-expand 0.35s ease-out forwards;
+      }
+
+      @keyframes terminal-expand {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       /* Why DeepScan 3-Column Info Cards */
       .why-card {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.008) 100%);
@@ -1371,136 +1495,163 @@
                 </div>
             </section>
 
-            <!-- Enterprise Core Capabilities (3x2 Grid) -->
+            <!-- Enterprise Core Capabilities (Terminal Accordion Trigger) -->
             <section id="use-cases" class="border-y border-white/20 mb-20">
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="border-x border-white/20 py-16 xl:py-20 px-6 xl:px-14">
-                        <div class="max-w-3xl mx-auto text-center mb-14">
-                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/20 rounded-full mb-4">
-                                <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-                                <span class="text-white/80 font-mono text-xs uppercase tracking-widest">ENTERPRISE DEFENSE</span>
+                    <div class="border-x border-white/20 py-8 lg:py-12 px-6 xl:px-14">
+                        
+                        <!-- Terminal-like Horizontal Structure -->
+                        <button id="capabilities-terminal-btn" type="button" class="capabilities-terminal-bar" aria-expanded="false" aria-controls="capabilities-expanded-content">
+                            <div class="terminal-bar-left">
+                                <div class="terminal-dots">
+                                    <span class="terminal-dot red"></span>
+                                    <span class="terminal-dot yellow"></span>
+                                    <span class="terminal-dot green"></span>
+                                </div>
+                                <div class="terminal-prompt">
+                                    <span class="terminal-dollar">$</span>
+                                    <span class="terminal-title">Core Capabilities</span>
+                                    <span class="terminal-cursor">_</span>
+                                </div>
                             </div>
-                            <h2 class="text-3xl sm:text-4xl font-medium text-white tracking-tight mb-4">Core Capabilities</h2>
-                            <p class="text-base sm:text-lg text-white/75 leading-relaxed max-w-2xl mx-auto">Everything you need to understand, detect, and prioritize software supply-chain risks.</p>
+                            <div class="terminal-bar-right">
+                                <span class="terminal-action-hint font-mono text-xs text-white/60">Click to expand</span>
+                                <svg class="terminal-chevron w-4 h-4 text-white/70 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                        </button>
+
+                        <!-- Collapsible Capabilities Content (Hidden by default, opens on click) -->
+                        <div id="capabilities-expanded-content" class="capabilities-content hidden pt-12">
+                            <div class="max-w-3xl mx-auto text-center mb-14">
+                                <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/20 rounded-full mb-4">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                    <span class="text-white/80 font-mono text-xs uppercase tracking-widest">ENTERPRISE DEFENSE</span>
+                                </div>
+                                <h2 class="text-3xl sm:text-4xl font-medium text-white tracking-tight mb-4">Core Capabilities</h2>
+                                <p class="text-base sm:text-lg text-white/75 leading-relaxed max-w-2xl mx-auto">Everything you need to understand, detect, and prioritize software supply-chain risks.</p>
+                            </div>
+
+                            <!-- 6 Distinct Enterprise Cards 3x2 Grid on Desktop -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- 1. Monorepo & Polyglot Auditing -->
+                                <div class="usecase-card">
+                                    <div>
+                                        <div class="usecase-icon-box">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                                <polyline points="2 17 12 22 22 17"></polyline>
+                                                <polyline points="2 12 12 17 22 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <h3 class="usecase-card-title">Monorepo &amp; Polyglot Auditing</h3>
+                                        <p class="usecase-card-desc">Simultaneously discover direct and transitive dependencies across npm, PyPI, Go, Maven, Cargo, and Composer registries.</p>
+                                    </div>
+                                    <a href="/dashboard" class="usecase-link">
+                                        <span>Learn more</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+
+                                <!-- 2. Pre-Deployment CI/CD Gates -->
+                                <div class="usecase-card">
+                                    <div>
+                                        <div class="usecase-icon-box">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                                            </svg>
+                                        </div>
+                                        <h3 class="usecase-card-title">Pre-Deployment CI/CD Gates</h3>
+                                        <p class="usecase-card-desc">Enforce automated quality gate policies with deterministic exit codes 0/1 to block risky PR merges in GitHub Actions.</p>
+                                    </div>
+                                    <a href="/dashboard" class="usecase-link">
+                                        <span>Learn more</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+
+                                <!-- 3. Zero-Day Backdoor AST Detection -->
+                                <div class="usecase-card">
+                                    <div>
+                                        <div class="usecase-icon-box">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                                <path d="M9 12l2 2 4-4"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="usecase-card-title">Zero-Day Backdoor AST Detection</h3>
+                                        <p class="usecase-card-desc">Static AST inspection detects obfuscated setup.py reverse shells, raw socket calls, and malicious install-time hooks.</p>
+                                    </div>
+                                    <a href="/dashboard" class="usecase-link">
+                                        <span>Learn more</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+
+                                <!-- 4. Transitive Blast Radius Impact -->
+                                <div class="usecase-card">
+                                    <div>
+                                        <div class="usecase-icon-box">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="18" cy="5" r="3"/>
+                                                <circle cx="6" cy="12" r="3"/>
+                                                <circle cx="18" cy="19" r="3"/>
+                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                            </svg>
+                                        </div>
+                                        <h3 class="usecase-card-title">Transitive Blast Radius Impact</h3>
+                                        <p class="usecase-card-desc">Topological NetworkX graph engine reveals multi-hop dependency depth and identifies which direct imports introduce CVEs.</p>
+                                    </div>
+                                    <a href="/dashboard" class="usecase-link">
+                                        <span>Learn more</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+
+                                <!-- 5. Obfuscated Lifecycle Script Audits -->
+                                <div class="usecase-card">
+                                    <div>
+                                        <div class="usecase-icon-box">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="4 17 10 11 4 5"></polyline>
+                                                <line x1="12" y1="19" x2="20" y2="19"></line>
+                                            </svg>
+                                        </div>
+                                        <h3 class="usecase-card-title">Lifecycle Script Execution Audits</h3>
+                                        <p class="usecase-card-desc">Audit postinstall, preinstall, and build script triggers for remote curl, wget, base64 payloads, or binary execution.</p>
+                                    </div>
+                                    <a href="/dashboard" class="usecase-link">
+                                        <span>Learn more</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+
+                                <!-- 6. Gemini AI Threat Explanations -->
+                                <div class="usecase-card">
+                                    <div>
+                                        <div class="usecase-icon-box">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                                <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+                                                <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+                                                <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+                                            </svg>
+                                        </div>
+                                        <h3 class="usecase-card-title">Gemini AI Threat Reasoning</h3>
+                                        <p class="usecase-card-desc">Google Gemini synthesizes plain-English risk narratives, attack vector proofs-of-concept, and 1-click unified Git diff patches.</p>
+                                    </div>
+                                    <a href="/dashboard" class="usecase-link">
+                                        <span>Learn more</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- 6 Distinct Enterprise Cards 3x2 Grid on Desktop -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- 1. Monorepo & Polyglot Auditing -->
-                            <div class="usecase-card">
-                                <div>
-                                    <div class="usecase-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                            <polyline points="2 17 12 22 22 17"></polyline>
-                                            <polyline points="2 12 12 17 22 12"></polyline>
-                                        </svg>
-                                    </div>
-                                    <h3 class="usecase-card-title">Monorepo &amp; Polyglot Auditing</h3>
-                                    <p class="usecase-card-desc">Simultaneously discover direct and transitive dependencies across npm, PyPI, Go, Maven, Cargo, and Composer registries.</p>
-                                </div>
-                                <a href="/dashboard" class="usecase-link">
-                                    <span>Learn more</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </div>
-
-                            <!-- 2. Pre-Deployment CI/CD Gates -->
-                            <div class="usecase-card">
-                                <div>
-                                    <div class="usecase-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                                        </svg>
-                                    </div>
-                                    <h3 class="usecase-card-title">Pre-Deployment CI/CD Gates</h3>
-                                    <p class="usecase-card-desc">Enforce automated quality gate policies with deterministic exit codes 0/1 to block risky PR merges in GitHub Actions.</p>
-                                </div>
-                                <a href="/dashboard" class="usecase-link">
-                                    <span>Learn more</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </div>
-
-                            <!-- 3. Zero-Day Backdoor AST Detection -->
-                            <div class="usecase-card">
-                                <div>
-                                    <div class="usecase-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                            <path d="M9 12l2 2 4-4"></path>
-                                        </svg>
-                                    </div>
-                                    <h3 class="usecase-card-title">Zero-Day Backdoor AST Detection</h3>
-                                    <p class="usecase-card-desc">Static AST inspection detects obfuscated setup.py reverse shells, raw socket calls, and malicious install-time hooks.</p>
-                                </div>
-                                <a href="/dashboard" class="usecase-link">
-                                    <span>Learn more</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </div>
-
-                            <!-- 4. Transitive Blast Radius Impact -->
-                            <div class="usecase-card">
-                                <div>
-                                    <div class="usecase-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="18" cy="5" r="3"/>
-                                            <circle cx="6" cy="12" r="3"/>
-                                            <circle cx="18" cy="19" r="3"/>
-                                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                                        </svg>
-                                    </div>
-                                    <h3 class="usecase-card-title">Transitive Blast Radius Impact</h3>
-                                    <p class="usecase-card-desc">Topological NetworkX graph engine reveals multi-hop dependency depth and identifies which direct imports introduce CVEs.</p>
-                                </div>
-                                <a href="/dashboard" class="usecase-link">
-                                    <span>Learn more</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </div>
-
-                            <!-- 5. Obfuscated Lifecycle Script Audits -->
-                            <div class="usecase-card">
-                                <div>
-                                    <div class="usecase-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="4 17 10 11 4 5"></polyline>
-                                            <line x1="12" y1="19" x2="20" y2="19"></line>
-                                        </svg>
-                                    </div>
-                                    <h3 class="usecase-card-title">Lifecycle Script Execution Audits</h3>
-                                    <p class="usecase-card-desc">Audit postinstall, preinstall, and build script triggers for remote curl, wget, base64 payloads, or binary execution.</p>
-                                </div>
-                                <a href="/dashboard" class="usecase-link">
-                                    <span>Learn more</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </div>
-
-                            <!-- 6. Gemini AI Threat Explanations -->
-                            <div class="usecase-card">
-                                <div>
-                                    <div class="usecase-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                                            <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
-                                            <polyline points="7.5 19.79 7.5 14.6 3 12"/>
-                                            <polyline points="21 12 16.5 14.6 16.5 19.79"/>
-                                        </svg>
-                                    </div>
-                                    <h3 class="usecase-card-title">Gemini AI Threat Reasoning</h3>
-                                    <p class="usecase-card-desc">Google Gemini synthesizes plain-English risk narratives, attack vector proofs-of-concept, and 1-click unified Git diff patches.</p>
-                                </div>
-                                <a href="/dashboard" class="usecase-link">
-                                    <span>Learn more</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -1844,6 +1995,28 @@
                 closeNavDrawer();
             });
         });
+
+        // 4. Interactive Terminal Horizontal Bar Trigger for Core Capabilities
+        const terminalBtn = document.getElementById("capabilities-terminal-btn");
+        const terminalContent = document.getElementById("capabilities-expanded-content");
+        const terminalHint = terminalBtn ? terminalBtn.querySelector(".terminal-action-hint") : null;
+
+        if (terminalBtn && terminalContent) {
+            terminalBtn.addEventListener("click", () => {
+                const isExpanded = terminalBtn.getAttribute("aria-expanded") === "true";
+                if (isExpanded) {
+                    terminalBtn.setAttribute("aria-expanded", "false");
+                    terminalContent.classList.remove("is-open");
+                    terminalContent.classList.add("hidden");
+                    if (terminalHint) terminalHint.textContent = "Click to expand";
+                } else {
+                    terminalBtn.setAttribute("aria-expanded", "true");
+                    terminalContent.classList.remove("hidden");
+                    terminalContent.classList.add("is-open");
+                    if (terminalHint) terminalHint.textContent = "Click to collapse";
+                }
+            });
+        }
 
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape") {
