@@ -30,12 +30,15 @@ from backend.models.domain import Repository
 from backend.models.enums import ScanStatus
 from backend.parsers.cargo_toml import parse_cargo_toml_file
 from backend.parsers.go_mod import parse_go_mod_file
+from backend.parsers.lockfiles import parse_package_lock_json
 from backend.parsers.maven import parse_pom_xml_file
 from backend.parsers.package_json import parse_package_json_file
 from backend.parsers.python_deps import parse_pyproject_toml_file, parse_requirements_txt_file
 from backend.scanner.heuristics import SupplyChainHeuristicsScanner
 from backend.scanner.lifecycle import LifecycleScriptScanner
 from backend.scanner.osv import OSVScanner
+from backend.scanner.provenance import BuildProvenanceScanner
+from backend.scanner.reputation import PackageReputationScanner
 from backend.scanner.risk_engine import compute_risk_score
 
 logger = logging.getLogger("supplyguard.pipeline.orchestrator")
@@ -134,6 +137,23 @@ class ScanOrchestrator:
                     has_partial_failures = True
                     errors.append(f"{manifest.path}: {parse_err}")
 
+            # Check for package-lock.json to resolve transitive dependencies
+            package_lock = root / "package-lock.json"
+            if package_lock.is_file():
+                try:
+                    lock_deps = parse_package_lock_json(package_lock, source_path="package-lock.json")
+                    existing_names = {
+                        (d.get("package_name") or d.get("package") or "").lower()
+                        for d in declared_dependencies
+                    }
+                    for ld in lock_deps:
+                        name_key = (ld.get("package_name") or ld.get("package") or "").lower()
+                        if name_key not in existing_names:
+                            declared_dependencies.append(ld)
+                            existing_names.add(name_key)
+                except Exception as lock_err:
+                    logger.warning("Failed parsing package-lock.json: %s", lock_err)
+
             # 4. Stage: Dependency Graph & Blast Radius Analysis
             dep_graph = build_dependency_graph(declared_dependencies)
             blast_map = {
@@ -159,7 +179,23 @@ class ScanOrchestrator:
             except Exception as h_err:
                 logger.warning("Supply chain heuristics scanner failed gracefully: %s", h_err)
 
-            # 7. Stage: Lifecycle Script Analysis (npm package.json scripts)
+            # 7. Stage: Package Reputation Signals (Freshness, Age, Deprecation)
+            try:
+                reputation_scanner = PackageReputationScanner()
+                rep_findings = reputation_scanner.scan_dependencies(declared_dependencies, blast_radii=blast_map)
+                findings.extend(rep_findings)
+            except Exception as rep_err:
+                logger.warning("Package reputation scanner failed gracefully: %s", rep_err)
+
+            # 8. Stage: Build Provenance & CI/CD Tampering
+            try:
+                provenance_scanner = BuildProvenanceScanner()
+                prov_findings = provenance_scanner.scan_workspace(root, blast_radius=0.75)
+                findings.extend(prov_findings)
+            except Exception as prov_err:
+                logger.warning("Build provenance scanner failed gracefully: %s", prov_err)
+
+            # 9. Stage: Lifecycle Script Analysis (npm package.json scripts)
             try:
                 lifecycle_scanner = LifecycleScriptScanner()
                 for pkg_data in package_json_data_list:
@@ -171,18 +207,20 @@ class ScanOrchestrator:
             except Exception as lc_err:
                 logger.warning("Lifecycle script scanner failed gracefully: %s", lc_err)
 
-            # 8. Stage: Risk Scoring
+            # 10. Stage: Risk Scoring
             risk_result = compute_risk_score(findings)
 
-            # 9. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
+            # 11. Determine final status (PARTIAL if isolated parser errors, else COMPLETED)
             final_status = (
                 ScanStatus.PARTIAL.value if has_partial_failures and declared_dependencies
                 else ScanStatus.COMPLETED.value
             )
 
             completed_time = datetime.now(timezone.utc).isoformat()
+            direct_count = sum(1 for d in declared_dependencies if d.get("direct", True))
+            transitive_count = len(declared_dependencies) - direct_count
 
-            # 10. Construct canonical scan context/result
+            # 12. Construct canonical scan context/result
             result: Dict[str, Any] = {
                 "scan_id": scan_id,
                 "status": final_status,
@@ -194,8 +232,8 @@ class ScanOrchestrator:
                 "dependencies": declared_dependencies,
                 "dependency_count": len(declared_dependencies),
                 "dependencies_count": len(declared_dependencies),
-                "direct_dependencies_count": len(declared_dependencies),
-                "transitive_dependencies_count": 0,
+                "direct_dependencies_count": direct_count,
+                "transitive_dependencies_count": transitive_count,
                 "findings": risk_result["prioritized_findings"],
                 "findings_count": len(findings),
                 "findings_by_severity": risk_result["findings_by_severity"],

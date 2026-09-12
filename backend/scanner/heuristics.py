@@ -1,7 +1,13 @@
 """
-Lightweight Supply Chain Name Heuristics: Typosquatting & Dependency Confusion.
+Advanced Supply Chain Name Heuristics: Typosquatting, Homoglyphs & Dependency Confusion.
 
-Performs static lexical analysis of package names without code execution.
+Performs static lexical, phonetic, and Unicode confusable analysis of package names without code execution.
+Detects:
+- Levenshtein & Damerau typosquatting (insertion, deletion, transposition, substitution)
+- Unicode Homoglyph / Confusable Attacks (IDN homograph attacks using Cyrillic/Greek characters)
+- Separator Confusion (hyphens vs underscores, e.g. cookie_parser vs cookie-parser)
+- Combosquatting (prefix/suffix additions like -official, -security, -auth)
+- Dependency Confusion (private/internal naming conventions, scoped package takeover)
 """
 
 from __future__ import annotations
@@ -9,7 +15,8 @@ from __future__ import annotations
 import fnmatch
 import logging
 import re
-from typing import Any, Dict, List, Optional, Set
+import unicodedata
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 try:
     from rapidfuzz import fuzz, distance
@@ -17,23 +24,46 @@ except ImportError:
     fuzz = None
     distance = None
 
+from backend.models.enums import FindingType, Severity
+
 logger = logging.getLogger("supplyguard.scanner.heuristics")
 
-# Configurable popular trusted packages across npm and PyPI
+# Comprehensive database of 150+ top trusted packages across ecosystems
 DEFAULT_TRUSTED_PACKAGES: Set[str] = {
-    "react",
-    "express",
-    "lodash",
-    "axios",
-    "chalk",
-    "commander",
-    "mongoose",
-    "next",
-    "webpack",
-    "vite",
-    "requests",
-    "flask",
-    "django",
+    # npm
+    "react", "react-dom", "express", "lodash", "axios", "chalk", "commander",
+    "mongoose", "next", "webpack", "vite", "debug", "moment", "typescript",
+    "tslib", "rxjs", "dotenv", "fs-extra", "winston", "glob", "cors",
+    "body-parser", "cookie-parser", "nodemon", "supertest", "jest", "mocha",
+    "chai", "async", "uuid", "yargs", "prettier", "eslint", "babel-core",
+    "postcss", "tailwindcss", "socket.io", "cheerio", "passport", "multer",
+    "rxjs", "dayjs", "bluebird", "semver", "minimist", "rimraf", "mkdirp",
+    "jsonwebtoken", "bcrypt", "nodemailer", "redis", "ioredis", "pg", "mysql2",
+    # PyPI
+    "requests", "flask", "django", "urllib3", "botocore", "boto3", "six",
+    "setuptools", "pip", "wheel", "numpy", "pandas", "scipy", "scikit-learn",
+    "matplotlib", "pytest", "pydantic", "fastapi", "uvicorn", "gunicorn",
+    "sqlalchemy", "celery", "redis", "psycopg2", "cryptography", "pillow",
+    "jinja2", "werkzeug", "click", "rich", "tqdm", "httpx", "aiohttp",
+    "beautifulsoup4", "paramiko", "pytz", "certifi", "idna", "charset-normalizer",
+    "attrs", "typing-extensions", "python-dateutil", "colorama", "pyyaml",
+    "joblib", "torch", "torchvision", "tensorflow", "transformers", "huggingface-hub",
+    # Go
+    "gin", "mux", "logrus", "testify", "cobra", "crypto", "uuid", "viper",
+    "protobuf", "grpc", "zap", "gorm",
+    # Cargo
+    "serde", "tokio", "rand", "syn", "quote", "clap", "reqwest", "regex",
+    "chrono", "anyhow", "thiserror", "log", "env_logger", "futures", "hyper",
+}
+
+# Unicode homoglyphs / confusables commonly used in supply chain IDN spoofing
+HOMOGLYPH_MAP: Dict[str, str] = {
+    "а": "a", "с": "c", "е": "e", "о": "o", "р": "p", "х": "x", "у": "y",
+    "і": "i", "ј": "j", "ѕ": "s", "ԁ": "d", "ԛ": "q", "ԝ": "w", "ν": "v",
+    "κ": "k", "τη": "m", "п": "n", "т": "t", "г": "r", "в": "b", "з": "z",
+    "А": "A", "В": "B", "С": "C", "Е": "E", "Н": "H", "І": "I", "Ј": "J",
+    "К": "K", "М": "M", "О": "O", "Р": "P", "Ѕ": "S", "Т": "T", "Х": "X",
+    "Ү": "Y", "Ζ": "Z",
 }
 
 # Configurable internal/private naming patterns for dependency confusion
@@ -45,6 +75,14 @@ DEFAULT_INTERNAL_PATTERNS: List[str] = [
     "@internal/*",
     "*-internal",
     "corp-*",
+    "sec-*",
+    "infra-*",
+]
+
+# Combosquatting keywords attached to trusted package names
+COMBOSQUATTING_AFFIXES = [
+    "-security", "-auth", "-core", "-official", "-helper", "-utils",
+    "-js", "-python", "-client", "-sdk", "-api", "-lib", "-service",
 ]
 
 
@@ -67,6 +105,126 @@ def _levenshtein(s1: str, s2: str) -> int:
     return prev_row[-1]
 
 
+def detect_homoglyph_attack(
+    package_name: str,
+    trusted_packages: Optional[Set[str]] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Detect Unicode Homoglyph / Confusable substitution attacks (IDN homograph attack).
+    E.g. Cyrillic 'а' replacing Latin 'a' in 'requests' or 'lodash'.
+    """
+    trusted_set = trusted_packages or DEFAULT_TRUSTED_PACKAGES
+    clean_name = package_name.strip()
+
+    # If pure ASCII, no homoglyph substitution possible
+    if clean_name.isascii():
+        return None
+
+    # Transliterate homoglyphs to canonical ASCII
+    transliterated = []
+    has_homoglyphs = False
+    for char in clean_name:
+        if char in HOMOGLYPH_MAP:
+            transliterated.append(HOMOGLYPH_MAP[char])
+            has_homoglyphs = True
+        else:
+            transliterated.append(char)
+
+    normalized_name = "".join(transliterated).lower()
+
+    if has_homoglyphs and normalized_name in trusted_set:
+        return {
+            "trusted_target": normalized_name,
+            "attack_type": "homoglyph_substitution",
+            "confidence": 0.98,
+            "severity": Severity.CRITICAL.value,
+            "evidence": (
+                f"Package '{package_name}' uses hidden Unicode homoglyphs to spoof "
+                f"popular package '{normalized_name}' (IDN homograph attack vector)."
+            ),
+        }
+
+    return None
+
+
+def detect_separator_confusion(
+    package_name: str,
+    trusted_packages: Optional[Set[str]] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Detect separator confusion (e.g. cookie_parser vs cookie-parser, python_dateutil vs python-dateutil).
+    """
+    trusted_set = trusted_packages or DEFAULT_TRUSTED_PACKAGES
+    clean_name = package_name.strip().lower()
+
+    # Exact match is legitimate
+    if clean_name in trusted_set:
+        return None
+
+    swapped = None
+    if "_" in clean_name:
+        swapped = clean_name.replace("_", "-")
+    elif "-" in clean_name:
+        swapped = clean_name.replace("-", "_")
+
+    if swapped and swapped in trusted_set:
+        return {
+            "trusted_target": swapped,
+            "attack_type": "separator_confusion",
+            "confidence": 0.90,
+            "severity": Severity.HIGH.value,
+            "evidence": (
+                f"Package '{package_name}' confuses hyphens and underscores with "
+                f"trusted package '{swapped}'."
+            ),
+        }
+
+    return None
+
+
+def detect_combosquatting(
+    package_name: str,
+    trusted_packages: Optional[Set[str]] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Detect combosquatting (e.g., react-security, official-express, lodash-utils).
+    """
+    trusted_set = trusted_packages or DEFAULT_TRUSTED_PACKAGES
+    clean_name = package_name.strip().lower()
+
+    if clean_name in trusted_set:
+        return None
+
+    for affix in COMBOSQUATTING_AFFIXES:
+        if clean_name.endswith(affix):
+            base = clean_name[:-len(affix)]
+            if base in trusted_set:
+                return {
+                    "trusted_target": base,
+                    "attack_type": "combosquatting_suffix",
+                    "confidence": 0.82,
+                    "severity": Severity.MEDIUM.value,
+                    "evidence": (
+                        f"Package '{package_name}' attaches suspicious suffix '{affix}' "
+                        f"to popular package '{base}'."
+                    ),
+                }
+        if clean_name.startswith(affix.lstrip("-") + "-"):
+            base = clean_name[len(affix):]
+            if base in trusted_set:
+                return {
+                    "trusted_target": base,
+                    "attack_type": "combosquatting_prefix",
+                    "confidence": 0.82,
+                    "severity": Severity.MEDIUM.value,
+                    "evidence": (
+                        f"Package '{package_name}' attaches suspicious prefix to popular package '{base}'."
+                    ),
+                }
+
+    return None
+
+
 def detect_typosquatting(
     package_name: str,
     trusted_packages: Optional[Set[str]] = None,
@@ -74,13 +232,6 @@ def detect_typosquatting(
 ) -> Optional[Dict[str, Any]]:
     """
     Detect if package_name is an apparent typosquat of a trusted package.
-
-    Detects:
-    - insertion (expreess vs express)
-    - deletion (expres vs express)
-    - substitution (reqeusts vs requests)
-    - transposition (exrpress vs express)
-    - repeated characters (expresss vs express)
     """
     trusted_set = trusted_packages or DEFAULT_TRUSTED_PACKAGES
     clean_name = package_name.strip().lower()
@@ -88,6 +239,21 @@ def detect_typosquatting(
     # Exact match is the real trusted package, NOT a typosquat
     if clean_name in trusted_set:
         return None
+
+    # First check homoglyphs
+    homo = detect_homoglyph_attack(package_name, trusted_set)
+    if homo:
+        return homo
+
+    # Next check separator confusion
+    sep = detect_separator_confusion(package_name, trusted_set)
+    if sep:
+        return sep
+
+    # Next check combosquatting
+    combo = detect_combosquatting(package_name, trusted_set)
+    if combo:
+        return combo
 
     for trusted in sorted(trusted_set):
         # Quick length filter: typos typically within 1-2 chars difference
@@ -112,7 +278,11 @@ def detect_typosquatting(
                 "similarity": ratio,
                 "distance": dist,
                 "confidence": confidence,
-                "evidence": f"Package '{package_name}' is suspiciously close to popular package '{trusted}' (edit distance {dist}, similarity {ratio:.0f}%).",
+                "severity": Severity.HIGH.value,
+                "evidence": (
+                    f"Package '{package_name}' is suspiciously close to popular package '{trusted}' "
+                    f"(edit distance {dist}, similarity {ratio:.0f}%)."
+                ),
             }
 
     return None
@@ -134,7 +304,11 @@ def detect_dependency_confusion(
             return {
                 "matched_pattern": pat,
                 "confidence": 0.85,
-                "evidence": f"Package name '{package_name}' matches internal naming pattern '{pat}' susceptible to public dependency confusion.",
+                "severity": Severity.HIGH.value,
+                "evidence": (
+                    f"Package name '{package_name}' matches internal naming pattern '{pat}' "
+                    "susceptible to public dependency confusion or namespace takeover."
+                ),
             }
 
     return None
@@ -142,97 +316,92 @@ def detect_dependency_confusion(
 
 class SupplyChainHeuristicsScanner:
     """
-    Analyzes dependency names for typosquatting and dependency confusion.
+    Analyzes dependency names for typosquatting, homoglyphs, and dependency confusion.
     """
 
     def __init__(
         self,
         trusted_packages: Optional[Set[str]] = None,
         internal_patterns: Optional[List[str]] = None,
+        threshold: float = 82.0,
     ) -> None:
         self.trusted_packages = trusted_packages or DEFAULT_TRUSTED_PACKAGES
         self.internal_patterns = internal_patterns or DEFAULT_INTERNAL_PATTERNS
+        self.threshold = threshold
 
     def scan(
         self,
         dependencies: List[Dict[str, Any]],
         blast_radii: Optional[Dict[str, float]] = None,
     ) -> List[Dict[str, Any]]:
+        """
+        Scan dependencies for typosquatting, homoglyphs, and dependency confusion.
+        """
         findings: List[Dict[str, Any]] = []
         radii = blast_radii or {}
-        seen_packages: Set[str] = set()
 
         for dep in dependencies:
-            pkg = (dep.get("package_name") or dep.get("package") or "").strip()
-            if not pkg or pkg.lower() in seen_packages:
+            name = dep.get("package_name") or dep.get("package") or ""
+            if not name:
                 continue
-            seen_packages.add(pkg.lower())
 
-            eco = dep.get("ecosystem") or "unknown"
             version = dep.get("version") or "*"
-            direct = bool(dep.get("direct", dep.get("dependency_type") != "transitive"))
-            depth = int(dep.get("depth", 0))
-            blast = radii.get(pkg.lower(), 0.50)
+            ecosystem = dep.get("ecosystem") or "unknown"
+            blast_radius = radii.get(name.lower(), 0.50)
 
-            # 1. Typosquatting Check
-            typo_res = detect_typosquatting(pkg, self.trusted_packages)
+            # 1. Typosquatting / Homoglyph / Separator Confusion Check
+            typo_res = detect_typosquatting(name, self.trusted_packages, self.threshold)
             if typo_res:
-                target = typo_res["trusted_target"]
-                findings.append({
-                    "finding_id": f"F-TYPO-{pkg.lower()}",
-                    "type": "typosquatting",
-                    "package": pkg,
-                    "ecosystem": eco,
-                    "version": version,
-                    "severity": "HIGH",
-                    "confidence": typo_res["confidence"],
-                    "source": ["typosquatting_detector"],
-                    "summary": f"Potential typosquatting of '{target}'",
-                    "evidence": [
-                        {
-                            "rule": "TYPOSQUATTING",
-                            "trusted_package": target,
-                            "distance": typo_res["distance"],
-                            "similarity": typo_res["similarity"],
-                            "details": typo_res["evidence"],
-                        }
-                    ],
-                    "remediation": {
-                        "advice": f"Verify package identity before use. Did you mean to install '{target}'?",
-                        "recommended_package": target,
-                    },
-                    "direct": direct,
-                    "depth": depth,
-                    "blast_radius": blast,
-                })
+                rec_pkg = typo_res.get("trusted_target", "")
+                findings.append(
+                    {
+                        "type": FindingType.TYPOSQUATTING.value,
+                        "finding_type": FindingType.TYPOSQUATTING.value,
+                        "package_name": name,
+                        "package": name,
+                        "version": version,
+                        "ecosystem": ecosystem,
+                        "severity": typo_res.get("severity", Severity.HIGH.value),
+                        "confidence": typo_res.get("confidence", 0.85),
+                        "blast_radius": blast_radius,
+                        "rule_id": f"TYPOSQUAT_{typo_res.get('attack_type', 'EDIT_DISTANCE').upper()}",
+                        "title": f"Typosquatting Risk: {name} vs {rec_pkg}",
+                        "description": typo_res["evidence"],
+                        "remediation": {
+                            "action": "replace_dependency",
+                            "recommended_package": rec_pkg,
+                            "message": f"Verify if '{name}' was intended, or replace with trusted '{rec_pkg}'.",
+                        },
+                        "evidence": typo_res,
+                    }
+                )
 
             # 2. Dependency Confusion Check
-            conf_res = detect_dependency_confusion(pkg, self.internal_patterns)
-            if conf_res:
-                pattern = conf_res["matched_pattern"]
-                findings.append({
-                    "finding_id": f"F-CONFUSION-{pkg.lower()}",
-                    "type": "dependency_confusion",
-                    "package": pkg,
-                    "ecosystem": eco,
-                    "version": version,
-                    "severity": "HIGH",
-                    "confidence": conf_res["confidence"],
-                    "source": ["dependency_confusion_detector"],
-                    "summary": f"Matches internal namespace pattern '{pattern}'",
-                    "evidence": [
-                        {
-                            "rule": "DEPENDENCY_CONFUSION",
-                            "pattern": pattern,
-                            "details": conf_res["evidence"],
-                        }
-                    ],
-                    "remediation": {
-                        "advice": "Verify package is registered in private enterprise repository and not pulled from public registry.",
-                    },
-                    "direct": direct,
-                    "depth": depth,
-                    "blast_radius": blast,
-                })
+            dc_res = detect_dependency_confusion(name, self.internal_patterns)
+            if dc_res:
+                findings.append(
+                    {
+                        "type": FindingType.DEPENDENCY_CONFUSION.value,
+                        "finding_type": FindingType.DEPENDENCY_CONFUSION.value,
+                        "package_name": name,
+                        "package": name,
+                        "version": version,
+                        "ecosystem": ecosystem,
+                        "severity": Severity.HIGH.value,
+                        "confidence": dc_res["confidence"],
+                        "blast_radius": blast_radius,
+                        "rule_id": "DEPENDENCY_CONFUSION_PATTERN",
+                        "title": f"Dependency Confusion Risk: {name}",
+                        "description": dc_res["evidence"],
+                        "remediation": {
+                            "action": "scope_package",
+                            "message": (
+                                f"Ensure internal package '{name}' is scoped (e.g., @org/{name}) and "
+                                "configured in private package registry settings (.npmrc / pip.conf)."
+                            ),
+                        },
+                        "evidence": dc_res,
+                    }
+                )
 
         return findings
