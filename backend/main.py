@@ -11,7 +11,7 @@ import logging
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -75,7 +75,7 @@ def create_app() -> FastAPI:
     async def root_api() -> JSONResponse:
         return JSONResponse(
             {
-                "name": "DepScan",
+                "name": settings.app_name,
                 "version": settings.app_version,
                 "docs": "/docs",
                 "health": "/health",
@@ -101,13 +101,24 @@ def create_app() -> FastAPI:
         if images_dir.is_dir():
             app.mount("/images", StaticFiles(directory=str(images_dir)), name="images")
 
-        # Root route serves the WriteMate-styled DepScan landing page
+        # Root route serves landing page for browsers, or API metadata for JSON/API clients
         @app.get("/", tags=["Landing"])
-        async def landing():
-            landing_file = frontend_dir / "landing.html"
-            if landing_file.is_file():
-                return FileResponse(str(landing_file))
-            return FileResponse(str(frontend_dir / "index.html"))
+        async def landing(request: Request):
+            accept = request.headers.get("accept", "")
+            if "text/html" in accept:
+                landing_file = frontend_dir / "landing.html"
+                if landing_file.is_file():
+                    return FileResponse(str(landing_file))
+                return FileResponse(str(frontend_dir / "index.html"))
+            return JSONResponse(
+                {
+                    "name": settings.app_name,
+                    "version": settings.app_version,
+                    "docs": "/docs",
+                    "health": "/health",
+                    "api": settings.api_prefix,
+                }
+            )
 
         # Main security analyzer dashboard
         @app.get("/dashboard", tags=["Dashboard"])
