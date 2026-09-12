@@ -11,8 +11,9 @@ import logging
 import tempfile
 import uuid
 from pathlib import Path
+from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter, Body, File, Query, UploadFile
 
 from backend.config import get_settings
 from backend.database.repository import get_scan_repository
@@ -347,7 +348,7 @@ async def export_sarif_report_endpoint(scan_id: str):
 
 
 @router.post("/{scan_id}/gate", summary="Evaluate CI/CD Quality Gate Policy")
-async def evaluate_gate_endpoint(scan_id: str, policy: Optional[Dict[str, Any]] = None):
+async def evaluate_gate_endpoint(scan_id: str, policy: Optional[Dict[str, Any]] = Body(default=None)):
     """
     Evaluates scan findings against configurable pipeline policies.
     Returns pass/fail status and exit code (0 for pass, 1 for fail).
