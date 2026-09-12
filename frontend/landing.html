@@ -50,8 +50,9 @@
         will-change: transform;
       }
 
-      .marquee-track:hover {
-        animation-play-state: paused;
+      .marquee-track:hover,
+      .marquee-wrapper:hover .marquee-track {
+        animation-play-state: running !important;
       }
 
       /* Auto-Moving Visual Scrollbar Track & Thumb */
