@@ -101,7 +101,7 @@ def create_app() -> FastAPI:
         if images_dir.is_dir():
             app.mount("/images", StaticFiles(directory=str(images_dir)), name="images")
 
-        # Root route: serves WriteMate-styled landing page for browsers, JSON metadata for API clients
+        # Root route: serves landing page for browsers, or API metadata for JSON/API clients
         @app.get("/", tags=["Landing"])
         async def landing(request: Request):
             accept = request.headers.get("accept", "")
@@ -113,7 +113,7 @@ def create_app() -> FastAPI:
 
             return JSONResponse(
                 {
-                    "name": "SupplyGuard",
+                    "name": settings.app_name,
                     "version": settings.app_version,
                     "docs": "/docs",
                     "health": "/health",
