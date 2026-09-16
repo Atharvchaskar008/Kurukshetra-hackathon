@@ -121,8 +121,6 @@ class FindingType(str, Enum):
     DEPENDENCY_CONFUSION = "dependency_confusion"
     SUSPICIOUS_LIFECYCLE_HOOK = "suspicious_lifecycle_hook"
     PROVENANCE_ANOMALY = "provenance_anomaly"
-    BUILD_PROVENANCE = "build_provenance"
-    PACKAGE_REPUTATION = "package_reputation"
     LICENSE_VIOLATION = "license_violation"
     UNMAINTAINED = "unmaintained"
 

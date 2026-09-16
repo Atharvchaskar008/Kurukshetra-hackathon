@@ -11,9 +11,8 @@ import logging
 import tempfile
 import uuid
 from pathlib import Path
-from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, Body, File, Query, UploadFile
+from fastapi import APIRouter, File, UploadFile
 
 from backend.config import get_settings
 from backend.database.repository import get_scan_repository
@@ -305,57 +304,4 @@ async def explain_scan(
         generated_by=explanation.get("generated_by", "expert_security_engine"),
         findings_analyzed=explanation.get("findings_analyzed", 0),
     )
-
-
-@router.get("/{scan_id}/graph", summary="Get Dependency Graph and Blast Radius Network")
-async def get_dependency_graph_endpoint(scan_id: str):
-    """
-    Exposes complete NetworkX dependency graph with directed parent-to-child edges,
-    calculated blast radius, and dependency hierarchy.
-    """
-    doc = _load_scan(scan_id)
-    graph = doc.get("graph") or {"nodes": [], "edges": []}
-    return {
-        "scan_id": scan_id,
-        "nodes": graph.get("nodes", []),
-        "edges": graph.get("edges", []),
-        "node_count": len(graph.get("nodes", [])),
-        "edge_count": len(graph.get("edges", [])),
-    }
-
-
-@router.get("/{scan_id}/sbom.cdx.json", summary="Export CycloneDX v1.5 JSON SBOM")
-async def export_cyclonedx_sbom_endpoint(scan_id: str):
-    """
-    Generates an industry-standard CycloneDX v1.5 JSON Software Bill of Materials (SBOM)
-    satisfying NTIA minimum elements.
-    """
-    from backend.remediation.sbom import generate_cyclonedx_sbom
-
-    doc = _load_scan(scan_id)
-    return generate_cyclonedx_sbom(doc)
-
-
-@router.get("/{scan_id}/sarif", summary="Export SARIF v2.1.0 Report")
-async def export_sarif_report_endpoint(scan_id: str):
-    """
-    Generates a SARIF v2.1.0 report for automated GitHub Code Scanning and CI pipeline alerts.
-    """
-    from backend.remediation.sarif import generate_sarif_report
-
-    doc = _load_scan(scan_id)
-    return generate_sarif_report(doc)
-
-
-@router.post("/{scan_id}/gate", summary="Evaluate CI/CD Quality Gate Policy")
-async def evaluate_gate_endpoint(scan_id: str, policy: Optional[Dict[str, Any]] = Body(default=None)):
-    """
-    Evaluates scan findings against configurable pipeline policies.
-    Returns pass/fail status and exit code (0 for pass, 1 for fail).
-    """
-    from backend.remediation.gate import evaluate_ci_gate
-
-    doc = _load_scan(scan_id)
-    return evaluate_ci_gate(doc, policy=policy)
-
 

@@ -5,7 +5,7 @@
  * Communicates with /api/v1/scans endpoints including the AI Threat Intelligence & Auto-Patch Engine.
  */
 
-const API_BASE = window.location.origin + "/api/v1";
+const API_BASE = window.DEPSCAN_API_BASE || (window.location.origin + "/api/v1");
 
 // State
 let currentScanId = null;

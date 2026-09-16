@@ -1,14 +1,10 @@
 """
-DepScan Headless CLI — Software Supply Chain Security Analyzer.
+DepScan AI CLI — Standalone Terminal Scanner, SBOM Exporter, and CI/CD Quality Gate.
 
-Provides standalone command-line execution for CI/CD pipelines and evaluator benchmarks:
-  python -m backend.cli ./path-to-repo --sarif out.sarif --sbom out.cdx.json --gate
-
-Features:
-- 100% static analysis (zero code execution)
-- Terminal summary table with P0-P3 prioritization and blast radius metrics
-- Direct export of CycloneDX v1.5 JSON SBOM and SARIF v2.1.0 reports
-- CI/CD Quality Gate evaluation with pipeline exit codes (0 for pass, 1 for fail)
+Usage:
+    python -m backend.cli ./demo-repository
+    python -m backend.cli ./demo-repository --sbom sbom.cdx.json --sarif results.sarif
+    python -m backend.cli ./demo-repository --gate
 """
 
 from __future__ import annotations
@@ -17,6 +13,7 @@ import argparse
 import json
 import sys
 import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -24,189 +21,351 @@ from backend.ingestion.workspace import RepositoryWorkspace
 from backend.models.domain import Repository
 from backend.models.enums import ScanStatus
 from backend.pipeline import run_scan
-from backend.remediation.gate import evaluate_ci_gate
-from backend.remediation.sarif import generate_sarif_report
-from backend.remediation.sbom import generate_cyclonedx_sbom
 
 
-# ANSI Color Codes for terminal output
+# ANSI Color Codes
 RESET = "\033[0m"
 BOLD = "\033[1m"
-RED = "\033[91m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-BLUE = "\033[94m"
-CYAN = "\033[96m"
-WHITE = "\033[97m"
-GRAY = "\033[90m"
+DIM = "\033[2m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+MAGENTA = "\033[35m"
+CYAN = "\033[36m"
+WHITE = "\033[37m"
+BG_RED = "\033[41m"
+BG_GREEN = "\033[42m"
 
 
-def _format_severity(severity: str) -> str:
-    s = (severity or "UNKNOWN").upper()
-    if s == "CRITICAL":
-        return f"{RED}{BOLD}CRITICAL{RESET}"
-    if s == "HIGH":
-        return f"{RED}HIGH{RESET}"
-    if s == "MEDIUM":
-        return f"{YELLOW}MEDIUM{RESET}"
-    if s == "LOW":
-        return f"{CYAN}LOW{RESET}"
-    return f"{GRAY}INFO{RESET}"
+def colorize(text: str, color: str, enable_color: bool = True) -> str:
+    if not enable_color:
+        return text
+    return f"{color}{text}{RESET}"
 
 
-def _format_priority(priority: str) -> str:
-    p = (priority or "P3").upper()
-    if p == "P0":
-        return f"{RED}{BOLD}[P0 Emergency]{RESET}"
-    if p == "P1":
-        return f"{RED}[P1 High]{RESET}"
-    if p == "P2":
-        return f"{YELLOW}[P2 Medium]{RESET}"
-    return f"{GRAY}[P3 Low]{RESET}"
-
-
-def run_cli_scan(
-    target_path: str,
-    output_sarif: Optional[str] = None,
-    output_sbom: Optional[str] = None,
-    output_json: Optional[str] = None,
-    enforce_gate: bool = False,
-    quiet: bool = False,
-) -> int:
-    """
-    Execute end-to-end security scan from CLI.
-    Returns exit code (0 for pass / success, 1 for gate failure or errors).
-    """
-    path = Path(target_path).resolve()
-    if not path.is_dir():
-        sys.stderr.write(f"{RED}Error:{RESET} Target directory does not exist: {path}\n")
-        return 1
-
-    scan_id = f"cli-{uuid.uuid4().hex[:8]}"
-
-    if not quiet:
-        sys.stdout.write(f"\n{BOLD}{CYAN}=== DepScan Supply Chain Security Analyzer ==={RESET}\n")
-        sys.stdout.write(f"{GRAY}Scanning workspace: {WHITE}{path}{RESET}\n")
-        sys.stdout.write(f"{GRAY}Scan ID: {WHITE}{scan_id}{RESET}\n\n")
-
-    workspace = RepositoryWorkspace(workspace_dir=path, auto_cleanup=False)
-    repo_meta = Repository(
-        url=str(path),
-        name=path.name,
-        file_count=len(workspace.list_files()),
-        metadata={"source": "cli"},
-    )
-
-    result = run_scan(scan_id, workspace, repo_meta)
-
-    status = result.get("status", ScanStatus.COMPLETED.value)
-    score = result.get("score", 100.0)
-    risk_level = result.get("risk_level", "SAFE")
-    findings = result.get("findings", [])
+def export_cyclonedx_sbom(result: Dict[str, Any], output_path: Path) -> None:
+    """Generate and write CycloneDX v1.5 JSON SBOM."""
     dependencies = result.get("dependencies", [])
-    direct_deps = result.get("direct_dependencies_count", len(dependencies))
-    transitive_deps = result.get("transitive_dependencies_count", 0)
+    findings = result.get("findings", [])
+    scan_id = result.get("scan_id", str(uuid.uuid4()))
 
-    if not quiet:
-        # 1. Print Summary Card
-        score_color = GREEN if score >= 80 else (YELLOW if score >= 50 else RED)
-        sys.stdout.write(f"{BOLD}Security Score:{RESET} {score_color}{score:.1f}/100 ({risk_level}){RESET}\n")
-        sys.stdout.write(
-            f"{BOLD}Dependencies Analyzed:{RESET} {len(dependencies)} total "
-            f"({direct_deps} direct, {transitive_deps} transitive)\n"
+    components = []
+    for dep in dependencies:
+        pkg = dep.get("package", "unknown")
+        ver = dep.get("version", "unknown").lstrip("^~=<>")
+        eco = dep.get("ecosystem", "generic")
+        purl = f"pkg:{eco}/{pkg}@{ver}" if ver != "unknown" else f"pkg:{eco}/{pkg}"
+        components.append(
+            {
+                "type": "library",
+                "name": pkg,
+                "version": ver,
+                "purl": purl,
+                "properties": [
+                    {"name": "depscan:ecosystem", "value": str(eco)},
+                    {"name": "depscan:is_direct", "value": str(dep.get("is_direct", True))},
+                    {"name": "depscan:manifest_path", "value": str(dep.get("manifest_path", ""))},
+                ],
+            }
         )
-        sys.stdout.write(f"{BOLD}Total Findings:{RESET} {len(findings)}\n\n")
 
-        # 2. Print Findings Table
-        if findings:
-            sys.stdout.write(f"{BOLD}{WHITE}Security Findings & Supply Chain Attack Indicators:{RESET}\n")
-            sys.stdout.write("-" * 88 + "\n")
-            sys.stdout.write(
-                f"{'PRIORITY':<16} {'SEVERITY':<16} {'PACKAGE':<24} {'BLAST':<8} {'TITLE':<30}\n"
+    vulnerabilities = []
+    for f in findings:
+        pkg = f.get("package", "unknown")
+        ver = f.get("version", "unknown").lstrip("^~=<>")
+        eco = f.get("ecosystem", "generic")
+        purl = f"pkg:{eco}/{pkg}@{ver}" if ver != "unknown" else f"pkg:{eco}/{pkg}"
+        vulnerabilities.append(
+            {
+                "id": f.get("id") or f.get("rule_id", "VULN-001"),
+                "source": {"name": "DepScan AI Risk Engine"},
+                "ratings": [
+                    {
+                        "severity": str(f.get("severity", "medium")).lower(),
+                        "method": "CVSSv3",
+                    }
+                ],
+                "description": f.get("title", "Supply chain security finding"),
+                "recommendation": f.get("remediation", {}).get("advice", ""),
+                "affects": [{"ref": purl}],
+            }
+        )
+
+    sbom = {
+        "bomFormat": "CycloneDX",
+        "specVersion": "1.5",
+        "serialNumber": f"urn:uuid:{uuid.uuid4()}",
+        "version": 1,
+        "metadata": {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "tools": [
+                {
+                    "vendor": "DepScan AI",
+                    "name": "SupplyGuard",
+                    "version": "0.1.0",
+                }
+            ],
+            "component": {
+                "type": "application",
+                "name": Path(result.get("repository", {}).get("url", "workspace")).stem or "target-repo",
+                "version": "1.0.0",
+            },
+        },
+        "components": components,
+        "vulnerabilities": vulnerabilities,
+    }
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(sbom, f, indent=2)
+
+
+def export_sarif_report(result: Dict[str, Any], output_path: Path) -> None:
+    """Generate and write SARIF v2.1.0 JSON report."""
+    findings = result.get("findings", [])
+
+    rules = []
+    sarif_results = []
+    seen_rules = set()
+
+    for idx, f in enumerate(findings):
+        rule_id = f.get("rule_id") or f"RULE-{idx + 1}"
+        sev = str(f.get("severity", "MEDIUM")).upper()
+        level = "error" if sev in ("CRITICAL", "HIGH") else ("warning" if sev == "MEDIUM" else "note")
+
+        if rule_id not in seen_rules:
+            seen_rules.add(rule_id)
+            rules.append(
+                {
+                    "id": rule_id,
+                    "name": f.get("finding_type", "SecurityFinding"),
+                    "shortDescription": {"text": f.get("title", rule_id)},
+                    "defaultConfiguration": {"level": level},
+                    "properties": {
+                        "priority": f.get("priority", "P2"),
+                        "severity": sev,
+                    },
+                }
             )
-            sys.stdout.write("-" * 88 + "\n")
 
-            for f in findings[:25]:  # Display top 25 findings in terminal
-                pri = _format_priority(f.get("priority", "P3"))
-                sev = _format_severity(f.get("severity", "LOW"))
-                pkg = (f.get("package") or f.get("package_name") or "unknown")[:22]
-                blast = f"{float(f.get('blast_radius', 0.5)):.2f}"
-                title = (f.get("title") or f.get("description") or "")[:35]
-                sys.stdout.write(f"{pri:<25} {sev:<25} {pkg:<24} {blast:<8} {title}\n")
+        manifest = f.get("manifest_path") or "package.json"
+        sarif_results.append(
+            {
+                "ruleId": rule_id,
+                "level": level,
+                "message": {
+                    "text": f"{f.get('title', 'Security Finding')} (Package: {f.get('package', 'unknown')})"
+                },
+                "locations": [
+                    {
+                        "physicalLocation": {
+                            "artifactLocation": {
+                                "uri": manifest,
+                                "uriBaseId": "%SRCROOT%",
+                            }
+                        }
+                    }
+                ],
+                "properties": {
+                    "package": f.get("package"),
+                    "version": f.get("version"),
+                    "remediation": f.get("remediation", {}).get("advice", ""),
+                },
+            }
+        )
 
-            if len(findings) > 25:
-                sys.stdout.write(f"{GRAY}... and {len(findings) - 25} more findings omitted from terminal.{RESET}\n")
-            sys.stdout.write("-" * 88 + "\n\n")
+    sarif = {
+        "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+        "version": "2.1.0",
+        "runs": [
+            {
+                "tool": {
+                    "driver": {
+                        "name": "DepScan AI",
+                        "semanticVersion": "0.1.0",
+                        "informationUri": "https://github.com/Atharvchaskar008/Kurukshetra-hackathon",
+                        "rules": rules,
+                    }
+                },
+                "results": sarif_results,
+            }
+        ],
+    }
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(sarif, f, indent=2)
+
+
+def render_terminal_table(result: Dict[str, Any], enable_color: bool = True) -> None:
+    """Print an ANSI summary table of scan results."""
+    status = result.get("status", "unknown").upper()
+    score = result.get("score", 0.0)
+    risk_level = result.get("risk_level", "SAFE").upper()
+    ecosystems = ", ".join(result.get("ecosystems", [])) or "None detected"
+    dependencies = result.get("dependencies", [])
+    findings = result.get("findings", [])
+
+    risk_color = RED if risk_level in ("CRITICAL", "HIGH") else (YELLOW if risk_level == "MEDIUM" else GREEN)
+
+    print()
+    print(colorize("=" * 80, CYAN, enable_color))
+    print(colorize(f" 🛡️  DEPSCAN AI — SUPPLY CHAIN SECURITY REPORT", BOLD + WHITE, enable_color))
+    print(colorize("=" * 80, CYAN, enable_color))
+    print(f" Target:         {colorize(str(result.get('repository', {}).get('url', 'workspace')), BOLD, enable_color)}")
+    print(f" Scan ID:        {result.get('scan_id')}")
+    print(f" Status:         {colorize(status, GREEN if status == 'COMPLETED' else YELLOW, enable_color)}")
+    print(f" Ecosystems:     {colorize(ecosystems, CYAN, enable_color)}")
+    print(f" Dependencies:   {len(dependencies)}")
+    print(f" Security Score: {colorize(f'{score:.1f} / 100.0', BOLD, enable_color)}")
+    print(f" Overall Risk:   {colorize(f'[{risk_level}]', risk_color + BOLD, enable_color)}")
+    print(colorize("-" * 80, CYAN, enable_color))
+
+    if not findings:
+        print(colorize("\n ✨ Clean scan! No security attack vectors or vulnerable dependencies detected.\n", GREEN + BOLD, enable_color))
+        print(colorize("=" * 80, CYAN, enable_color))
+        return
+
+    print(f"\n {colorize(f'FINDINGS SUMMARY ({len(findings)} detected)', BOLD + WHITE, enable_color)}:\n")
+
+    # Table header
+    header_fmt = "{:<6} {:<10} {:<24} {:<40}"
+    print(colorize(header_fmt.format("PRIO", "SEVERITY", "PACKAGE", "SUMMARY"), BOLD, enable_color))
+    print(colorize("-" * 84, DIM, enable_color))
+
+    for f in findings:
+        prio = f.get("priority", "P3")
+        sev = str(f.get("severity", "LOW")).upper()
+        pkg = f.get("package", "unknown")
+        ver = f.get("version", "")
+        pkg_display = f"{pkg}@{ver}" if ver else pkg
+        title = f.get("title", "Finding")[:38]
+
+        # Severity & Priority color
+        if prio == "P0" or sev == "CRITICAL":
+            sev_color = RED + BOLD
+        elif prio == "P1" or sev == "HIGH":
+            sev_color = YELLOW + BOLD
+        elif prio == "P2" or sev == "MEDIUM":
+            sev_color = YELLOW
         else:
-            sys.stdout.write(f"{GREEN}[OK] Zero supply chain vulnerabilities or attack indicators detected.{RESET}\n\n")
+            sev_color = CYAN
 
-    # 3. Export Artifacts if requested
-    if output_sbom:
-        sbom_path = Path(output_sbom)
-        sbom_data = generate_cyclonedx_sbom(result)
-        sbom_path.write_text(json.dumps(sbom_data, indent=2), encoding="utf-8")
-        if not quiet:
-            sys.stdout.write(f"{GREEN}[OK] Exported CycloneDX v1.5 SBOM:{RESET} {sbom_path}\n")
+        line = header_fmt.format(prio, sev, pkg_display[:22], title)
+        print(colorize(line, sev_color, enable_color))
 
-    if output_sarif:
-        sarif_path = Path(output_sarif)
-        sarif_data = generate_sarif_report(result)
-        sarif_path.write_text(json.dumps(sarif_data, indent=2), encoding="utf-8")
-        if not quiet:
-            sys.stdout.write(f"{GREEN}[OK] Exported SARIF v2.1.0 Report:{RESET} {sarif_path}\n")
+    print(colorize("-" * 84, DIM, enable_color))
 
-    if output_json:
-        json_path = Path(output_json)
-        json_path.write_text(json.dumps(result, indent=2, default=str), encoding="utf-8")
-        if not quiet:
-            sys.stdout.write(f"{GREEN}[OK] Exported Raw Scan JSON:{RESET} {json_path}\n")
+    # Breakdown by severity
+    crit_count = sum(1 for f in findings if str(f.get("severity")).upper() == "CRITICAL")
+    high_count = sum(1 for f in findings if str(f.get("severity")).upper() == "HIGH")
+    med_count = sum(1 for f in findings if str(f.get("severity")).upper() == "MEDIUM")
+    low_count = sum(1 for f in findings if str(f.get("severity")).upper() == "LOW")
 
-    # 4. CI/CD Gate Evaluation
-    if enforce_gate:
-        gate_eval = evaluate_ci_gate(result)
-        passed = gate_eval["passed"]
-        if not quiet:
-            sys.stdout.write("\n" + "=" * 40 + "\n")
-            if passed:
-                sys.stdout.write(f"{GREEN}{BOLD}CI/CD QUALITY GATE: PASSED{RESET}\n")
-            else:
-                sys.stdout.write(f"{RED}{BOLD}CI/CD QUALITY GATE: FAILED{RESET}\n")
-                for v in gate_eval.get("violations", []):
-                    sys.stdout.write(f"  {RED}[X] [{v.get('severity')}] {v.get('package')}: {v.get('reason')}{RESET}\n")
-            sys.stdout.write("=" * 40 + "\n\n")
-
-        return gate_eval["exit_code"]
-
-    return 0
+    print(f"\n Severity Breakdown: "
+          f"{colorize(f'{crit_count} Critical', RED + BOLD, enable_color)} | "
+          f"{colorize(f'{high_count} High', YELLOW + BOLD, enable_color)} | "
+          f"{colorize(f'{med_count} Medium', YELLOW, enable_color)} | "
+          f"{colorize(f'{low_count} Low', CYAN, enable_color)}")
+    print(colorize("=" * 80, CYAN, enable_color))
+    print()
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="DepScan Software Supply Chain Security Analyzer CLI",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
+        prog="depscan",
+        description="DepScan AI — Software Supply Chain Security Analyzer CLI",
     )
-    parser.add_argument("target", help="Local directory path to scan")
-    parser.add_argument("--sarif", dest="sarif_out", help="Path to write SARIF v2.1.0 report")
-    parser.add_argument("--sbom", dest="sbom_out", help="Path to write CycloneDX v1.5 JSON SBOM")
-    parser.add_argument("--json", dest="json_out", help="Path to write raw scan result JSON")
+    parser.add_argument(
+        "target",
+        nargs="?",
+        default=".",
+        help="Path to repository or directory to scan (default: current directory)",
+    )
+    parser.add_argument(
+        "--sbom",
+        metavar="PATH",
+        type=str,
+        help="Export CycloneDX v1.5 JSON SBOM to specified file path",
+    )
+    parser.add_argument(
+        "--sarif",
+        metavar="PATH",
+        type=str,
+        help="Export SARIF v2.1.0 report to specified file path",
+    )
     parser.add_argument(
         "--gate",
         action="store_true",
-        help="Enforce CI/CD Quality Gate (exits with code 1 if P0/Critical findings exist)",
+        help="Enforce CI/CD Quality Gate (exits with code 1 on P0/Critical findings, 0 on clean)",
     )
-    parser.add_argument("--quiet", action="store_true", help="Suppress terminal banner and tables")
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Output raw JSON scan results to stdout",
+    )
+    parser.add_argument(
+        "--no-color",
+        action="store_true",
+        help="Disable ANSI colors in terminal output",
+    )
 
     args = parser.parse_args()
+    enable_color = not args.no_color and sys.stdout.isatty()
 
-    exit_code = run_cli_scan(
-        target_path=args.target,
-        output_sarif=args.sarif_out,
-        output_sbom=args.sbom_out,
-        output_json=args.json_out,
-        enforce_gate=args.gate,
-        quiet=args.quiet,
+    target_path = Path(args.target).resolve()
+    if not target_path.exists() or not target_path.is_dir():
+        print(f"Error: Target directory does not exist: {target_path}", file=sys.stderr)
+        sys.exit(2)
+
+    workspace = RepositoryWorkspace(workspace_dir=target_path, auto_cleanup=False)
+    scan_id = f"cli_{uuid.uuid4().hex[:12]}"
+    files = workspace.list_files()
+
+    repo_metadata = Repository(
+        url=str(target_path),
+        name=target_path.name,
+        file_count=len(files),
+        metadata={"source": "cli"},
     )
-    sys.exit(exit_code)
+
+    result = run_scan(scan_id, workspace, repo_metadata)
+
+    if args.json:
+        print(json.dumps(result, indent=2))
+
+    if not args.json:
+        render_terminal_table(result, enable_color=enable_color)
+
+    if args.sbom:
+        sbom_path = Path(args.sbom).resolve()
+        export_cyclonedx_sbom(result, sbom_path)
+        print(f"📦 CycloneDX SBOM exported successfully to: {sbom_path}")
+
+    if args.sarif:
+        sarif_path = Path(args.sarif).resolve()
+        export_sarif_report(result, sarif_path)
+        print(f"📋 SARIF report exported successfully to: {sarif_path}")
+
+    if args.gate:
+        findings = result.get("findings", [])
+        blocking_findings = [
+            f for f in findings
+            if f.get("priority") == "P0" or str(f.get("severity", "")).upper() == "CRITICAL"
+        ]
+
+        if blocking_findings:
+            msg = (
+                f"❌ CI/CD QUALITY GATE FAILED: {len(blocking_findings)} blocking (P0 / Critical) "
+                f"finding(s) identified in {target_path.name}."
+            )
+            print(colorize(f"\n{msg}\n", BG_RED + WHITE + BOLD, enable_color))
+            sys.exit(1)
+        else:
+            msg = f"✅ CI/CD QUALITY GATE PASSED: 0 blocking findings detected in {target_path.name}."
+            print(colorize(f"\n{msg}\n", BG_GREEN + WHITE + BOLD, enable_color))
+            sys.exit(0)
 
 
 if __name__ == "__main__":
