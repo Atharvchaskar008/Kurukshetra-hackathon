@@ -36,9 +36,9 @@ class Settings(BaseModel):
     )
 
     # Server configuration
-    backend_host: str = Field(default_factory=lambda: os.getenv("BACKEND_HOST", "127.0.0.1"))
+    backend_host: str = Field(default_factory=lambda: os.getenv("BACKEND_HOST", "0.0.0.0"))
     backend_port: int = Field(
-        default_factory=lambda: int(os.getenv("BACKEND_PORT", "8000"))
+        default_factory=lambda: int(os.getenv("PORT", os.getenv("BACKEND_PORT", "8000")))
     )
     api_prefix: str = "/api/v1"
 
